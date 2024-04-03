@@ -7,9 +7,24 @@ const app = express();
 
 require('dotenv-flow').config();
 
+app.use(bodyParser.json());
+
 // Routes
+const authRoutes = require('./routes/auth');
 
+// CRUD
+app.use('/api/user', authRoutes);
 
+mongoose.connection.once('open', () => console.log('Connected to MongoDB'));
+
+const PORT = process.env.PORT || 5000;
+
+// Start up the server
+app.listen(PORT, function() {
+    console.log('Server is running on Port:', PORT);
+})
+
+// Connect to MongoDB
 mongoose.connect
 (
     process.env.DBHOST,
@@ -18,13 +33,5 @@ mongoose.connect
     }
 ).catch(error => console.log("Error connecting to MongoDB: ", error));
 
-mongoose.connection.once('open', () => console.log('Connected to MongoDB'));
-
-const PORT = process.env.PORT || 4000;
-
-// Start up the server
-app.listen(PORT, function() {
-    console.log('Server is running on Port:', PORT);
-})
-
+// Export app as a module
 module.exports = app;
