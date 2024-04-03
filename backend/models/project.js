@@ -40,7 +40,11 @@ let projectSchema = new Schema(
                 type: Schema.Types.ObjectId, 
                 ref: 'Team'
             }
-        ]
+        ],
+        currentSprint: {
+            type: Schema.Types.ObjectId, 
+            ref: 'Sprint'
+        },
     });
 
     // Export model
