@@ -1,9 +1,10 @@
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
 
-const {registerValidation} = require('../validation');
+const {registerValidation, loginValidation} = require('../validation');
 
 // Register
 // /api/user/register
@@ -48,7 +49,45 @@ router.post('/register', async (req, res) => {
 // Login
 // /api/user/login
 router.post('/login', async (req, res) => {
-    return res.status(200).json({message: 'Login route'});
+    // Validate user login credentials
+    const {error} = loginValidation(req.body);
+
+    if (error) {
+        return res.status(400).json({error: error.details[0].message});
+    }
+
+    // Login valid -- find the user
+    const user = await User.findOne({email: req.body.email});
+
+    // Error if email is wrong (user not in DB)
+    if (!user) {
+        return res.status(400).json({error: 'Incorrect email or password'});
+    }
+
+    // User exists -- check password
+    const validPassword = await bcrypt.compare(req.body.password, user.password);
+
+    // Error if password is wrong
+    if(!validPassword) {
+        return res.status(400).json({error: 'Incorrect email or password'});
+    }
+    
+    // Create and assign a token with email and id
+    const token = jwt.sign 
+    (
+        {
+            email: user.email,
+            id: user._id
+        },
+        process.env.TOKEN_SECRET,
+        {expiresIn: process.env.JWT_EXPIRES_IN},
+    );
+
+    // Attach token to header
+    res.header('auth-token', token).json({
+        error: null, 
+        data: {token}
+    });
 });
 
 // Logout
