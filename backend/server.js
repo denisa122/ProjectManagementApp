@@ -8,9 +8,7 @@ const app = express();
 require('dotenv-flow').config();
 
 // Routes
-app.get("/api/welcome", (req, res) => {
-    res.status(200).send("Welcome to the Express API!");
-});
+
 
 mongoose.connect
 (
