@@ -31,14 +31,14 @@ let projectSchema = new Schema(
             min: 2, 
             max: 100
         },
-        teamLeader: {
-            type: Schema.Types.ObjectId, 
-            ref: 'User'
-        },
+        // teamLeader: {
+        //     type: Schema.Types.ObjectId, 
+        //     ref: 'User'
+        // },  maybe i don't need this if lower i'm referencing the team that already has teamLeader
         members: [
             {
                 type: Schema.Types.ObjectId, 
-                ref: 'User'
+                ref: 'Team'
             }
         ]
     });
