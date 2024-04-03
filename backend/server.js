@@ -11,9 +11,11 @@ app.use(bodyParser.json());
 
 // Routes
 const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/user');
 
 // CRUD
 app.use('/api/user', authRoutes);
+app.use('/api/users', userRoutes);
 
 mongoose.connection.once('open', () => console.log('Connected to MongoDB'));
 
