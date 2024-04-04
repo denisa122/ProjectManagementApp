@@ -9,26 +9,28 @@ const {verifyToken} = require('../middlewares/tokenVerification');
 
 // Create
 // /api/teams/
-router.post('/', teamController.createTeam);
+router.post('/', verifyToken, teamController.createTeam);
 
 // api/teams/{teamId}/members/:userId -- Add member to team
-router.post('/:teamId/members/:userId', teamController.addTeamMemberToTeam);
+router.post('/:teamId/members/:userId', verifyToken, teamController.addTeamMemberToTeam);
 
 // Read
-// /api/teams/
+// /api/teams/ -- Maybe I won't need this route
 router.get('/', teamController.getAllTeams);
-router.get('/:teamId', teamController.getTeamDetailsById);
+
+// /api/teams/{teamId}
+router.get('/:teamId', verifyToken, teamController.getTeamDetailsById);
 
 // Update
 // /api/teams/{teamId}
-router.put('/:teamId', teamController.updateTeam);
+router.put('/:teamId', verifyToken, teamController.updateTeam);
 
 // Delete
 // /api/teams/{teamId}
-router.delete('/:teamId', teamController.deleteTeam);
+router.delete('/:teamId', verifyToken, teamController.deleteTeam);
 
 // /api/teams/{teamId}/members/:userId -- Remove member from team
-router.delete('/:teamId/members/:userId', teamController.removeTeamMemberFromTeam);
+router.delete('/:teamId/members/:userId', verifyToken, teamController.removeTeamMemberFromTeam);
 
 // Export routes
 module.exports = router;
