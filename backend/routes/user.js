@@ -20,5 +20,22 @@ router.get('/:userId', (req, res) => {
     .catch(error => { res.status(500).send( {message: error.message}); })
 });
 
+// Update
+
+// /api/users/:userId
+router.put('/:userId', (req, res) => {
+    const userId = req.params.userId;
+
+    user.findByIdAndUpdate(userId, req.body)
+    .then(data => {
+        if(!data) {
+            res.status(404).send({message: `Cannot update user with id=${userId}. User not found.`});
+        } else {
+            res.send({message: 'User was updated successfully.'});
+        }
+    })
+    .catch(error => { res.status(500).send( {message: error.message}); })
+});
+
 // Export routes
 module.exports = router;
