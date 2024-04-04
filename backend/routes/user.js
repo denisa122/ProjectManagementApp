@@ -1,6 +1,8 @@
 // Dependencies
 const router = require('express').Router();
-const user = require('../models/user');
+const bcrypt = require('bcrypt');
+
+const User = require('../models/user');
 
 // CRUD
 
@@ -8,14 +10,14 @@ const user = require('../models/user');
 
 // /api/users/    -- Maybe I won't need this route
 router.get('/', (req, res) => {
-    user.find()
+    User.find()
     .then(data => { res.send(data); })
     .catch(error => { res.status(500).send( {message: error.message}); })
 });
 
 // /api/users/:userId
 router.get('/:userId', (req, res) => {
-    user.findById(req.params.userId)
+    User.findById(req.params.userId)
     .then(data => { res.send(data); })
     .catch(error => { res.status(500).send( {message: error.message}); })
 });
@@ -23,18 +25,37 @@ router.get('/:userId', (req, res) => {
 // Update
 
 // /api/users/:userId
-router.put('/:userId', (req, res) => {
+router.put('/:userId', async (req, res) => {
     const userId = req.params.userId;
 
-    user.findByIdAndUpdate(userId, req.body)
-    .then(data => {
-        if(!data) {
+    try {
+        // Check if the user exists
+        const existingUser = await User.findById(userId);
+
+        if(!existingUser) {
             res.status(404).send({message: `Cannot update user with id=${userId}. User not found.`});
-        } else {
-            res.send({message: 'User was updated successfully.'});
         }
-    })
-    .catch(error => { res.status(500).send( {message: `Cannot update user with id=${userId}.`}); })
+
+        // Update user fields
+        existingUser.firstName = req.body.firstName || existingUser.firstName;
+        existingUser.lastName = req.body.lastName || existingUser.lastName;
+        existingUser.email = req.body.email || existingUser.email;
+        existingUser.role = req.body.role || existingUser.role;
+        
+        // Check if password is being changed
+        if (req.body.password) {
+            // Hash new password
+            const salt = await bcrypt.genSalt(10);
+            existingUser.password = await bcrypt.hash(req.body.password, salt);
+        }
+
+        // Save updated user
+        const userUpdated = await existingUser.save();
+        
+        res.status(200).send({message: 'User was updated successfully.', userUpdated});
+    } catch (error) {
+        res.status(500).send({message: `Cannot update user with id=${userId}.`, error: error.message});
+    }
 });
 
 // Delete
@@ -43,7 +64,7 @@ router.put('/:userId', (req, res) => {
 router.delete('/:userId', (req, res) => {
     const userId = req.params.userId;
 
-    user.findByIdAndDelete(userId)
+    User.findByIdAndDelete(userId)
     .then(data => {
         if(!data) {
             res.status(404).send({message: `Cannot delete user with id=${userId}. User not found.`});
