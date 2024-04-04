@@ -5,7 +5,7 @@ const createProject = async (req, res) => {
 
 };
 
-const getAllProjects = async (req, res) => {
+const getAllProjectsForTeam = async (req, res) => {
 
 };
 
@@ -27,7 +27,7 @@ const deleteProject = async (req, res) => {
 
 module.exports = {
     createProject,
-    getAllProjects,
+    getAllProjectsForTeam,
     getProjectDetailsById,
     getTeamMembersByProjectId,
     updateProject,
