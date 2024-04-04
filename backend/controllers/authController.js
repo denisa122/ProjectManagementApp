@@ -25,13 +25,16 @@ const register = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const password = await bcrypt.hash(req.body.password, salt);
 
+    // Role of team member unless specified otherwise
+    const role = req.body.role ? req.body.role : 'team member';
+
     // Create user object and save it in the DB
     const userObject = new User({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
         password: password,
-        role: req.body.role
+        role: role
     });
 
     try {
