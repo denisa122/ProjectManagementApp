@@ -7,7 +7,6 @@ const User = require('../models/user');
 // CRUD
 
 // Read
-
 // /api/users/    -- Maybe I won't need this route
 router.get('/', (req, res) => {
     User.find()
@@ -23,7 +22,6 @@ router.get('/:userId', (req, res) => {
 });
 
 // Update
-
 // /api/users/:userId
 router.put('/:userId', async (req, res) => {
     const userId = req.params.userId;
@@ -59,20 +57,23 @@ router.put('/:userId', async (req, res) => {
 });
 
 // Delete
-
 // /api/users/:userId
-router.delete('/:userId', (req, res) => {
+router.delete('/:userId', async (req, res) => {
     const userId = req.params.userId;
 
-    User.findByIdAndDelete(userId)
-    .then(data => {
-        if(!data) {
+    try {
+        // Delete user
+        const deletedUser = await User.findByIdAndDelete(userId);
+
+        // Check if user was deleted
+        if (!deletedUser) {
             res.status(404).send({message: `Cannot delete user with id=${userId}. User not found.`});
         } else {
             res.send({message: 'User was deleted successfully.'});
         }
-    })
-    .catch(error => { res.status(500).send( {message: `Cannot delete user with id=${userId}.`}); })
+    } catch (error) {
+        res.status(500).send({message: `Cannot delete user with id=${userId}.`, error: error.message});
+    }
 });
 
 // Export routes
