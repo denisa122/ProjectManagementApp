@@ -12,10 +12,12 @@ app.use(bodyParser.json());
 // Routes
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
+const teamRoutes = require('./routes/team');
 
 // CRUD
 app.use('/api/user', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/teams', teamRoutes);
 
 mongoose.connection.once('open', () => console.log('Connected to MongoDB'));
 
