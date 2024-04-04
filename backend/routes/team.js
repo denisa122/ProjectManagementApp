@@ -23,5 +23,12 @@ router.get('/:teamId', teamController.getTeamDetailsById);
 // /api/teams/{teamId}
 router.put('/:teamId', teamController.updateTeam);
 
+// Delete
+// /api/teams/{teamId}
+router.delete('/:teamId', teamController.deleteTeam);
+
+// /api/teams/{teamId}/members/:userId -- Remove member from team
+router.delete('/:teamId/members/:userId', teamController.removeTeamMemberFromTeam);
+
 // Export routes
 module.exports = router;

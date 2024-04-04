@@ -105,11 +105,51 @@ const updateTeam = async (req, res) => {
 }
 
 const deleteTeam = async (req, res) => {
+    const teamId = req.params.teamId;
 
+    try {
+        const deletedTeam = await Team.findByIdAndDelete(teamId);
+
+        if (!deletedTeam) {
+            res.status(404).send({message: `Team with id=${teamId} not found.`});
+            return;
+        }
+
+        res.send({message: `Team with id=${teamId} was deleted successfully.`});
+    } catch (error) {
+        res.status(500).send({message: error.message});
+    }
 }
 
 const removeTeamMemberFromTeam = async (req, res) => {
+    const teamId = req.params.teamId;
+    const userId = req.params.userId;
 
+    try {
+        const team = await Team.findById(teamId);
+
+        if (!team) {
+            res.status(404).send({message: `Team with id=${teamId} not found.`});
+            return;
+        }
+
+        // Check if the user is a member of the team
+        if (!team.members.includes(userId)) {
+            res.status(400).send({message: `User with id=${userId} is not a member of the team.`});
+            return;
+        }
+
+        // Remove the member from the team
+        team.members = team.members.filter(memberId => memberId != userId);
+
+        const updatedTeam = await team.save();
+        await Team.populate(updatedTeam, {path: 'members', select: 'firstName lastName'});
+        await Team.populate(updatedTeam, {path: 'teamLeader', select: 'firstName lastName'});
+
+        res.send({message: `User with id=${userId} was removed from the team.`});
+    } catch (error) {
+        res.status(500).send({message: error.message});
+    }
 }
 
 module.exports = {
@@ -117,5 +157,7 @@ module.exports = {
     addTeamMemberToTeam,
     getAllTeams,
     getTeamDetailsById,
-    updateTeam
+    updateTeam,
+    deleteTeam,
+    removeTeamMemberFromTeam
 }
