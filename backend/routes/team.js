@@ -20,7 +20,8 @@ router.get('/', teamController.getAllTeams);
 router.get('/:teamId', teamController.getTeamDetailsById);
 
 // Update
-// 
+// /api/teams/{teamId}
+router.put('/:teamId', teamController.updateTeam);
 
 // Export routes
 module.exports = router;

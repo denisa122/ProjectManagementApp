@@ -76,7 +76,32 @@ const getTeamDetailsById = async (req, res) => {
 };
 
 const updateTeam = async (req, res) => {
+    const teamId = req.params.teamId;
+    const updateData = req.body;
 
+    try {
+        const team = await Team.findById(teamId);
+
+        if (!team) {
+            res.status(404).send({message: `Team with id=${teamId} not found.`});
+            return;
+        }
+
+        // Prevent updating team leader and members
+        delete updateData.teamLeader;
+        delete updateData.members;
+
+        // Update other fields
+        Object.assign(team, updateData);
+
+        const updatedTeam = await team.save();
+        await Team.populate(updatedTeam, {path: 'members', select: 'firstName lastName'});
+        await Team.populate(updatedTeam, {path: 'teamLeader', select: 'firstName lastName'});
+
+        res.send(updatedTeam);
+    } catch (error) {
+        res.status(500).send({message: error.message});
+    }
 }
 
 const deleteTeam = async (req, res) => {
@@ -92,4 +117,5 @@ module.exports = {
     addTeamMemberToTeam,
     getAllTeams,
     getTeamDetailsById,
+    updateTeam
 }
