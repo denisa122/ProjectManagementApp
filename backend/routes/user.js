@@ -34,7 +34,24 @@ router.put('/:userId', (req, res) => {
             res.send({message: 'User was updated successfully.'});
         }
     })
-    .catch(error => { res.status(500).send( {message: error.message}); })
+    .catch(error => { res.status(500).send( {message: `Cannot update user with id=${userId}.`}); })
+});
+
+// Delete
+
+// /api/users/:userId
+router.delete('/:userId', (req, res) => {
+    const userId = req.params.userId;
+
+    user.findByIdAndDelete(userId)
+    .then(data => {
+        if(!data) {
+            res.status(404).send({message: `Cannot delete user with id=${userId}. User not found.`});
+        } else {
+            res.send({message: 'User was deleted successfully.'});
+        }
+    })
+    .catch(error => { res.status(500).send( {message: `Cannot delete user with id=${userId}.`}); })
 });
 
 // Export routes
