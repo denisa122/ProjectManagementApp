@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 const {registerValidation, loginValidation} = require('../validation');
+const {verifyToken} = require('../middlewares/tokenVerification');
 
 // Register
 // /api/user/register

@@ -25,6 +25,4 @@ const loginValidation = (data) => {
     return schema.validate(data);
 }
 
-// Verify token
-
 module.exports = {registerValidation, loginValidation};

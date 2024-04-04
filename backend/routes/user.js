@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt');
 
 const User = require('../models/user');
 
+const {verifyToken} = require('../middlewares/tokenVerification');
+
 // CRUD
 
 // Read
@@ -15,7 +17,7 @@ router.get('/', (req, res) => {
 });
 
 // /api/users/:userId
-router.get('/:userId', (req, res) => {
+router.get('/:userId', verifyToken, (req, res) => {
     User.findById(req.params.userId)
     .then(data => { res.send(data); })
     .catch(error => { res.status(500).send( {message: error.message}); })
@@ -23,11 +25,11 @@ router.get('/:userId', (req, res) => {
 
 // Update
 // /api/users/:userId
-router.put('/:userId', async (req, res) => {
+router.put('/:userId', verifyToken, async (req, res) => {
     const userId = req.params.userId;
 
     try {
-        // Check if the user exists
+        // Check if user exists
         const existingUser = await User.findById(userId);
 
         if(!existingUser) {
@@ -58,7 +60,7 @@ router.put('/:userId', async (req, res) => {
 
 // Delete
 // /api/users/:userId
-router.delete('/:userId', async (req, res) => {
+router.delete('/:userId', verifyToken, async (req, res) => {
     const userId = req.params.userId;
 
     try {
