@@ -140,11 +140,59 @@ const deleteTask = async (req, res) => {
     }
 };
 
+const assignTask = async (req, res) => {
+    const taskId = req.params.taskId;
+    const teamMemberId = req.body.teamMemberId;
+
+    try {
+        const task = await Task.findById(taskId).populate({
+            path: 'assignedTeamMember',
+            select: 'firstName lastName'
+        });
+
+        if (!task) {
+            return res.status(404).json({message: 'Task not found'});
+        }
+
+        task.assignedTeamMember = [teamMemberId];
+        task.taskStatus = 'In progress';
+
+        const updatedTask = await task.save();
+
+        res.status(200).json(updatedTask);
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+};
+
+const unassignTask = async (req, res) => {
+    const taskId = req.params.taskId;
+
+    try {
+        const task = await Task.findById(taskId);
+
+        if (!task) {
+            return res.status(404).json({message: 'Task not found'});
+        }
+
+        task.assignedTeamMember = null;
+        task.taskStatus = "To do";
+
+        const updatedTask = await task.save();
+
+        res.status(200).json(updatedTask);
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+};
+
 module.exports = {
     createTask,
     getAllTasksForProject,
     getAllTasksForSprint,
     getTaskDetailsById,
     updateTask,
-    deleteTask
+    deleteTask,
+    assignTask,
+    unassignTask
 };
