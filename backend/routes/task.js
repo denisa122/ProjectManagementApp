@@ -23,5 +23,6 @@ router.get('/:taskId', verifyToken, taskController.getTaskDetailsById);
 
 // Delete
 // /projects/:projectId/tasks/:taskId
+router.delete('/:taskId', verifyToken, taskController.deleteTask);
 
 module.exports = router;

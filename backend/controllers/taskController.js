@@ -114,7 +114,30 @@ const updateTask = async (req, res) => {
 };
 
 const deleteTask = async (req, res) => {
+    const taskId = req.params.taskId;
 
+    try {
+        const deletedTask = await Task.findByIdAndDelete(taskId);
+
+        if (!deletedTask) {
+            return res.status(404).json({message: 'Task not found'});
+        } 
+
+        // Remove the task Id from the project's tasks array
+        const project = await Project.findOneAndUpdate(
+            {tasks: taskId},
+            {$pull: {tasks: taskId}},
+            {new: true}
+        );
+
+        if (!project) {
+            return res.status(404).json({message: 'Project not found'});
+        }
+
+        res.send({message: `Task deleted successfully.`});
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
 };
 
 module.exports = {
