@@ -13,8 +13,10 @@ router.post('/', verifyToken, taskController.createTask);
 
 // Read
 // /projects/:projectId/tasks
+router.get('/', verifyToken, taskController.getAllTasksForProject);
 
 // /projects/:projectId/tasks/:taskId
+router.get('/:taskId', verifyToken, taskController.getTaskDetailsById);
 
 // Update
 // /projects/:projectId/tasks/:taskId
