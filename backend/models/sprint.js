@@ -5,11 +5,9 @@ const Schema = mongoose.Schema;
 
 let sprintSchema = new Schema(
     {
-        name: {
-            type: String, 
-            required: true, 
-            min: 2, 
-            max: 100
+        number: {
+            type: Number, 
+            required: true
         },
         description: {
             type: String, 

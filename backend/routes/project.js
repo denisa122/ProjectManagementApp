@@ -8,7 +8,11 @@ const {verifyToken} = require('../middlewares/tokenVerification');
 // CRUD
 
 // Create
+// /api/projects/templates -- This won't be available to any user (it's just to create the template in the db)
+router.post('/templates', projectController.createProjectTemplate);
+
 // /api/projects/
+router.post('/', verifyToken, projectController.createProject);
 
 // Read
 // /api/projects/:teamId
@@ -22,3 +26,5 @@ const {verifyToken} = require('../middlewares/tokenVerification');
 
 // Delete
 // /api/projects/:projectId
+
+module.exports = router;

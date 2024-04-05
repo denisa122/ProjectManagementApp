@@ -7,27 +7,22 @@ let projectSchema = new Schema(
     {
         name: {
             type: String, 
-            required: true, 
             min: 2, 
             max: 100
         },
         description: {
             type: String, 
-            required: true, 
             min: 10, 
             max: 100
         },
         startDate: {
-            type: Date, 
-            required: true
+            type: Date
         },
         endDate: {
-            type: Date, 
-            required: true
+            type: Date
         },
-        status: {
+        projectStatus: {
             type: String, 
-            required: true, 
             min: 2, 
             max: 100
         },
@@ -45,6 +40,16 @@ let projectSchema = new Schema(
             type: Schema.Types.ObjectId, 
             ref: 'Sprint'
         },
+        tasks: [
+            {
+                type: Schema.Types.ObjectId, 
+                ref: 'Task'
+            }
+        ],
+        templateId: {
+            type: Schema.Types.ObjectId, 
+            ref: 'ProjectTemplate'
+        }
     });
 
     // Export model

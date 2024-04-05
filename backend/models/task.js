@@ -11,6 +11,10 @@ let taskSchema = new Schema(
             min: 2, 
             max: 100
         },
+        number: {
+            type: Number, 
+            required: true
+        },
         description: {
             type: String, 
             required: true, 
@@ -35,6 +39,11 @@ let taskSchema = new Schema(
             {
                 type: Schema.Types.ObjectId, 
                 ref: 'User'
+            }
+        ],
+        attachments: [
+            {
+                type: String
             }
         ]
     });
