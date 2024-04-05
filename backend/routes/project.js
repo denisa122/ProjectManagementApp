@@ -15,11 +15,14 @@ router.post('/templates', projectController.createProjectTemplate);
 router.post('/', verifyToken, projectController.createProject);
 
 // Read
-// /api/projects/:teamId
-
 // /api/projects/:projectId
+router.get('/:projectId', verifyToken, projectController.getProjectDetailsById);
 
-// /api/projects/:projectId/members
+// /api/projects/team/:teamId
+router.get('/team/:teamId', verifyToken, projectController.getAllProjectsForTeam);
+
+// /api/projects/users/:userId
+router.get('/users/:userId', verifyToken, projectController.getAllProjectsForUser);
 
 // Update
 // /api/projects/:projectId

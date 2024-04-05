@@ -93,15 +93,51 @@ const createProject = async (req, res) => {
 };
 
 const getAllProjectsForTeam = async (req, res) => {
+    const teamId = req.params.teamId;
 
+    try {
+        const projects = await Project.find({team: teamId});
+
+        res.send(projects);
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+};
+
+const getAllProjectsForUser = async (req, res) => {
+    const userId = req.params.userId;
+
+    try {
+        // Find teams where the user is a member or leader
+        const teams = await Team.find({$or: [{teamLeader: userId}, {members: userId}]});
+        const teamIds = teams.map(team => team._id);
+        
+        // Find projects associated with the teams
+        const projects = await Project.find({team: {$in: teamIds}});
+
+        res.send(projects);
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
 };
 
 const getProjectDetailsById = async (req, res) => {
+    const projectId = req.params.projectId;
 
-};
+    try {
+        const project = await Project.findById(projectId)
+            .populate('team', 'name teamLeader members')
+            .populate('currentSprint', 'name startDate endDate')
+            .populate('tasks', 'name description');
 
-const getTeamMembersByProjectId = async (req, res) => {
+        if (!project) {
+            return res.status(404).json({message: 'Project not found'});
+        }
 
+        res.send(project);
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
 };
 
 const updateProject = async (req, res) => {
@@ -159,8 +195,8 @@ module.exports = {
     createProjectTemplate,
     createProject,
     getAllProjectsForTeam,
+    getAllProjectsForUser,
     getProjectDetailsById,
-    getTeamMembersByProjectId,
     updateProject,
     deleteProject
 }
