@@ -27,5 +27,6 @@ router.put('/:projectId', verifyToken, projectController.updateProject);
 
 // Delete
 // /api/projects/:projectId
+router.delete('/:projectId', verifyToken, projectController.deleteProject);
 
 module.exports = router;
