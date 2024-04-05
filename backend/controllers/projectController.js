@@ -1,7 +1,10 @@
 // Dependencies
 const Project = require('../models/project');
 const ProjectTemplate = require('../models/projectTemplate');
+
 const Team = require('../models/team');
+const Task = require('../models/task');
+const Sprint = require('../models/sprint');
 
 const createProjectTemplate = async (req, res) => {
     try {
@@ -11,7 +14,7 @@ const createProjectTemplate = async (req, res) => {
             startDate,
             endDate,
             projectStatus,
-            members,
+            team,
             currentSprint,
             tasks
         } = req.body;
@@ -22,7 +25,7 @@ const createProjectTemplate = async (req, res) => {
             startDate,
             endDate,
             projectStatus,
-            members,
+            team,
             currentSprint,
             tasks
         });
@@ -42,7 +45,7 @@ const createProject = async (req, res) => {
         const startDate = req.body.startDate;
         const endDate = req.body.endDate;
         const projectStatus = req.body.projectStatus;
-        const members = req.body.members;
+        const team = req.body.team;
         const currentSprint = req.body.currentSprint;
         const tasks = req.body.tasks;
         const templateId = req.body.templateId;
@@ -61,7 +64,7 @@ const createProject = async (req, res) => {
             startDate: template.startDate,
             endDate: template.endDate,
             projectStatus: template.projectStatus,
-            members: template.members,
+            team: template.team,
             currentSprint: template.currentSprint,
             tasks: template.tasks
         });
@@ -76,7 +79,7 @@ const createProject = async (req, res) => {
             startDate,
             endDate,
             projectStatus,
-            members,
+            team,
             currentSprint,
             tasks
         });
@@ -102,7 +105,38 @@ const getTeamMembersByProjectId = async (req, res) => {
 };
 
 const updateProject = async (req, res) => {
+    const projectId = req.params.projectId;
+    const updateData = req.body;
 
+    try {
+        const project = await Project.findById(projectId);
+         if (!project) {
+            return res.status(404).json({message: 'Project not found'});
+        }
+
+        // Prevent updating templateId
+        delete updateData.templateId;
+
+        Object.assign(project, updateData);
+
+        const updatedProject = await project.save();
+        await Project.populate(updatedProject, {
+            path: 'team',
+            populate: {
+                path: 'teamLeader',
+                select: 'firstName lastName role'
+            }
+        });
+        await Project.populate(updatedProject, {
+            path: 'team.members',
+            select: 'firstName lastName'
+        });
+        await Project.populate(updatedProject, {path: 'currentSprint', select: 'name startDate endDate'});
+
+        res.send(updatedProject);
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
 };
 
 const deleteProject = async (req, res) => {

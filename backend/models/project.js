@@ -30,7 +30,7 @@ let projectSchema = new Schema(
         //     type: Schema.Types.ObjectId, 
         //     ref: 'User'
         // },  maybe i don't need this if lower i'm referencing the team that already has teamLeader
-        members: [
+        team: [
             {
                 type: Schema.Types.ObjectId, 
                 ref: 'Team'

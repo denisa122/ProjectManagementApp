@@ -35,7 +35,7 @@ const updateUser = async (req, res) => {
             const existingUser = await User.findById(userId);
     
             if(!existingUser) {
-                res.status(404).send({message: `Cannot update user with id=${userId}. User not found.`});
+                res.status(404).send({message: `Cannot update user. User not found.`});
             }
     
             // Update user fields
@@ -56,7 +56,7 @@ const updateUser = async (req, res) => {
             
             res.status(200).send({message: 'User was updated successfully.', userUpdated});
         } catch (error) {
-            res.status(500).send({message: `Cannot update user with id=${userId}.`, error: error.message});
+            res.status(500).send({message: `Cannot update user.`, error: error.message});
         }
     } else {
         res.status(403).send({message: 'You are not authorized to access this resource'});
@@ -74,12 +74,12 @@ const deleteUser = async (req, res) => {
     
             // Check if user was deleted
             if (!deletedUser) {
-                res.status(404).send({message: `Cannot delete user with id=${userId}. User not found.`});
+                res.status(404).send({message: `Cannot delete user. User not found.`});
             } else {
                 res.send({message: 'User was deleted successfully.'});
             }
         } catch (error) {
-            res.status(500).send({message: `Cannot delete user with id=${userId}.`, error: error.message});
+            res.status(500).send({message: `Cannot delete user.`, error: error.message});
         }
     } else {
         res.status(403).send({message: 'You are not authorized to access this resource'});

@@ -25,7 +25,7 @@ const projectTemplateSchema = new Schema(
             type: String,
             default: 'Not started'
         },
-        members: [
+        team: [
             {
                 type: Schema.Types.ObjectId,
                 ref: 'Team',

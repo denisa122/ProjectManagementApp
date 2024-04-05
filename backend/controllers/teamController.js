@@ -20,7 +20,7 @@ const addTeamMemberToTeam = async (req, res) => {
         const team = await Team.findById(teamId);
 
         if (!team) {
-            res.status(404).send({message: `Team with id=${teamId} not found.`});
+            res.status(404).send({message: `Team not found.`});
             return;
         }
 
@@ -64,7 +64,7 @@ const getTeamDetailsById = async (req, res) => {
         .populate('members', 'firstName lastName');
 
         if (!team) {
-            res.status(404).send({message: `Team with id=${teamId} not found.`});
+            res.status(404).send({message: `Team not found.`});
         } else {
             res.send(team);
         }
@@ -81,7 +81,7 @@ const updateTeam = async (req, res) => {
         const team = await Team.findById(teamId);
 
         if (!team) {
-            res.status(404).send({message: `Team with id=${teamId} not found.`});
+            res.status(404).send({message: `Team not found.`});
             return;
         }
 
@@ -109,11 +109,11 @@ const deleteTeam = async (req, res) => {
         const deletedTeam = await Team.findByIdAndDelete(teamId);
 
         if (!deletedTeam) {
-            res.status(404).send({message: `Team with id=${teamId} not found.`});
+            res.status(404).send({message: `Team not found.`});
             return;
         }
 
-        res.send({message: `Team with id=${teamId} was deleted successfully.`});
+        res.send({message: `Team deleted successfully.`});
     } catch (error) {
         res.status(500).send({message: error.message});
     }
@@ -127,7 +127,7 @@ const removeTeamMemberFromTeam = async (req, res) => {
         const team = await Team.findById(teamId);
 
         if (!team) {
-            res.status(404).send({message: `Team with id=${teamId} not found.`});
+            res.status(404).send({message: `Team not found.`});
             return;
         }
 

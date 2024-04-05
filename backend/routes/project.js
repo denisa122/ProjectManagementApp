@@ -23,6 +23,7 @@ router.post('/', verifyToken, projectController.createProject);
 
 // Update
 // /api/projects/:projectId
+router.put('/:projectId', verifyToken, projectController.updateProject);
 
 // Delete
 // /api/projects/:projectId
