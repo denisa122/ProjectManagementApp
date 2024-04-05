@@ -7,27 +7,31 @@ let taskSchema = new Schema(
     {
         name: {
             type: String, 
-            required: true, 
+            required: true,
+            default: 'Task',
             min: 2, 
             max: 100
         },
         number: {
             type: Number, 
-            required: true
+            required: true,
+            default: 0
         },
         description: {
             type: String, 
-            required: true, 
+            required: true,
+            default: 'Task description', 
             min: 10, 
             max: 100
         },
         startDate: {
             type: Date, 
-            required: true
+            default: null
         },
-        status: {
+        taskStatus: {
             type: String, 
             required: true, 
+            default: 'To do',
             min: 2, 
             max: 100
         },

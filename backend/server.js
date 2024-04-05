@@ -14,12 +14,14 @@ const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const teamRoutes = require('./routes/team');
 const projectRoutes = require('./routes/project');
+const taskRoutes = require('./routes/task');
 
 // CRUD
 app.use('/api/user', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/teams', teamRoutes);
 app.use('/api/projects', projectRoutes);
+app.use('/api/projects/:projectId/tasks', taskRoutes);
 
 mongoose.connection.once('open', () => console.log('Connected to MongoDB'));
 
