@@ -15,4 +15,8 @@ router.post('/logout', async (req, res) => {
 
 });
 
+// Get login status
+// /api/user/login-status
+router.get('/login-status', authController.getLoginStatus);
+
 module.exports = router;

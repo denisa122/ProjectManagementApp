@@ -2,6 +2,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 const app = express();
 
@@ -40,6 +41,14 @@ mongoose.connect
 
     }
 ).catch(error => console.log("Error connecting to MongoDB: ", error));
+
+// Serve static files from the "frontend_temporary" folder
+app.use(express.static(path.join(__dirname, "../frontend_temporary")));
+
+// Set index.html as the default page (temporary)
+app.get("/", (request, response) => {
+    response.sendFile(path.join(__dirname, "../frontend_temporary/index.html"));
+})
 
 // Export app as a module
 module.exports = app;

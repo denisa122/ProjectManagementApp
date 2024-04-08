@@ -18,6 +18,10 @@ router.post('/', verifyToken, projectController.createProject);
 // /api/projects/:projectId
 router.get('/:projectId', verifyToken, projectController.getProjectDetailsById);
 
+// /api/projects/ -- For the DE assignment (remove after)
+router.get('/', projectController.getAllProjects);
+
+
 // /api/projects/team/:teamId
 router.get('/team/:teamId', verifyToken, projectController.getAllProjectsForTeam);
 

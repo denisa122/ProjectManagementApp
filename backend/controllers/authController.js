@@ -45,7 +45,7 @@ const register = async (req, res) => {
     } catch (error) {
         res.status(400).json({error});
     }
-} 
+}; 
 
 const login = async (req, res) => {
     // Validate user login credentials
@@ -87,9 +87,23 @@ const login = async (req, res) => {
         error: null, 
         data: {token}
     });
-}
+};
+
+const getLoginStatus = async (req, res) => {
+    try {
+        const token = req.header('auth-token');
+        if (token) {
+            res.json({isLoggedIn: true});
+        } else {
+            res.json({isLoggedIn: false});
+        }
+    } catch (error) {
+        res.status(500).json({error});
+    }
+};
 
 module.exports = {
     register, 
-    login
+    login,
+    getLoginStatus
 };
