@@ -23,7 +23,7 @@ describe('Register & login tests', () => {
                 .post('/api/user/register')
                 .send(user)
                 .end((err, res) => {
-                    res.should.have.status(200);
+                    expect(res.status).to.be.equal(200);
                     registeredUser = user;
                     done();
                 })
@@ -38,10 +38,66 @@ describe('Register & login tests', () => {
             password: registeredUser.password
         })
         .end((err, res) => {
-            res.should.have.status(200);
+            expect(res.status).to.be.equal(200);
             res.body.should.have.property('data');
             res.body.data.should.have.property('token');
             done();
         })
-        });  
+    });
+    
+    it ('should not register an invalid user', (done) => {
+        let user = {
+            firstName: 'Paul',
+            lastName: 'Smith',
+            email: 'paulsmith@test.com',
+            password: '123'
+        }
+        
+        chai.request(server)
+            .post('/api/user/register')
+            .send(user)
+            .end((err, res) => {
+                expect(res.status).to.be.equal(400);
+
+                expect(res.body).to.be.a('object');
+                expect(res.body.error).to.be.equal('\"password\" length must be at least 8 characters long');
+                done();
+            });
+    });
+
+    it ('should not register a user with an existing email', (done) => {
+        let user = {
+            firstName: 'Jens',
+            lastName: 'Jensen',
+            email: 'paulsmith@email.com',
+            password: 'password'
+        }
+
+        chai.request(server)
+            .post('/api/user/register')
+            .send(user)
+            .end((err, res) => {
+                expect(res.status).to.be.equal(400);
+
+                expect(res.body).to.be.a('object');
+                expect(res.body.error).to.be.equal('Email is already taken');
+                done();
+            });
+    });
+
+    it ('should not log in an invalid user', (done) => {
+        chai.request(server)
+            .post('/api/user/login')
+            .send({
+                email: 'email@test.com',
+                password: 'password'
+            })
+            .end((err, res) => {
+                expect(res.status).to.be.equal(400);
+
+                expect(res.body).to.be.a('object');
+                expect(res.body.error).to.be.equal('Incorrect email or password');
+                done();
+            });
+    });
 });
