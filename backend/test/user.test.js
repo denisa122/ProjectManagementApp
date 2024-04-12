@@ -100,4 +100,48 @@ describe('Register & login tests', () => {
                 done();
             });
     });
+
+    // DELETE User
+    it ('should delete the registered user', (done) => {
+        let userId; 
+
+        // Register the user
+        let userToDelete = {
+            firstName: 'Paul',
+            lastName: 'Paulsen',
+            email: 'paulpaulsen@email.com',
+            password: 'password'
+        }
+
+        chai.request(server)
+            .post('/api/user/register')
+            .send(userToDelete)
+            .end((err, res) => {
+                expect(res.status).to.be.equal(200);
+                
+                userId = res.body.data._id;
+
+                // Login the user
+                chai.request(server)
+                    .post('/api/user/login')
+                    .send({
+                        email: 'paulpaulsen@email.com',
+                        password: 'password'
+                    })
+                    .end((err, res) => {
+                        expect(res.status).to.be.equal(200);
+                        expect(res.body.error).to.be.equal(null);
+
+                        let token = res.body.data.token;
+
+                        chai.request(server)
+                            .delete('/api/user/' + userId)
+                            .set({'auth-token': token})
+                            .end((err, res) => {
+                                expect(res.status).to.be.equal(200);
+                                done();
+                            });
+                    });
+            });
+    });
 });

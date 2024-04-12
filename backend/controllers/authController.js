@@ -41,7 +41,7 @@ const register = async (req, res) => {
         const savedUser = await userObject.save();
 
         // There was no error and we return the user's ID
-        res.json({error: null, data: savedUser._id});
+        res.json({error: null, data: savedUser});
     } catch (error) {
         res.status(400).json({error});
     }
