@@ -7,6 +7,7 @@ const path = require('path');
 const app = express();
 
 require('dotenv-flow').config();
+require('dotenv').config({ path: '.env.development' });
 
 app.use(bodyParser.json());
 
@@ -46,6 +47,8 @@ mongoose.connect
 
     }
 ).catch(error => console.log("Error connecting to MongoDB: ", error));
+
+console.log("dbhost", process.env.DBHOST);
 
 // Serve static files from the "frontend_temporary" folder
 app.use(express.static(path.join(__dirname, "../frontend_temporary")));
