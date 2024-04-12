@@ -1,3 +1,5 @@
+const User = require('../models/user');
+
 const chai = require('chai')
 const expect = chai.expect;
 const should = chai.should();
@@ -8,7 +10,8 @@ const server = require('../server');
 chai.use(chaiHttp);
 
 describe('User tests', () => {
-    // Maybe I don't need this
+    let registeredUser;
+
     it ('should verify that we have 0 users in the DB initially', (done) => {
         chai.request(server)
             .get('/api/users/')
@@ -20,11 +23,11 @@ describe('User tests', () => {
             })
     });
 
-    it ('should POST (register) a valid user', (done) => {
+    it ('should register a valid user', (done) => {
         let user = {
             firstName: 'John',
             lastName: 'Doe',
-            email: 'test@test.com',
+            email: 'johndoe@email.com',
             password: 'password'
         }
         
@@ -33,11 +36,26 @@ describe('User tests', () => {
             .send(user)
             .end((err, res) => {
                 res.should.have.status(200);
+                registeredUser = user;
                 done();
             })
     });
 
-    // Maybe I don't need this
+    it ('should log in the registered user', (done) => {
+    chai.request(server)
+        .post('/api/user/login')
+        .send({
+            email: registeredUser.email,
+            password: registeredUser.password
+        })
+        .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.have.property('data');
+            res.body.data.should.have.property('token');
+            done();
+        })
+    });
+
     it ('should verify that we have 1 user in the DB', (done) => {
         chai.request(server)
             .get('/api/users/')
