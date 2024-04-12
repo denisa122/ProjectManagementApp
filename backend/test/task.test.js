@@ -10,7 +10,9 @@
 // chai.use(chaiHttp);
 
 // describe ('Task tests', () => {
-//     describe ('Create task workflow test', () => {
+//     
+//   // POST Create task
+//  describe ('Create task workflow test', () => {
 //         it ('should register + login user, and then create a new task', (done) => {
 //             // Register the user
 //             let user = {

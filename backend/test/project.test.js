@@ -9,6 +9,8 @@ const project = require('../models/project');
 chai.use(chaiHttp);
 
 describe ('Project tests', () => {
+    
+    // POST Create project
     describe ('Create project workflow test', () => {
         it ('should register + login user, and then create a new project', (done) => {
             // Register the user

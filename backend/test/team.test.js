@@ -8,6 +8,8 @@ const server = require('../server');
 chai.use(chaiHttp);
 
 describe ('Team tests', () => {
+    
+    // POST Create team
     describe ('Create team workflow test', () => {
         it ('should register + login a user, and then create a new team', (done) => {
         

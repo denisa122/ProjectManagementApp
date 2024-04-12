@@ -10,7 +10,8 @@ chai.use(chaiHttp);
 describe('Register & login tests', () => {
     let registeredUser;
     
-        it ('should register a valid user', (done) => {
+    // POST Register user    
+    it ('should register a valid user', (done) => {
             let user = {
                 firstName: 'Paul',
                 lastName: 'Smith',
@@ -28,18 +29,19 @@ describe('Register & login tests', () => {
                 })
         });
 
-        it ('should log in the registered user', (done) => {
-        chai.request(server)
-            .post('/api/user/login')
-            .send({
-                email: registeredUser.email,
-                password: registeredUser.password
-            })
-            .end((err, res) => {
-                res.should.have.status(200);
-                res.body.should.have.property('data');
-                res.body.data.should.have.property('token');
-                done();
-            })
+    // POST Login user
+    it ('should log in the registered user', (done) => {
+    chai.request(server)
+        .post('/api/user/login')
+        .send({
+            email: registeredUser.email,
+            password: registeredUser.password
+        })
+        .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.have.property('data');
+            res.body.data.should.have.property('token');
+            done();
+        })
         });  
 });
