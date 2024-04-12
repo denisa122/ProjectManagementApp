@@ -24,6 +24,11 @@ app.use('/api/teams', teamRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/projects/:projectId/tasks', taskRoutes);
 
+// For Render (health check path)
+app.get('/api/welcome', (req, res) => {
+    res.status(200).send('Welcome to the Project Management API');
+});
+
 mongoose.connection.once('open', () => console.log('Connected to MongoDB'));
 
 const PORT = process.env.PORT || 5000;
