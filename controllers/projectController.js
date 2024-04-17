@@ -194,7 +194,14 @@ const deleteProject = async (req, res) => {
 // For the DE assignment (remove after)
 const getAllProjects = async (req, res) => {
     try {
-        const projects = await Project.find();
+        const projects = await Project.find()
+        .populate({
+            path: 'team',
+            populate: [
+                {path: 'teamLeader', select: 'firstName lastName role'},
+                {path: 'members', select: 'firstName lastName'}
+            ]
+        });
         res.send(projects);
     } catch (error) {
         res.status(500).json({message: error.message});

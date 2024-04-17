@@ -24,6 +24,15 @@ const renderProjects = projects => {
             <p><strong>Start Date:</strong> ${project.startDate ? new Date(project.startDate).toLocaleDateString() : 'N/A'}</p>
             <p><strong>End Date:</strong> ${project.endDate ? new Date(project.endDate).toLocaleDateString() : 'N/A'}</p>
             <p><strong>Project Status:</strong> ${project.projectStatus}</p>
+            <h3>Team:</h3>
+            <ul>
+            <li><strong>Team Leader:</strong> ${project.team.teamLeader.firstName} ${project.team.teamLeader.lastName}</li>
+            <li><strong>Members:</strong>
+                <ul>
+                    ${project.team.members.map(member => `<li>${member.firstName} ${member.lastName}</li>`).join('')}
+                </ul>
+            </li>
+        </ul>
         `;
         projectsContainer.appendChild(projectElement);
     });
