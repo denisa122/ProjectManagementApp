@@ -5,8 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start-dev": "cross-env NODE_ENV=development nodemon server.js",
-    "test": "cross-env NODE_ENV=test mocha --exit",
-    "start": "cross-env NODE_ENV=development server.js"
+    "test": "cross-env NODE_ENV=test mocha --exit"
   },
   "keywords": [],
   "author": "Denisa-Gabriela Neagu",
