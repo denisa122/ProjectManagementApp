@@ -3,8 +3,8 @@ const expect = chai.expect;
 const should = chai.should();
 
 const chaiHttp = require('chai-http');
-const server = require('../backend/server');
-const project = require('../backend/models/project');
+const server = require('../server');
+const project = require('../models/project');
 
 chai.use(chaiHttp);
 
@@ -12,7 +12,6 @@ describe ('Project tests', () => {
     
     // POST Create project
     describe ('Create project workflow test', () => {
-        this.timeout(15000);
         it ('should register + login user, and then create a new project', (done) => {          
             // Register the user
             let user = {
