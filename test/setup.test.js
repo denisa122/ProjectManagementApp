@@ -7,17 +7,21 @@ const Sprint = require('../backend/models/sprint');
 const Project = require('../backend/models/project');
 
 before(async () => {
-        await User.deleteMany({});
-        await Team.deleteMany({});
-        await Task.deleteMany({});
-        await Sprint.deleteMany({});
-        await Project.deleteMany({});
+        await Promise.all([
+                User.deleteMany({}),
+                Team.deleteMany({}),
+                Task.deleteMany({}),
+                Sprint.deleteMany({}),
+                Project.deleteMany({})
+        ]);
 });
 
 after(async () => {
-        await User.deleteMany({});
-        await Team.deleteMany({});
-        await Task.deleteMany({});
-        await Sprint.deleteMany({});
-        await Project.deleteMany({});
+        await Promise.all([
+                User.deleteMany({}),
+                Team.deleteMany({}),
+                Task.deleteMany({}),
+                Sprint.deleteMany({}),
+                Project.deleteMany({})
+        ]);
 });
