@@ -54,7 +54,7 @@ app.use(express.static(path.join(__dirname, "../frontend_temporary")));
 
 // Set index.html as the default page (temporary)
 app.get("/", (request, response) => {
-    response.sendFile(path.join(__dirname, "../frontend_temporary/index.html"));
+    response.sendFile(path.join(__dirname, "./frontend_temporary/index.html"));
 })
 
 // Export app as a module
