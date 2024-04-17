@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start-dev": "cross-env NODE_ENV=development nodemon server.js",
-    "test": "cross-env NODE_ENV=test mocha --require dotenv-flow/config",
+    "test": "cross-env NODE_ENV=test mocha --exit",
     "start": "node backend/server.js NODE_ENV=development"
   },
   "keywords": [],
