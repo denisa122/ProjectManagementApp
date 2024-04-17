@@ -33,7 +33,7 @@ jobs:
         working-directory: ./backend
       
       - name: Run tests
-        run: npm test
+        run: npm run test
         env:
           DBHOST: ${{ secrets.DBHOST }}
           TOKEN_SECRET: ${{ secrets.TOKEN_SECRET }}
