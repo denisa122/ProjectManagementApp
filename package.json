@@ -6,7 +6,7 @@
   "scripts": {
     "start-dev": "cross-env NODE_ENV=development nodemon server.js",
     "test": "cross-env NODE_ENV=test mocha --exit",
-    "start": "node backend/server.js NODE_ENV=development"
+    "start": "cross-env NODE_ENV=development server.js"
   },
   "keywords": [],
   "author": "Denisa-Gabriela Neagu",
@@ -16,6 +16,7 @@
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "bootstrap-vue": "^2.23.1",
+    "cross-env": "7.0.3",
     "dotenv-flow": "^4.1.0",
     "express": "^4.19.2",
     "joi": "^17.12.3",
