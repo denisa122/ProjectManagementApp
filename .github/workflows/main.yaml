@@ -30,6 +30,7 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: ./backend
       
       - name: Run tests
         run: npm test
@@ -37,3 +38,4 @@ jobs:
           DBHOST: ${{ secrets.DBHOST }}
           TOKEN_SECRET: ${{ secrets.TOKEN_SECRET }}
           JWT_EXPIRES_IN: ${{ secrets.JWT_EXPIRES_IN }}
+        working-directory: ./backend
