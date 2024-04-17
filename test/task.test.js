@@ -4,7 +4,7 @@
 
 // const chaiHttp = require('chai-http');
 // const server = require('../server');
-// const project = require('../models/project');
+// const project = require('../backend/models/project');
 // const { number } = require('joi');
 
 // chai.use(chaiHttp);
