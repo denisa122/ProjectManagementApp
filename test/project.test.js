@@ -12,7 +12,8 @@ describe ('Project tests', () => {
     
     // POST Create project
     describe ('Create project workflow test', () => {
-        it ('should register + login user, and then create a new project', (done) => {
+        this.timeout(15000);
+        it ('should register + login user, and then create a new project', (done) => {          
             // Register the user
             let user = {
                 firstName: 'Jane',

@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start-dev": "cross-env NODE_ENV=development nodemon server.js",
-    "test": "cross-env NODE_ENV=test mocha --exit",
+    "test": "cross-env NODE_ENV=test mocha",
     "start": "node backend/server.js NODE_ENV=development"
   },
   "keywords": [],
