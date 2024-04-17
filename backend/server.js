@@ -6,7 +6,6 @@ const path = require('path');
 
 const app = express();
 
-require('dotenv-flow').config();
 require('dotenv').config({ path: '.env.development' });
 
 app.use(bodyParser.json());
