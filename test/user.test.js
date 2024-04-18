@@ -87,7 +87,7 @@ describe('Register & login tests', () => {
 
     it ('should not log in an invalid user', (done) => {
         chai.request(server)
-            .post('/api/login')
+            .post('/api/user/login')
             .send({
                 email: 'email@test.com',
                 password: 'password'
