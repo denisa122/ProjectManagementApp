@@ -4,7 +4,16 @@
 
 .dashboardContainerLeader {
     margin: 80px;
+}
 
+.dashboardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dashboardLogo {
+    width: 200px;
 }
 
 .projectsContainer {
@@ -68,8 +77,7 @@
     border-radius: 5px;
     transition: background-color 0.3s;
     background-color: #9f98f0;
-    margin-left: 10px;
-    margin-bottom: 40px;
+    margin: -20px 0 40px 10px;
 }
 
 .newProjectButton:hover {

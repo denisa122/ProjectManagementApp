@@ -2,15 +2,22 @@ import React from "react";
 
 import "./Dashboard.css"
 
+import Navigation from "../Navigation/Navigation";
 import Footer from "../Footer/Footer";
 
+import Logo from "../../assets/logo.png";
 import Clock from "../../assets/clock.svg";
 import Project from "../../assets/project.png";
 
 const Dashboard = () => {
     return (
-        <div className="dashboardContainer">
-            <h1>Team Projects</h1>
+        <div>
+            <Navigation />
+            <div className="dashboardContainer">
+            <div className="dashboardHeader">
+                <h1>Team Projects</h1>
+                <img src={Logo} alt="logo" className="dashboardLogo"></img>
+            </div>
             <div className="projectsContainer">
                 <div className="projectCard">
                     <img src={Project} alt="project-thumbnail" className="projectImg"></img>
@@ -65,6 +72,8 @@ const Dashboard = () => {
 
             <Footer />
         </div>
+        </div>
+        
     );
 }
 

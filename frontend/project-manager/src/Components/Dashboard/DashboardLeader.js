@@ -2,16 +2,23 @@ import React from "react";
 
 import "./Dashboard.css"
 
+import NavigationLeader from "../Navigation/NavigationLeader";
 import Footer from "../Footer/Footer";
 
+import Logo from "../../assets/logo.png";
 import Plus from "../../assets/plus.svg";
 import Clock from "../../assets/clock.svg";
 import Project from "../../assets/project.png";
 
 const Dashboard = () => {
     return (
-        <div className="dashboardContainerLeader">
-            <h1>Your Team's Projects</h1>
+        <div>
+            <NavigationLeader />
+            <div className="dashboardContainerLeader">
+            <div className="dashboardHeader">
+                <h1>Your Team's Projects</h1>
+                <img src={Logo} alt="logo" className="dashboardLogo"></img>
+            </div>
             <a href="" className="newProjectButton">
                 <img src={Plus} alt='plus icon' style={{marginRight: "2px"}}></img>
                 <button style={{border: "none", background: "none"}}>New project</button>  
@@ -81,6 +88,7 @@ const Dashboard = () => {
             <button className="loadButton">Load more</button>
 
             <Footer />
+        </div>
         </div>
     );
 }
