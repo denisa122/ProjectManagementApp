@@ -1,0 +1,55 @@
+.homepageContainer {
+    display: flex;
+    margin: 180px;
+}
+
+.heroImgContainer {
+    flex: 1;
+    margin-top: -60px;
+}
+
+.homepageLogo {
+    object-fit: cover;
+    width: 250px;
+    margin-left: 20px;
+}
+
+.homepageTitle {
+    margin-top: 0px;
+}
+
+.homepageLoginFormContainer {
+    border: 1px solid black;
+    flex: 1;
+    text-align: center;
+    height: 350px;
+}
+
+#homepageLoginForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.signupSection {
+    margin-top: 20px;
+
+}
+
+label {
+    text-align: left !important;
+    margin-bottom: 8px;
+}
+
+input {
+    margin-bottom: 12px;
+}
+
+button {
+    margin-top: 4px;
+}
+
+h2 {
+    margin-top: 30px;
+}
