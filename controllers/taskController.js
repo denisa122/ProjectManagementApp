@@ -69,11 +69,6 @@ const getAllTasksForProject = async (req, res) => {
     }
 };
 
-// Implement after I implement sprint
-const getAllTasksForSprint = async (req, res) => {
-
-};
-
 const getTaskDetailsById = async (req, res) => {
     const taskId = req.params.taskId;
     const projectId = req.query.projectId;
@@ -189,7 +184,6 @@ const unassignTask = async (req, res) => {
 module.exports = {
     createTask,
     getAllTasksForProject,
-    getAllTasksForSprint,
     getTaskDetailsById,
     updateTask,
     deleteTask,

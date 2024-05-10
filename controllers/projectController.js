@@ -4,7 +4,6 @@ const ProjectTemplate = require('../models/projectTemplate');
 
 const Team = require('../models/team');
 const Task = require('../models/task');
-const Sprint = require('../models/sprint');
 
 const createProjectTemplate = async (req, res) => {
     try {
@@ -15,7 +14,6 @@ const createProjectTemplate = async (req, res) => {
             endDate,
             projectStatus,
             team,
-            currentSprint,
             tasks
         } = req.body;
 
@@ -26,7 +24,6 @@ const createProjectTemplate = async (req, res) => {
             endDate,
             projectStatus,
             team,
-            currentSprint,
             tasks
         });
 
@@ -46,7 +43,6 @@ const createProject = async (req, res) => {
         const endDate = req.body.endDate;
         const projectStatus = req.body.projectStatus;
         const team = req.body.team;
-        const currentSprint = req.body.currentSprint;
         const tasks = req.body.tasks;
         const templateId = req.body.templateId;
 
@@ -65,7 +61,6 @@ const createProject = async (req, res) => {
             endDate: template.endDate,
             projectStatus: template.projectStatus,
             team: template.team,
-            currentSprint: template.currentSprint,
             tasks: template.tasks
         });
 
@@ -80,7 +75,6 @@ const createProject = async (req, res) => {
             endDate,
             projectStatus,
             team,
-            currentSprint,
             tasks
         });
 
@@ -127,7 +121,6 @@ const getProjectDetailsById = async (req, res) => {
     try {
         const project = await Project.findById(projectId)
             .populate('team', 'name teamLeader members')
-            .populate('currentSprint', 'name startDate endDate')
             .populate('tasks', 'name description');
 
         if (!project) {
@@ -167,7 +160,6 @@ const updateProject = async (req, res) => {
             path: 'team.members',
             select: 'firstName lastName'
         });
-        await Project.populate(updatedProject, {path: 'currentSprint', select: 'name startDate endDate'});
 
         res.send(updatedProject);
     } catch (error) {

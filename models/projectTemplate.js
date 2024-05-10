@@ -32,11 +32,6 @@ const projectTemplateSchema = new Schema(
                 default: null
             }
         ],
-        currentSprint: {
-            type: Schema.Types.ObjectId,
-            ref: 'Sprint',
-            default: null
-        },
         tasks: [
             {
                 type: Schema.Types.ObjectId,

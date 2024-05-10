@@ -32,10 +32,6 @@ let projectSchema = new Schema(
                 ref: 'Team'
             }
         ],
-        currentSprint: {
-            type: Schema.Types.ObjectId, 
-            ref: 'Sprint'
-        },
         tasks: [
             {
                 type: Schema.Types.ObjectId, 
