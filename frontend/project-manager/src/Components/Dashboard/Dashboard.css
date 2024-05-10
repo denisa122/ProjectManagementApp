@@ -1,0 +1,77 @@
+.dashboardContainer {
+    margin: 80px;
+}
+
+.dashboardContainerLeader {
+    margin: 80px;
+
+}
+
+.projectsContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.projectCard {
+    background-color: #dad8fc;
+    box-shadow: 0 3px 10px rgba(176, 38, 128, 0.152);
+    padding: 20px;
+    margin: 10px;
+}
+
+.projectImg {
+    object-fit: cover;
+    height: 150px;
+    margin-left: 20px;
+}
+
+.projectDetailsRow {
+    display: flex;
+    justify-content: space-between;
+}
+
+.timeLeft {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+    color: red;
+}
+
+.clockImg {
+    margin-right: 2px;
+}
+
+.loadButton{
+    display: flex;
+    margin: auto;
+    margin-top: 80px;
+    width: 200px;
+    justify-content: center;
+}
+
+.editButtonWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.newProjectButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    background-color: #9f98f0;
+    margin-left: 10px;
+    margin-bottom: 40px;
+}
+
+.newProjectButton:hover {
+    background-color: #6f64e5;
+}
