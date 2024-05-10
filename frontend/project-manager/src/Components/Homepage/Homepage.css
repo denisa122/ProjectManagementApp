@@ -32,24 +32,23 @@
     align-items: center;
 }
 
-.signupSection {
+.homepageSignupSection{
     margin-top: 20px;
 
 }
 
-label {
+.homepageLoginFormContainer label {
     text-align: left !important;
     margin-bottom: 8px;
 }
 
-input {
+.homepageLoginFormContainer input {
     margin-bottom: 12px;
 }
-
-button {
+.homepageLoginFormContainer button {
     margin-top: 4px;
 }
 
-h2 {
+.homepageLoginFormContainer h2 {
     margin-top: 30px;
 }

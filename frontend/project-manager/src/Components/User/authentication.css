@@ -1,0 +1,73 @@
+.authLogo {
+    object-fit: cover;
+    width: 250px;
+    margin-top: 40px;
+}
+
+.registerPageContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto 0;
+}
+
+.registerFormContainer {
+    border: 1px solid black;
+    text-align: center;
+    height: 580px;
+    width: 500px;
+    margin-top: 60px;
+}
+
+#registerForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.registerFormContainer h2 {
+    margin-top: 0;
+}
+
+.registerFormContainer input {
+    margin-bottom: 12px;
+}
+
+.registerFormContainer button {
+    margin-top: 8px;
+}
+
+.loginPageContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto 0;
+}
+
+.loginFormContainer {
+    border: 1px solid black;
+    text-align: center;
+    height: 520px;
+    width: 500px;
+    margin-top: 90px;
+}
+
+#loginForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginFormContainer h2 {
+    margin-top: 0;
+}
+
+.loginFormContainer input {
+    margin-bottom: 12px;
+}
+
+.loginFormContainer button {
+    margin-top: 8px;
+}

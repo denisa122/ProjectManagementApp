@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 import "./Homepage.css";
 
 import Logo from "../../assets/logo.png";
@@ -23,18 +25,18 @@ const Homepage = () => {
                     Your teammates need you. <br></br> Log in to get started.
                 </p>
                 <form id="homepageLoginForm">
-                    <label for="email">Work email</label>
-                    <input type="email" name="email"></input>
+                    <label htmlFor="email">Work email</label>
+                    <input type="email" id="email" name="email"></input>
 
-                    <label for="password">Password</label>
-                    <input type="password" name="password"></input>
+                    <label htmlFor="password">Password</label>
+                    <input type="password" id="password" name="password"></input>
 
                     <button type="submit">Log in</button>
                 </form>
 
                 <div>
-                    <p className="signupSection">
-                    Don't have an account? <a href="/signup">Sign up</a>
+                    <p className="homepageSignupSection">
+                    Don't have an account? <Link to="/register">Sign up</Link>
                     </p>
                 </div>
             </div>
