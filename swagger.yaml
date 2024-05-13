@@ -1,0 +1,982 @@
+openapi: 3.0.0
+info:
+  title: Swagger CollabHub (Project Management Application)
+  version: 1.0.0
+servers:
+  - url: https://localhost:5000/api/
+tags:
+  - name: "User"
+    description: "Operations related to users"
+  - name: "Team"
+    description: "Operations related to teams"
+  - name: "Task"
+    description: "Operations related to tasks"
+  - name: "Project"
+    description: "Operations related to projects"
+paths:
+  /user/register:
+    post:
+      tags:
+        - "User"
+      summary: "Register a new user"
+      description: "Register a new user with the provided details"
+      requestBody:
+       required: true
+       content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        201:
+          description: "User registered successfully"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  error:
+                    type: null
+                  data:
+                    $ref: "#/components/schemas/User"
+        400:
+          description: "Invalid request or email already taken"
+  /user/login:
+    post:
+      tags:
+        - "User"
+      summary: "Login a user"
+      description: "Login a user with the provided email and password"
+      requestBody:
+       required: true
+       content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        200:
+          description: "User logged in successfully"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  error:
+                    type: null
+                  data:
+                    type: "object"
+                    properties:
+                      token:
+                        type: "string"
+        400:
+          description: "Invalid request or invalid login credentials"
+  /users/:
+    get:
+      tags:
+        - "User"
+      summary: "Get all users"
+      description: "Get all users in the system"
+      responses:
+        200:
+          description: "Users retrieved successfully"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/User"
+        500:
+          description: "Internal server error"
+  /users/{userId}:
+    get:
+      tags:
+        - "User"
+      summary: "Get a user by ID"
+      description: "Get a user by ID"
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: userId
+          description: "MongoDB ID"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "User retrieved successfully"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        403:
+          description: "Access denied"
+        500: 
+          description: "Internal server error"
+    put:
+      tags:
+        - "User"
+      summary: "Update a user by ID"
+      description: "Update a user by ID"
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: userId
+          description: "MongoDB ID"
+          required: true
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        200:
+          description: "User updated successfully"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+                  userUpdated:
+                    $ref: "#/components/schemas/User"
+        403:
+          description: "Access denied"
+        404:
+          description: "User not found"
+        500: 
+          description: "Internal server error"
+    delete:
+      tags:
+        - "User"
+      summary: "Delete a user by ID"
+      description: "Delete a user by ID"
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: userId
+          description: "MongoDB ID"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "User deleted successfully"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+        403:
+          description: "Access denied"
+        404:
+          description: "User not found"
+        500: 
+          description: "Internal server error"
+  /teams/:
+    post:
+      tags:
+        - "Team"
+      summary: "Create a new team"
+      description: "Create a new team with the provided details"
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Team"
+      responses:
+        201:
+          description: "Team created successfully"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  error:
+                    type: null
+                  data:
+                    $ref: "#/components/schemas/Team"
+        400:
+          description: "Invalid request or team name already taken"
+    get:
+      tags:
+        - "Team"
+      summary: "Get all teams"
+      description: "Get all teams in the system"
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          description: "Teams retrieved successfully"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Team"
+        500:
+          description: "Internal server error"
+    put:
+      tags:
+        - "Team"
+      summary: "Update a team by ID"
+      description: "Update a team by ID"
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: teamId
+          description: "MongoDB ID"
+          required: true
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TeamRequest"
+      responses:
+        200:
+          description: "Team updated successfully"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  updatedTeam:
+                    $ref: "#/components/schemas/Team"
+        404:
+          description: "Team not found"
+        500: 
+          description: "Internal server error"
+    delete:
+      tags:
+        - "Team"
+      summary: "Delete a team by ID"
+      description: "Delete a team by ID"
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: teamId
+          description: "MongoDB ID"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Team deleted successfully"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+        404:
+          description: "Team not found"
+        500: 
+          description: "Internal server error"
+  /teams/{teamId}:
+    get:
+      tags:
+        - "Team"
+      summary: "Get a team by ID"
+      description: "Get a team by ID"
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: teamId
+          description: "MongoDB ID"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Team retrieved successfully"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Team"
+        404:
+          description: "Team not found"
+        500: 
+          description: "Internal server error"
+  /teams/{teamId}/members/{userId}:
+    post:
+      tags:
+        - "Team"
+      summary: "Add a member to a team"
+      description: "Add a member to a team by team ID and user ID"
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: teamId
+          description: "MongoDB ID"
+          required: true
+          schema:
+            type: "string"
+        - in: path
+          name: userId
+          description: "MongoDB ID"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Member added to team successfully"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Team"
+        400:
+          description: "Invalid request or user already in team"
+        404:
+          description: "Team or user not found"
+        500:
+          description: "Internal server error"
+    delete:
+      tags:
+        - "Team"
+      summary: "Remove a member from a team"
+      description: "Remove a member from a team by team ID and user ID"
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: teamId
+          description: "MongoDB ID"
+          required: true
+          schema:
+            type: "string"
+        - in: path
+          name: userId
+          description: "MongoDB ID"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Member removed from team successfully"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+        400:
+          description: "Invalid request or user not in team"
+        404:
+          description: "Team or user not found"
+        500:
+          description: "Internal server error"
+  /projects/{projectId}/tasks:
+    get:
+      tags:
+        - "Task"
+      summary: "Get all tasks in a project"
+      description: "Get all tasks in a project by project ID"
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: projectId
+          description: "MongoDB ID"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Tasks retrieved successfully"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Task"
+        500:
+          description: "Internal server error"
+    post:
+      tags:
+        - "Task"
+      summary: "Create a new task in a project"
+      description: "Create a new task in a project"
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: projectId
+          description: "MongoDB ID"
+          required: true
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Task"
+      responses:
+        201:
+          description: "Task created successfully"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"           
+        400:
+          description: "Invalid request"
+        500:
+          description: "Internal server error"
+  /projects/{projectId}/tasks/{taskId}:
+    get:
+      tags:
+        - "Task"
+      summary: "Get a task by ID"
+      description: "Get a task by ID"
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: projectId
+          description: "MongoDB ID"
+          required: true
+          schema:
+            type: "string"
+        - in: path
+          name: taskId
+          description: "MongoDB ID"
+          required: true
+          schema:
+            type: "string"
+        - in: query
+          name: projectId
+          description: "MongoDB ID"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Task retrieved successfully"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+        404:
+          description: "Task or project not found"
+        500:
+          description: "Internal server error"
+    delete:
+      tags:
+        - "Task"
+      summary: "Delete a task by ID"
+      description: "Delete a task by ID"
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: projectId
+          description: "MongoDB ID"
+          required: true
+          schema:
+            type: "string"
+        - in: path
+          name: taskId
+          description: "MongoDB ID"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Task deleted successfully"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+        404:
+          description: "Task or project not found"
+        500:
+          description: "Internal server error"
+  /projects/{projectId}/tasks/{taskId}/assign:
+    put:
+      tags:
+        - "Task"
+      summary: "Assign a team member to a task"
+      description: "Assign a team member to a task"
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: projectId
+          description: "MongoDB ID"
+          required: true
+          schema:
+            type: "string"
+        - in: path
+          name: taskId
+          description: "MongoDB ID"
+          required: true
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                teamMemberId:
+                  type: "string"
+      responses:
+        200:
+          description: "Team member assigned to task successfully"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+        400:
+          description: "Invalid request or team member already assigned to task"
+        404:
+          description: "Task not found"
+        500:
+          description: "Internal server error"
+  /projects/{projectId}/tasks/{taskId}/unassign:
+    put:
+      tags:
+        - "Task"
+      summary: "Unassign a team member from a task"
+      description: "Unassign a team member from a task"
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: projectId
+          description: "MongoDB ID"
+          required: true
+          schema:
+            type: "string"
+        - in: path
+          name: taskId
+          description: "MongoDB ID"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Team member unassigned from task successfully"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+        404:
+          description: "Task not found"
+        500:
+          description: "Internal server error"
+  /projects/:
+    post:
+      tags:
+        - "Project"
+      summary: "Create a new project"
+      description: "Create a new project with the provided details"
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Project"
+      responses:
+        201:
+          description: "Project created successfully"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  savedProject:
+                    $ref: "#/components/schemas/Project"
+        400:
+          description: "Invalid request"
+        500:
+          description: "Internal server error"
+    get:
+      tags:
+        - "Project"
+      summary: "Get all projects"
+      description: "Get all projects in the system"
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          description: "Projects retrieved successfully"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Project"
+        500:
+          description: "Internal server error"
+  /projects/{projectId}:
+    get:  
+      tags:
+        - "Project"
+      summary: "Get a project by ID"
+      description: "Get a project by ID"
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: projectId
+          description: "MongoDB ID"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Project retrieved successfully"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+        404:
+          description: "Project not found"
+        500:
+          description: "Internal server error"
+    put:
+      tags:
+        - "Project"
+      summary: "Update a project by ID"
+      description: "Update a project by ID"
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: projectId
+          description: "MongoDB ID"
+          required: true
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProjectRequest"
+      responses:
+        200:
+          description: "Project updated successfully"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  updatedProject:
+                    $ref: "#/components/schemas/Project"
+        404:
+          description: "Project not found"
+        500:
+          description: "Internal server error"
+    delete:
+      tags:
+        - "Project"
+      summary: "Delete a project by ID"
+      description: "Delete a project by ID"
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: projectId
+          description: "MongoDB ID"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Project deleted successfully"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+        404:
+          description: "Project not found"
+        500:
+          description: "Internal server error"
+  /projects/team/{teamId}:
+    get:
+      tags:
+        - "Project"
+      summary: "Get all projects for a team"
+      description: "Get all projects for a team by team ID"
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: teamId
+          description: "MongoDB ID"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Projects retrieved successfully"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Project"
+        500:
+          description: "Internal server error"
+  /projects/users/{userId}:
+    get:
+      tags:
+        - "Project"
+      summary: "Get all projects for a user"
+      description: "Get all projects for a user by user ID"
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: userId
+          description: "MongoDB ID"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Projects retrieved successfully"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Project"
+        500:
+          description: "Internal server error"
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: "apiKey"
+      in: "header"
+      name: "auth-token"
+  schemas:
+    User:
+      type: "object"
+      required:
+        - firstName
+        - lastName
+        - email
+        - password
+      properties:
+        id:
+          type: "string"
+        firstName:
+          type: "string"
+          minLength: 2
+          maxLength: 100
+        lastName:
+          type: "string"
+          minLength: 2
+          maxLength: 100
+        email: 
+          type: "string"
+          format: "email"
+          minLength: 5
+          maxLength: 100
+          x-uniqueItems: true
+        password:
+          type: "string"
+          format: "password"
+          minLength: 8
+          maxLength: 100
+        role:
+          type: "string"
+          maxLength: 100
+    Team:
+      type: "object"
+      required:
+        - name
+      properties:
+        id:
+          type: "string"
+        name:
+          type: "string"
+          minLength: 2
+          maxLength: 100
+        teamLeader:
+          $ref: "#/components/schemas/User"
+        members:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/User"
+        projects:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/Project"
+    Task:
+      type: "object"
+      required:
+        - name
+        - number
+        - description
+        - taskStatus
+      properties:
+        id:
+          type: "string"
+        name:
+          type: "string"
+          minLength: 2
+          maxLength: 100
+          default: "Task"
+        number:
+          type: "number"
+          default: 0
+        description:
+          type: "string"
+          minLength: 10
+          maxLength: 100
+          default: "Task description"
+        startDate:
+          type: "string"
+          format: "date"
+          default: null
+        taskStatus:
+          type: "string"
+          minLength: 2
+          maxLength: 100
+          default: "To do"
+        projectId:
+          type: "string"
+        assignedTeamMember:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/User"
+        attachments:
+          type: "array"
+          items:
+            type: "string"
+    ProjectTemplate:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+        name:
+          type: "string"
+          default: "Untitled Project"
+        description:
+          type: "string"
+          default: "No description provided"
+        startDate:
+          type: "string"
+          format: "date"
+          default: "{{currentDateTime}}"
+        endDate:
+          type: "string"
+          format: "date"
+          default: null
+        projectStatus:
+          type: "string"
+          default: "Not started"
+        team: 
+          type: "array"
+          items:
+            $ref: "#/components/schemas/Team"
+          default: []
+        tasks:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/Task"
+          default: []
+    Project:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+        name:
+          type: "string"
+          minLength: 2
+          maxLength: 100
+        description:
+          type: "string"
+          minLength: 10
+          maxLength: 100
+        startDate:
+          type: "string"
+          format: "date"
+        endDate:
+          type: "string"
+          format: "date"
+        projectStatus:
+          type: "string"
+          minLength: 2
+          maxLength: 100
+        team:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/Team"
+        tasks:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/Task"
+        templateId:
+          type: "string"
+    TeamRequest:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+          minLength: 2
+          maxLength: 100
+        projects:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/Project"
+    ProjectRequest:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+          minLength: 2
+          maxLength: 100
+        description:
+          type: "string"
+          minLength: 10
+          maxLength: 100
+        startDate:
+          type: "string"
+          format: "date"
+        endDate:
+          type: "string"
+          format: "date"
+        projectStatus:
+          type: "string"
+          minLength: 2
+          maxLength: 100
+        team:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/Team"
+        tasks:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/Task"

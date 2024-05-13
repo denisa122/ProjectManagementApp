@@ -10,12 +10,19 @@ require ('dotenv-flow').config();
 
 app.use(bodyParser.json());
 
+// Swagger
+const swaggerUi = require('swagger-ui-express');
+const yaml = require('yamljs');
+
+const swaggerDefinition = yaml.load('./swagger.yaml');
+
 // Routes
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const teamRoutes = require('./routes/team');
 const projectRoutes = require('./routes/project');
 const taskRoutes = require('./routes/task');
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDefinition));
 
 // CRUD
 app.use('/api/user', authRoutes);
@@ -28,6 +35,7 @@ app.use('/api/projects/:projectId/tasks', taskRoutes);
 app.get('/api/welcome', (req, res) => {
     res.status(200).send('Welcome to the Project Management API');
 });
+
 
 mongoose.connection.once('open', () => console.log('Connected to MongoDB'));
 

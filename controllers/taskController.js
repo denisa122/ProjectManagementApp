@@ -80,7 +80,7 @@ const getTaskDetailsById = async (req, res) => {
         });
         
         if (!taskId) {
-            return res.status(400).json({message: 'Task not found'});
+            return res.status(404).json({message: 'Task not found'});
         }
 
         const project = await Project.findById(projectId).populate({
@@ -89,7 +89,7 @@ const getTaskDetailsById = async (req, res) => {
         });
 
         if (!project) {
-            return res.status(400).json({message: 'Project not found'});
+            return res.status(404).json({message: 'Project not found'});
         }
 
         // Combine task and project details
