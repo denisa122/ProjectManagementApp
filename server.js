@@ -11,6 +11,13 @@ require ('dotenv-flow').config();
 
 app.use(bodyParser.json());
 
+const corsOptions = {
+    origin: '*',
+    credentials: true,
+    optionsSuccessStatus: 200
+}
+app.use(cors(corsOptions));
+
 // Swagger
 const swaggerUi = require('swagger-ui-express');
 const yaml = require('yamljs');
@@ -32,10 +39,6 @@ app.use('/api/teams', teamRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/projects/:projectId/tasks', taskRoutes);
 
-app.use(cors({
-    origin: 'http://localhost:3000',
-    optionsSuccessStatus: 200
-}));
 
 // For Render (health check path)
 app.get('/api/welcome', (req, res) => {

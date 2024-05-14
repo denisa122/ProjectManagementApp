@@ -26,15 +26,10 @@ const Register = () => {
                 password
             });
 
-            console.log(response.data);
-
-            // Redirect to dashboard
             window.location.href = "/dashboard";
         } catch (error) {
-            setError(error.response.data.error);
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            console.error("Error caught in handleSubmit:", error);
+            setError("An unexpected error occurred");
         }
     }
     
@@ -49,7 +44,7 @@ const Register = () => {
                 <p>
                     Your team is waiting for you. <br></br> Create an account to get started. 
                 </p>
-                <form id="registerForm">
+                <form id="registerForm" onSubmit={handleSubmit}>
                     <input type="text" placeholder="First name" id="firstName" name="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)}></input>
                     <input type="text" placeholder="Last name" id="lastName" name="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)}></input>
                     <input type="email" placeholder="Work email" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)}></input>

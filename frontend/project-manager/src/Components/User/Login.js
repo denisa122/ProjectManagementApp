@@ -17,31 +17,22 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            // const response = await fetch("http://localhost:5000/api/user/login", {
-            //     method: "POST",
-            //     headers: {
-            //         "Content-Type": "application/json"
-            //     },
-            //     body: JSON.stringify({
-            //         email,
-            //         password
-            //     })
-            // });
             const response = await axios.post("http://localhost:5000/api/user/login", {
                 email,
                 password
             });
 
-            const token = response.data.data.token;
-            localStorage.setItem("token", token);
-
-            // Redirect to dashboard
-            window.location.href = "/dashboard";
+            const token = response.data?.data?.token;
+            
+            if (token) {  
+                localStorage.setItem("token", token);
+                window.location.href = "/dashboard";
+            } else {
+                setError("Token not received from server")
+            }
         } catch (error) {
-            setError(error.response.data.error);
-            setTimeout(() => {
-                setError("");
-            }, 5000);
+            console.error("Error caught in handleSubmit:", error);
+            setError("An unexpected error occurred");
         }
     }
 

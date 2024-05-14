@@ -1,5 +1,7 @@
 import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 import "./Homepage.css";
 
@@ -7,6 +9,34 @@ import Logo from "../../assets/logo.png";
 import Footer from "../Footer/Footer";
 
 const Homepage = () => {
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await axios.post("http://localhost:5000/api/user/login", {
+                email,
+                password
+            });
+
+            const token = response.data?.data?.token;
+            
+            if (token) {  
+                localStorage.setItem("token", token);
+                window.location.href = "/dashboard";
+            } else {
+                setError("Token not received from server")
+            }
+        } catch (error) {
+            console.error("Error caught in handleSubmit:", error);
+            setError("An unexpected error occurred");
+        }
+    }
+
   return (
     <div>
       <div className="homepageContainer">
@@ -24,12 +54,12 @@ const Homepage = () => {
                 <p>
                     Your teammates need you. <br></br> Log in to get started.
                 </p>
-                <form id="homepageLoginForm">
+                <form id="homepageLoginForm" onSubmit={handleSubmit}>
                     <label htmlFor="email">Work email</label>
-                    <input type="email" id="email" name="email"></input>
+                    <input type="email" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)}></input>
 
                     <label htmlFor="password">Password</label>
-                    <input type="password" id="password" name="password"></input>
+                    <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)}></input>
 
                     <button type="submit">Log in</button>
                 </form>
