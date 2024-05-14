@@ -95,8 +95,8 @@ const getLoginStatus = async (req, res) => {
         const token = req.header('auth-token');
         if (token) {
             const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
-            const {role} = decoded
-            res.json({isLoggedIn: true, role});
+            const { role, id } = decoded
+            res.json({isLoggedIn: true, role, id});
         } else {
             res.json({isLoggedIn: false});
         }

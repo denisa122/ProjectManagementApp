@@ -14,16 +14,22 @@ import Plus from "../../assets/plus.svg";
 
 const Dashboard = () => {
   const [isTeamLeader, setIsTeamLeader] = useState(false);
+  const [userId, setUserId] = useState(null);
+
+  const [projects, setProjects] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchUserRole = async () => {
+    const fetchData = async () => {
       try {
         const token = localStorage.getItem("token");
         if (!token) {
           return;
         }
 
-        const response = await axios.get(
+        // Fetch user role and ID
+        const roleResponse = await axios.get(
           "http://localhost:5000/api/user/login-status",
           {
             headers: {
@@ -32,14 +38,32 @@ const Dashboard = () => {
           }
         );
 
-        setIsTeamLeader(response.data?.role === "team leader");
-        console.log("Role received:", response.data?.role);
+        setIsTeamLeader(roleResponse.data?.role === "team leader");
+        const id = roleResponse.data?.id;
+        setUserId(id);
+
+        // Fetch projects
+        if (id) {
+          const projectsResponse = await axios.get(
+            `http://localhost:5000/api/projects/users/${id}`,
+            {
+              headers: {
+                "auth-token": token,
+              },
+            }
+          );
+
+          setProjects(projectsResponse.data);
+          setIsLoading(false);
+        }  
+
       } catch (error) {
-        console.error("Error fetching user role:", error);
+        console.error("Error fetching data:", error);
+        setIsLoading(false);
       }
     };
 
-    fetchUserRole();
+    fetchData();
   }, []);
 
   return (
@@ -65,15 +89,24 @@ const Dashboard = () => {
           )}
         </div>
         <div className="projectsContainer">
-          <ProjectCard title="My first project" status="In progress" timeLeft="1w"/>
-          <ProjectCard title="My second project" status="In progress" timeLeft="2d" />
-          <ProjectCard title="My third project" status="Finished" timeLeft="" />
-          <ProjectCard title="My fourth project" status="Finished" timeLeft="" />
-          <ProjectCard title="My fifth project" status="Finished" timeLeft="" />
-          <ProjectCard title="My sixth project" status="Finished" timeLeft="" />
+          {isLoading  ? (
+            <p>Loading...</p>
+          ) : error ? (
+            <p>{error}</p>
+          ) : (
+            projects.map((project) => (
+              <ProjectCard
+                key={project._id}
+                _id={project._id}
+                name={project.name}
+                projectStatus={project.projectStatus}
+                startDate={project.startDate}
+                endDate={project.endDate}
+              />
+            ))
+          
+          )}
         </div>
-
-        <button className="loadButton">Load more</button>
 
         <Footer />
       </div>
