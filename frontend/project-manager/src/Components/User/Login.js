@@ -23,15 +23,12 @@ const Login = () => {
             });
 
             const token = response.data?.data?.token;
-
-            console.log("Token received:", token);
             
             if (token) {  
                 localStorage.setItem("token", token);
 
                 // Check user role
                 const role = response.data?.data?.role;
-                console.log("Role received:", role);
                 if (role === "team member"){
                     window.location.href = "/dashboard";
                 } else if(role === "team leader"){

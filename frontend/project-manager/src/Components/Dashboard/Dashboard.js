@@ -1,22 +1,33 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import "./Dashboard.css"
 
 import Navigation from "../Navigation/Navigation";
+import NavigationLeader from "../Navigation/NavigationLeader";
 import Footer from "../Footer/Footer";
 
 import Logo from "../../assets/logo.png";
+import Plus from "../../assets/plus.svg";
 import Clock from "../../assets/clock.svg";
 import Project from "../../assets/project.png";
 
-const Dashboard = () => {
+const Dashboard = ({ isTeamLeader }) => {
     return (
         <div>
-            <Navigation />
+            {isTeamLeader ? <NavigationLeader /> : <Navigation/>}
             <div className="dashboardContainer">
             <div className="dashboardHeader">
-                <h1>Team Projects</h1>
+                <h1>{isTeamLeader ? "Your Team's Project" : "Team Projects"}</h1>
                 <img src={Logo} alt="logo" className="dashboardLogo"></img>
+            </div>
+            <div>
+            {isTeamLeader && (
+                <Link to='/create-project' className="newProjectButton">
+                <img src={Plus} alt='plus icon' style={{marginRight: "2px"}}></img>
+                <button style={{border: "none", background: "none"}}>New project</button>  
+            </Link>
+            )}
             </div>
             <div className="projectsContainer">
                 <div className="projectCard">

@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import "./Homepage.css";
@@ -14,6 +14,8 @@ const Homepage = () => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
+    const navigate = useNavigate();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -24,22 +26,17 @@ const Homepage = () => {
             });
 
             const token = response.data?.data?.token;
-
-            console.log("Token received:", token);
             
             if (token) {  
                 localStorage.setItem("token", token);
 
                 // Check user role
                 const role = response.data?.data?.role;
-                console.log("Role received:", role);
-                if (role === "team member"){
-                    window.location.href = "/dashboard";
-                } else if(role === "team leader"){
-                    window.location.href = "/dashboard/leader";
-                } else {
-                    setError("Invalid user role received from server");
-                }
+                localStorage.setItem("userRole", role);
+                console.log("Role:", role);
+
+                navigate("/dashboard");
+
             } else {
                 setError("Token not received from server")
             }
