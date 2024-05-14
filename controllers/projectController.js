@@ -53,7 +53,11 @@ const createProject = async (req, res) => {
             if (!template) {
                 return res.status(400).json({message: 'Invalid template Id'});
             } 
-            // Create project using template
+
+            // Get user id from request
+            const userId = req.user.id;
+
+            // Create project using template and assign teamLeader
             const project = new Project({
             name: name || template.name,
             description: description || template.description,
@@ -61,7 +65,8 @@ const createProject = async (req, res) => {
             endDate: template.endDate,
             projectStatus: template.projectStatus,
             team: template.team,
-            tasks: template.tasks
+            tasks: template.tasks,
+            teamLeader: userId
         });
 
         const savedProject = await project.save();
@@ -75,7 +80,8 @@ const createProject = async (req, res) => {
             endDate,
             projectStatus,
             team,
-            tasks
+            tasks,
+            teamLeader: req.user.id
         });
 
         const savedProject = await project.save();
@@ -106,8 +112,8 @@ const getAllProjectsForUser = async (req, res) => {
         const teams = await Team.find({$or: [{teamLeader: userId}, {members: userId}]});
         const teamIds = teams.map(team => team._id);
         
-        // Find projects associated with the teams
-        const projects = await Project.find({team: {$in: teamIds}});
+        // Find projects associated with the teams where the user is a team member or leader
+        const projects = await Project.find({$or: [{team: {$in: teamIds}}, {teamLeader: userId}]});
 
         res.send(projects);
     } catch (error) {

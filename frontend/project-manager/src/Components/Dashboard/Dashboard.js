@@ -76,7 +76,7 @@ const Dashboard = () => {
         </div>
         <div>
           {isTeamLeader && (
-            <Link to="/create-project" className="newProjectButton">
+            <Link to="/new-project" className="newProjectButton">
               <img
                 src={Plus}
                 alt="plus icon"

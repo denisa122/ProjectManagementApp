@@ -32,6 +32,10 @@ let projectSchema = new Schema(
                 ref: 'Team'
             }
         ],
+        teamLeader: {
+            type: Schema.Types.ObjectId, 
+            ref: 'User'
+        },
         tasks: [
             {
                 type: Schema.Types.ObjectId, 
