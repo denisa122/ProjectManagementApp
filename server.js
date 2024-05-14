@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
+const cors = require('cors');
 
 const app = express();
 
@@ -30,6 +31,11 @@ app.use('/api/users', userRoutes);
 app.use('/api/teams', teamRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/projects/:projectId/tasks', taskRoutes);
+
+app.use(cors({
+    origin: 'http://localhost:3000',
+    optionsSuccessStatus: 200
+}));
 
 // For Render (health check path)
 app.get('/api/welcome', (req, res) => {

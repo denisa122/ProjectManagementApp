@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import "./Dashboard.css"
 
@@ -19,10 +20,10 @@ const Dashboard = () => {
                 <h1>Your Team's Projects</h1>
                 <img src={Logo} alt="logo" className="dashboardLogo"></img>
             </div>
-            <a href="" className="newProjectButton">
+            <Link to='/create-project' className="newProjectButton">
                 <img src={Plus} alt='plus icon' style={{marginRight: "2px"}}></img>
                 <button style={{border: "none", background: "none"}}>New project</button>  
-            </a>
+            </Link>
             <div className="projectsContainer">
                 <div className="projectCard">
                     <img src={Project} alt="project-thumbnail" className="projectImg"></img>

@@ -3,7 +3,7 @@ info:
   title: Swagger CollabHub (Project Management Application)
   version: 1.0.0
 servers:
-  - url: https://localhost:5000/api/
+  - url: https://localhost:5000/api
 tags:
   - name: "User"
     description: "Operations related to users"
