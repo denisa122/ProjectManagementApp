@@ -11,9 +11,7 @@ router.post('/login', authController.login);
 
 // Logout -- TO DO: IMPLEMENT
 // /api/user/logout 
-router.post('/logout', async (req, res) => {
-
-});
+router.post('/logout', authController.logout);
 
 // Get login status
 // /api/user/login-status

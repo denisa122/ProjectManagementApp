@@ -33,7 +33,6 @@ const Homepage = () => {
                 // Check user role
                 const role = response.data?.data?.role;
                 localStorage.setItem("userRole", role);
-                console.log("Role:", role);
 
                 navigate("/dashboard");
 

@@ -94,7 +94,9 @@ const getLoginStatus = async (req, res) => {
     try {
         const token = req.header('auth-token');
         if (token) {
-            res.json({isLoggedIn: true});
+            const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
+            const {role} = decoded
+            res.json({isLoggedIn: true, role});
         } else {
             res.json({isLoggedIn: false});
         }
@@ -103,8 +105,17 @@ const getLoginStatus = async (req, res) => {
     }
 };
 
+const logout = async (req, res) => {
+    try {
+       res.header('auth-token', '').json({ message: 'Logged out successfully' });
+    } catch (error) {
+        res.status(500).json({error});
+    }
+};
+
 module.exports = {
     register, 
     login,
-    getLoginStatus
+    getLoginStatus,
+    logout
 };
