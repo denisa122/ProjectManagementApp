@@ -23,10 +23,22 @@ const Login = () => {
             });
 
             const token = response.data?.data?.token;
+
+            console.log("Token received:", token);
             
             if (token) {  
                 localStorage.setItem("token", token);
-                window.location.href = "/dashboard";
+
+                // Check user role
+                const role = response.data?.data?.role;
+                console.log("Role received:", role);
+                if (role === "team member"){
+                    window.location.href = "/dashboard";
+                } else if(role === "team leader"){
+                    window.location.href = "/dashboard/leader";
+                } else {
+                    setError("Invalid user role received from server");
+                }
             } else {
                 setError("Token not received from server")
             }

@@ -76,7 +76,8 @@ const login = async (req, res) => {
     (
         {
             email: user.email,
-            id: user._id
+            id: user._id,
+            role: user.role
         },
         process.env.TOKEN_SECRET,
         {expiresIn: process.env.JWT_EXPIRES_IN},
@@ -85,7 +86,7 @@ const login = async (req, res) => {
     // Attach token to header
     res.header('auth-token', token).json({
         error: null, 
-        data: {token}
+        data: {token, role: user.role}
     });
 };
 
