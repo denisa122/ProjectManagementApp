@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -10,6 +11,32 @@ import ProfileIcon from "../../assets/avatar.svg";
 const Navigation = () => {
 
     const navigate = useNavigate();
+
+    const [isTeamLeader, setIsTeamLeader] = useState(false);
+
+    useEffect(() => {
+        const fetchUserRole = async () => {
+          try {
+            const token = localStorage.getItem("token");
+            if (!token) {
+              return;
+            }
+    
+            const response = await axios.get("http://localhost:5000/api/user/login-status", {
+              headers: {
+                'auth-token': token,
+              },
+            });
+    
+            setIsTeamLeader(response.data?.role === "team leader");
+            console.log("Role received:", response.data?.role);
+          } catch (error) {
+            console.error("Error fetching user role:", error);
+          }
+        };
+    
+        fetchUserRole();
+      }, []); 
 
     const handleLogout = async () => {
         try {
@@ -28,6 +55,7 @@ const Navigation = () => {
         <nav className='navbar'>
             <div className='leftSide'>
                 <span>Projects</span>
+                {isTeamLeader && <span style={{paddingLeft: "20px"}}>Team</span>}
             </div>
             <div className='rightSide'>
                 <input type='text' placeholder='Search...' className='searchbar'></input>

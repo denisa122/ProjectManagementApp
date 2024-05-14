@@ -6,7 +6,6 @@ import axios from "axios";
 import "./Dashboard.css"
 
 import Navigation from "../Navigation/Navigation";
-import NavigationLeader from "../Navigation/NavigationLeader";
 import Footer from "../Footer/Footer";
 
 import Logo from "../../assets/logo.png";
@@ -44,7 +43,7 @@ const Dashboard = () => {
 
     return (
         <div>
-      {isTeamLeader ? <NavigationLeader /> : <Navigation />}
+      <Navigation />
       <div className="dashboardContainer">
         <div className="dashboardHeader">
           <h1>{isTeamLeader ? "Your Team's Project" : "Team Projects"}</h1>
