@@ -226,6 +226,32 @@ paths:
                   $ref: "#/components/schemas/Team"
         500:
           description: "Internal server error"
+  /teams/{teamId}:
+    get:
+      tags:
+        - "Team"
+      summary: "Get a team by ID"
+      description: "Get a team by ID"
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: teamId
+          description: "MongoDB ID"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Team retrieved successfully"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Team"
+        404:
+          description: "Team not found"
+        500: 
+          description: "Internal server error"
     put:
       tags:
         - "Team"
@@ -284,32 +310,6 @@ paths:
                 properties:
                   message:
                     type: "string"
-        404:
-          description: "Team not found"
-        500: 
-          description: "Internal server error"
-  /teams/{teamId}:
-    get:
-      tags:
-        - "Team"
-      summary: "Get a team by ID"
-      description: "Get a team by ID"
-      security:
-        - ApiKeyAuth: []
-      parameters:
-        - in: path
-          name: teamId
-          description: "MongoDB ID"
-          required: true
-          schema:
-            type: "string"
-      responses:
-        200:
-          description: "Team retrieved successfully"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Team"
         404:
           description: "Team not found"
         500: 
@@ -384,7 +384,57 @@ paths:
           description: "Team or user not found"
         500:
           description: "Internal server error"
-  /projects/{projectId}/tasks:
+  /teams/leader/{userId}:    
+    get:
+      tags:
+        - "Team"
+      summary: "Get all teams led by a user"
+      description: "Get all teams led by a user" 
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: userId
+          description: "MongoDB ID"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Teams retrieved successfully"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Team"
+        500:
+          description: "Internal server error"
+  /projects/templates:
+    post:
+      tags:
+        - "Project"
+      summary: "Create a new project template"
+      description: "Create a new project template with the provided details"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProjectTemplate"
+      responses:
+        201:
+          description: "Project template created successfully"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  savedProjectTemplate:
+                    $ref: "#/components/schemas/ProjectTemplate"
+        500:
+          description: "Internal server error"     
+  /tasks/{projectId}:
     get:
       tags:
         - "Task"
@@ -441,7 +491,41 @@ paths:
           description: "Invalid request"
         500:
           description: "Internal server error"
-  /projects/{projectId}/tasks/{taskId}:
+    delete:
+      tags:
+        - "Task"
+      summary: "Delete a task by ID"
+      description: "Delete a task by ID"
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: projectId
+          description: "MongoDB ID"
+          required: true
+          schema:
+            type: "string"
+        - in: path
+          name: taskId
+          description: "MongoDB ID"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Task deleted successfully"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+        404:
+          description: "Task or project not found"
+        500:
+          description: "Internal server error"
+  /tasks/project/{projectId}/task/{taskId}:
     get:
       tags:
         - "Task"
@@ -478,41 +562,7 @@ paths:
           description: "Task or project not found"
         500:
           description: "Internal server error"
-    delete:
-      tags:
-        - "Task"
-      summary: "Delete a task by ID"
-      description: "Delete a task by ID"
-      security:
-        - ApiKeyAuth: []
-      parameters:
-        - in: path
-          name: projectId
-          description: "MongoDB ID"
-          required: true
-          schema:
-            type: "string"
-        - in: path
-          name: taskId
-          description: "MongoDB ID"
-          required: true
-          schema:
-            type: "string"
-      responses:
-        200:
-          description: "Task deleted successfully"
-          content:
-            application/json:
-              schema:
-                type: "object"
-                properties:
-                  message:
-                    type: "string"
-        404:
-          description: "Task or project not found"
-        500:
-          description: "Internal server error"
-  /projects/{projectId}/tasks/{taskId}/assign:
+  /tasks/{taskId}/assign:
     put:
       tags:
         - "Task"
@@ -555,7 +605,7 @@ paths:
           description: "Task not found"
         500:
           description: "Internal server error"
-  /projects/{projectId}/tasks/{taskId}/unassign:
+  /tasks/{taskId}/unassign:
     put:
       tags:
         - "Task"
@@ -579,6 +629,44 @@ paths:
       responses:
         200:
           description: "Team member unassigned from task successfully"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+        404:
+          description: "Task not found"
+        500:
+          description: "Internal server error"
+  /tasks/{projectId}/task/{taskId}:
+    put:
+      tags:
+        - "Task"
+      summary: "Update a task by ID"
+      description: "Update a task by ID"
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: projectId
+          description: "MongoDB ID"
+          required: true
+          schema:
+            type: "string"
+        - in: path
+          name: taskId
+          description: "MongoDB ID"
+          required: true
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Task"
+      responses:
+        200:
+          description: "Task updated successfully"
           content:
             application/json:
               schema:
@@ -839,7 +927,6 @@ components:
         - name
         - number
         - description
-        - taskStatus
       properties:
         id:
           type: "string"
@@ -934,6 +1021,8 @@ components:
           type: "array"
           items:
             $ref: "#/components/schemas/Team"
+        teamLeader:
+          $ref: "#/components/schemas/User"
         tasks:
           type: "array"
           items:

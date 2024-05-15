@@ -16,12 +16,6 @@ let userSchema = new Schema({
     min: 2,
     max: 100,
   },
-  // username: {
-  //     type: String,
-  //     required: true,
-  //     min: 6,
-  //     max: 100
-  // },  maybe i don't need this for a team of people who work together
   email: {
     type: String,
     required: true,
