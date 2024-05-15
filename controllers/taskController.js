@@ -44,7 +44,7 @@ const createTask = async (req, res) => {
 };
 
 const getAllTasksForProject = async (req, res) => {
-    const projectId = req.query.projectId;
+    const projectId = req.params.projectId;
 
     try {
         const tasks = await Task.find({projectId})
@@ -62,7 +62,7 @@ const getAllTasksForProject = async (req, res) => {
 
 const getTaskDetailsById = async (req, res) => {
     const taskId = req.params.taskId;
-    const projectId = req.query.projectId;
+    const projectId = req.params.projectId;
 
     try {
         const task = await Task.findById(taskId).populate({

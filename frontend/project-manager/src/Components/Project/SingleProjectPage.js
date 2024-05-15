@@ -13,6 +13,7 @@ const SingleProjectPage = () => {
   const [error, setError] = useState(null);
   const [isTeamLeader, setIsTeamLeader] = useState(false);
   const [showCreateTask, setShowCreateTask] = useState(false);
+  const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
     const fetchProjectDetails = async () => {
@@ -68,6 +69,32 @@ const SingleProjectPage = () => {
     fetchUserRole();
   }, []);
 
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          return;
+        }
+
+        const response = await axios.get(
+          `http://localhost:5000/api/tasks/${projectId}`,
+          {
+            headers: {
+              "auth-token": token,
+            },
+          }
+        );
+        setTasks(response.data);
+        console.log("tasks", response.data);
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+      }
+    };
+
+    fetchTasks();
+  }, [projectId]);
+
   const handleAddTask = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -107,16 +134,11 @@ const SingleProjectPage = () => {
           <p>Team leader: {project.teamLeader}</p>
           <p>Tasks:</p>
           <div>
-            {project.tasks.map((task) => (
+            {tasks.map((task) => (
               <TaskCard
-                key={task._id} 
-                name={task.name}
-                number={task.number}
-                description={task.description}
-                startDate={task.startDate}
-                taskStatus={task.taskStatus}
-                assignedTeamMember={task.assignedTeamMember}
-                attachments={task.attachments}
+                key={task._id}
+                task={task}
+                projectId = {projectId} // Pass task as a prop
               />
             ))}
           </div>
@@ -134,5 +156,6 @@ const SingleProjectPage = () => {
     </div>
   );
 };
+
 
 export default SingleProjectPage;
