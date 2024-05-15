@@ -5,6 +5,9 @@ import axios from "axios";
 import TaskCard from "./TaskCard";
 import CreateTasks from "./CreateTasks";
 
+import Navigation from "../Navigation/Navigation";
+import Footer from "../Footer/Footer";
+
 const SingleProjectPage = () => {
   const navigate = useNavigate();
   const { projectId } = useParams();
@@ -123,6 +126,7 @@ const SingleProjectPage = () => {
 
   return (
     <div>
+      <Navigation />
       <h2>Single Project Details</h2>
       {project && (
         <div>
@@ -153,6 +157,7 @@ const SingleProjectPage = () => {
           )}
         </div>
       )}
+      <Footer />
     </div>
   );
 };

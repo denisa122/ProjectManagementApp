@@ -3,6 +3,9 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+import Navigation from "../Navigation/Navigation";
+import Footer from "../Footer/Footer";
+
 const ProjectDetails = ( {  userId  }) => {
     const navigate = useNavigate();
 
@@ -74,6 +77,8 @@ const ProjectDetails = ( {  userId  }) => {
 
     return (
         <div>
+            <Navigation />
+            <div style={{margin: "100px"}}>
             <h1>Enter Project Details</h1>
             <form onSubmit={handleSubmit}>
                 <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Project Name" required />
@@ -88,6 +93,8 @@ const ProjectDetails = ( {  userId  }) => {
                 </select>
                 <button type="submit" disabled={loading}>Save</button>
             </form>
+            </div>
+            <Footer />
         </div>
     )
 }

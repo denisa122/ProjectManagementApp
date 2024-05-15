@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 
 import "./Navigation.css";
@@ -53,7 +53,9 @@ const Navigation = () => {
     return (
         <nav className='navbar'>
             <div className='leftSide'>
-                <span>Projects</span>
+                <Link to='/dashboard'>
+                Projects
+                </Link>
                 {isTeamLeader && <span style={{paddingLeft: "20px"}}>Team</span>}
             </div>
             <div className='rightSide'>
