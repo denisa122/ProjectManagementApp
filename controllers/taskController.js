@@ -97,7 +97,26 @@ const getTaskDetailsById = async (req, res) => {
   }
 };
 
-const updateTask = async (req, res) => {};
+const updateTask = async (req, res) => {
+  const taskId = req.params.taskId;
+  const {taskStatus} = req.body;
+
+  try {
+    const updatedTask = await Task.findByIdAndUpdate(
+      taskId,
+      { taskStatus },
+      { new: true }
+    );
+
+    if (!updatedTask) {
+      return res.status(404).json({ message: "Task not found" });
+    }
+
+    res.status(200).json(updatedTask);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 const deleteTask = async (req, res) => {
   const taskId = req.params.taskId;

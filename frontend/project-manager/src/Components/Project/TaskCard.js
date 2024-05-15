@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+import { Draggable } from "react-beautiful-dnd";
+
 import "./Task.css";
 
-const TaskCard = ({ task, projectId }) => {
+const TaskCard = ({ task, projectId, index }) => {
   const [taskDetails, setTaskDetails] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true); // Set initial loading state to true
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchTaskDetails = async () => {
       if (!task) {
-        return; // If task is null, do nothing
+        return; 
       }
 
-      setIsLoading(true);
       try {
         const token = localStorage.getItem("token");
         if (!token) {
@@ -30,7 +31,7 @@ const TaskCard = ({ task, projectId }) => {
           }
         );
         setTaskDetails(response.data);
-        setIsLoading(false);
+        setIsLoading(false); // Set loading state to false after fetching task details
       } catch (error) {
         console.error("Error fetching task details:", error);
         setError(error.message);
@@ -41,7 +42,8 @@ const TaskCard = ({ task, projectId }) => {
     fetchTaskDetails();
   }, [task, projectId]);
 
-  if (!taskDetails || isLoading) {
+  // Conditional rendering based on loading state and task details
+  if (isLoading || !taskDetails) {
     return <p>Loading task details...</p>;
   }
 
@@ -50,29 +52,37 @@ const TaskCard = ({ task, projectId }) => {
   }
 
   return (
-    <div className="taskCard">
-      <h3 className="taskTitle">
-        # {taskDetails.task.number} {taskDetails.task.name}
-      </h3>
-      <p className="taskDescription">
-        Description: {taskDetails.task.description}
-      </p>
-      <p className="taskStatus">Status: {taskDetails.task.taskStatus}</p>
-      <div className="taskAssignedMember">
-        <p>
-          Assigned Team Member:{" "}
-          {taskDetails.task.assignedTeamMember &&
-            taskDetails.task.assignedTeamMember
-              .map((member) => `${member.firstName} ${member.lastName}`)
-              .join(", ")}
-        </p>
-      </div>
-      <p className="taskAttachments">
-        Attachments: {taskDetails.task.attachments}
-      </p>
-      <p>Start date: {taskDetails.task.startDate}</p>
-    </div>
+    <Draggable draggableId={task._id} index={index}> 
+      {(provided) => (
+        <div
+          className="taskCard"
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+        >
+          <h3>
+            # {taskDetails.task.number} {taskDetails.task.name}
+          </h3>
+          <p>
+            Description: {taskDetails.task.description}
+          </p>
+          <p>Status: {taskDetails.task.taskStatus}</p>
+          
+            <p>
+              Assigned Team Member:{" "}
+              {taskDetails.task.assignedTeamMember &&
+                taskDetails.task.assignedTeamMember
+                  .map((member) => `${member.firstName} ${member.lastName}`)
+                  .join(", ")}
+            </p>
+          
+          
+          <p>Start date: {taskDetails.task.startDate}</p>
+        </div>
+      )}
+    </Draggable>
   );
 };
+
 
 export default TaskCard;

@@ -19,7 +19,8 @@ router.get('/:projectId', verifyToken, taskController.getAllTasksForProject);
 router.get('/project/:projectId/task/:taskId', verifyToken, taskController.getTaskDetailsById);
 
 // Update
-// api/tasks/:taskId
+// api/tasks/:projectId/task/:taskId
+router.put('/:projectId/task/:taskId', verifyToken, taskController.updateTask);
 
 // api/tasks/:taskId/assign -- Assign a team member to a task
 router.put('/:taskId/assign', verifyToken, taskController.assignTask);
