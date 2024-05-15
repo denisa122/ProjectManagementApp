@@ -142,7 +142,7 @@ const SingleProjectPage = () => {
               <TaskCard
                 key={task._id}
                 task={task}
-                projectId = {projectId} // Pass task as a prop
+                projectId={projectId}
               />
             ))}
           </div>
@@ -161,6 +161,5 @@ const SingleProjectPage = () => {
     </div>
   );
 };
-
 
 export default SingleProjectPage;

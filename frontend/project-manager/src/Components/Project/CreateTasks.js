@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import "./Task.css";
 
-const CreateTasks = ({projectId}) => {
+const CreateTasks = ({ projectId }) => {
   const navigate = useNavigate();
   console.log("projectId", projectId);
 
@@ -44,7 +44,7 @@ const CreateTasks = ({projectId}) => {
             },
           }
         );
-        
+
         setSuccessMessage("Task created successfully!");
         setTask({
           name: "",
@@ -57,18 +57,14 @@ const CreateTasks = ({projectId}) => {
           projectId,
         });
 
-      navigate(`/projects/${projectId}`);
+        navigate(`/projects/${projectId}`);
       } catch (error) {
         setError(error.message);
         console.error("Error with request for creating task:", error);
       }
-      
-      
-
     } catch (error) {
       setError(error.message);
       console.error("Error adding task:", error);
-    
     }
   };
 

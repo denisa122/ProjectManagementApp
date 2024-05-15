@@ -55,8 +55,7 @@ const Dashboard = () => {
 
           setProjects(projectsResponse.data);
           setIsLoading(false);
-        }  
-
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
         setIsLoading(false);
@@ -89,7 +88,7 @@ const Dashboard = () => {
           )}
         </div>
         <div className="projectsContainer">
-          {isLoading  ? (
+          {isLoading ? (
             <p>Loading...</p>
           ) : error ? (
             <p>{error}</p>
@@ -97,16 +96,17 @@ const Dashboard = () => {
             projects.map((project) => (
               <div key={project._id}>
                 <ProjectCard
-                _id={project._id}
-                name={project.name}
-                projectStatus={project.projectStatus}
-                startDate={project.startDate}
-                endDate={project.endDate}
-              />
-              <Link to={`/projects/${project._id}`} className="detailsButton">See Details</Link>
+                  _id={project._id}
+                  name={project.name}
+                  projectStatus={project.projectStatus}
+                  startDate={project.startDate}
+                  endDate={project.endDate}
+                />
+                <Link to={`/projects/${project._id}`} className="detailsButton">
+                  See Details
+                </Link>
               </div>
             ))
-          
           )}
         </div>
 

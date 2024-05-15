@@ -3,74 +3,91 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-import "./authentication.css" ;
+import "./authentication.css";
 
 import Logo from "../../assets/logo.png";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        try {
-            const response = await axios.post("http://localhost:5000/api/user/login", {
-                email,
-                password
-            });
-
-            const token = response.data?.data?.token;
-            
-            if (token) {  
-                localStorage.setItem("token", token);
-
-                // Check user role
-                const role = response.data?.data?.role;
-                if (role === "team member"){
-                    window.location.href = "/dashboard";
-                } else if(role === "team leader"){
-                    window.location.href = "/dashboard/leader";
-                } else {
-                    setError("Invalid user role received from server");
-                }
-            } else {
-                setError("Token not received from server")
-            }
-        } catch (error) {
-            console.error("Error caught in handleSubmit:", error);
-            setError("An unexpected error occurred");
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/user/login",
+        {
+          email,
+          password,
         }
+      );
+
+      const token = response.data?.data?.token;
+
+      if (token) {
+        localStorage.setItem("token", token);
+
+        // Check user role
+        const role = response.data?.data?.role;
+        if (role === "team member") {
+          window.location.href = "/dashboard";
+        } else if (role === "team leader") {
+          window.location.href = "/dashboard/leader";
+        } else {
+          setError("Invalid user role received from server");
+        }
+      } else {
+        setError("Token not received from server");
+      }
+    } catch (error) {
+      console.error("Error caught in handleSubmit:", error);
+      setError("An unexpected error occurred");
     }
+  };
 
-    return (
-        <div className="loginPageContainer">
-            <div className="loginFormContainer">
-                <img src={Logo} alt="Logo" className="authLogo" />  
-                <h2>
-                    <strong>Log in</strong>
-                </h2>
-                {error && <p>{error}</p>}
-                <p>
-                    Your team is waiting for you. <br></br> Log in to your account to get started. 
-                </p>
-                <form id="loginForm" onSubmit={handleSubmit}>
-                    <input type="email" placeholder="Work email" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)}></input>
-                    <input type="password" placeholder="Password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)}></input>
+  return (
+    <div className="loginPageContainer">
+      <div className="loginFormContainer">
+        <img src={Logo} alt="Logo" className="authLogo" />
+        <h2>
+          <strong>Log in</strong>
+        </h2>
+        {error && <p>{error}</p>}
+        <p>
+          Your team is waiting for you. <br></br> Log in to your account to get
+          started.
+        </p>
+        <form id="loginForm" onSubmit={handleSubmit}>
+          <input
+            type="email"
+            placeholder="Work email"
+            id="email"
+            name="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          ></input>
+          <input
+            type="password"
+            placeholder="Password"
+            id="password"
+            name="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          ></input>
 
-                    <button type="submit">Log in</button>
-                </form>
+          <button type="submit">Log in</button>
+        </form>
 
-                <div>
-                    <p className="registerSection">
-                        Don't have an account? <Link to="/register">Sign up</Link>
-                    </p>
-                </div>
-            </div>
+        <div>
+          <p className="registerSection">
+            Don't have an account? <Link to="/register">Sign up</Link>
+          </p>
         </div>
-    )
-}
+      </div>
+    </div>
+  );
+};
 
-export default Login
+export default Login;

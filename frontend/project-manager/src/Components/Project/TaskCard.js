@@ -39,7 +39,7 @@ const TaskCard = ({ task, projectId }) => {
     };
 
     fetchTaskDetails();
-  }, [task, projectId]); 
+  }, [task, projectId]);
 
   if (!taskDetails || isLoading) {
     return <p>Loading task details...</p>;
@@ -51,8 +51,12 @@ const TaskCard = ({ task, projectId }) => {
 
   return (
     <div className="taskCard">
-      <h3 className="taskTitle"># {taskDetails.task.number} {taskDetails.task.name}</h3>
-      <p className="taskDescription">Description: {taskDetails.task.description}</p>
+      <h3 className="taskTitle">
+        # {taskDetails.task.number} {taskDetails.task.name}
+      </h3>
+      <p className="taskDescription">
+        Description: {taskDetails.task.description}
+      </p>
       <p className="taskStatus">Status: {taskDetails.task.taskStatus}</p>
       <div className="taskAssignedMember">
         <p>
@@ -63,7 +67,9 @@ const TaskCard = ({ task, projectId }) => {
               .join(", ")}
         </p>
       </div>
-      <p className="taskAttachments">Attachments: {taskDetails.task.attachments}</p>
+      <p className="taskAttachments">
+        Attachments: {taskDetails.task.attachments}
+      </p>
       <p>Start date: {taskDetails.task.startDate}</p>
     </div>
   );
