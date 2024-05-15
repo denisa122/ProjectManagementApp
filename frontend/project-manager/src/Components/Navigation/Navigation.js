@@ -29,7 +29,6 @@ const Navigation = () => {
             });
     
             setIsTeamLeader(response.data?.role === "team leader");
-            console.log("Role received:", response.data?.role);
           } catch (error) {
             console.error("Error fetching user role:", error);
           }

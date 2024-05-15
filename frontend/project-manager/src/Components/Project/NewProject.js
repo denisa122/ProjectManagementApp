@@ -17,31 +17,26 @@ const NewProject = ( {userId}) => {
       }
 
       let requestData = {};
+      
       if (templateId) {
         requestData = { templateId };
-        
+        const response = await axios.post(
+            "http://localhost:5000/api/projects/",
+            requestData,
+            {
+              headers: {
+                "auth-token": token,
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          if (response.status === 201) {
+            navigate(`/dashboard`);
+          }
       } else {
         requestData = { teamLeader: userId };
-        console.log(requestData);
-      }
-      const response = await axios.post(
-        "http://localhost:5000/api/projects/",
-        requestData,
-        {
-          headers: {
-            "auth-token": token,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (response.status === 201) {
-        if (templateId) {
-          navigate(`/dashboard`);
-        } else {
-          const projectId = response.data._id;
-          navigate(`/project-details/${projectId}`);
-        }
+        navigate(`/project-details/${requestData}`);
       }
     } catch (error) {
       console.error("Error creating project: ", error);
