@@ -73,6 +73,17 @@ const getTeamDetailsById = async (req, res) => {
     }
 };
 
+const getTeamsByLeader = async (req, res) => {
+    const userId = req.params.userId;
+
+    try {
+        const teams = await Team.find({teamLeader: userId});
+        res.send(teams);
+    } catch (error) {
+        res.status(500).send({message: error.message});
+    }
+};
+
 const updateTeam = async (req, res) => {
     const teamId = req.params.teamId;
     const updateData = req.body;
@@ -155,6 +166,7 @@ module.exports = {
     addTeamMemberToTeam,
     getAllTeams,
     getTeamDetailsById,
+    getTeamsByLeader,
     updateTeam,
     deleteTeam,
     removeTeamMemberFromTeam

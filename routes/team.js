@@ -21,6 +21,9 @@ router.get('/', teamController.getAllTeams);
 // /api/teams/:teamId
 router.get('/:teamId', verifyToken, teamController.getTeamDetailsById);
 
+// /api/teams/leader/:userId
+router.get('/leader/:userId', verifyToken, teamController.getTeamsByLeader);
+
 // Update
 // /api/teams/:teamId
 router.put('/:teamId', verifyToken, teamController.updateTeam);

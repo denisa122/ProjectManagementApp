@@ -1,11 +1,10 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const ProjectDetails = ( {  userId  }) => {
     const navigate = useNavigate();
-    console.log(userId);
 
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
@@ -19,7 +18,31 @@ const ProjectDetails = ( {  userId  }) => {
         tasks: []
     });
 
-    console.log("Form data: ", formData.teamLeader);
+    const [teams, setTeams] = useState([]);
+
+    useEffect(() => {
+        const fetchTeams = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    navigate('/login');
+                    return;
+                }
+
+                const response = await axios.get(`http://localhost:5000/api/teams/leader/${userId}`, {
+                    headers: {
+                        "auth-token": token
+                    }
+                });
+
+                setTeams(response.data);
+            } catch (error) {
+                console.error("Error fetching teams: ", error);
+            }
+        };
+
+        fetchTeams();
+    }, [userId, navigate]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -57,7 +80,12 @@ const ProjectDetails = ( {  userId  }) => {
                 <textarea name="description" value={formData.description} onChange={handleChange} placeholder="Project Description" required />
                 <input type="date" name="startDate" value={formData.startDate} onChange={handleChange} required />
                 <input type="date" name="endDate" value={formData.endDate} onChange={handleChange} required />
-                {/* Add team selection dropdown */}
+                <select name="team" value={formData.team} onChange={handleChange}>
+                    <option value="">Select Team</option>
+                    {teams.map((team) => (
+                        <option key={team._id} value={team._id}>{team.name}</option>
+                    ))}
+                </select>
                 <button type="submit" disabled={loading}>Save Project</button>
             </form>
         </div>
