@@ -13,23 +13,7 @@ const createTask = async (req, res) => {
         const attachments = req.body.attachments;
 
         // I had to make it a query parameter because I couldn't access it from the URL
-        const projectId = req.query.projectId;
-
-        // Check if projectId exists
-        const project = await Project.findById(projectId);
-
-
-        if (!project || !project._id) {
-            return res.status(400).json({message: 'Invalid project Id'});
-        }
-
-        if (!(project instanceof Project)) {
-            return res.status(500).json({message: 'Invalid project object'});
-        }
-
-        if (!project.tasks) {
-            project.tasks = [];
-        }
+        const projectId = req.params.projectId;
 
         const task = new Task({
             name,
@@ -44,8 +28,13 @@ const createTask = async (req, res) => {
 
         const savedTask = await task.save();
 
-        // Add task to project
-        project.tasks.push(savedTask);
+        const project = await Project.findById(projectId);
+
+        if (!project) {
+            return res.status(404).json({ message: 'Project not found' });
+        }
+
+        project.tasks.push(savedTask._id);
         await project.save();
         
         res.status(201).json(savedTask);
@@ -58,10 +47,12 @@ const getAllTasksForProject = async (req, res) => {
     const projectId = req.query.projectId;
 
     try {
-        const tasks = await Task.find({projectId}).populate({
+        const tasks = await Task.find({projectId})
+        .populate({
             path: 'assignedTeamMember',
             select: 'firstName lastName'
-        });
+        })
+        .select('name number description startDate taskStatus attachments');
 
         res.status(200).json(tasks);
     } catch (error) {
@@ -77,7 +68,8 @@ const getTaskDetailsById = async (req, res) => {
         const task = await Task.findById(taskId).populate({
             path: 'assignedTeamMember',
             select: 'firstName lastName'
-        });
+        })
+        .select('name number description startDate taskStatus attachments');
         
         if (!taskId) {
             return res.status(404).json({message: 'Task not found'});

@@ -95,14 +95,16 @@ const Dashboard = () => {
             <p>{error}</p>
           ) : (
             projects.map((project) => (
-              <ProjectCard
-                key={project._id}
+              <div key={project._id}>
+                <ProjectCard
                 _id={project._id}
                 name={project.name}
                 projectStatus={project.projectStatus}
                 startDate={project.startDate}
                 endDate={project.endDate}
               />
+              <Link to={`/projects/${project._id}`} className="detailsButton">See Details</Link>
+              </div>
             ))
           
           )}

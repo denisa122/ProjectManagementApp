@@ -7,10 +7,13 @@ import Homepage from './Components/Homepage/Homepage';
 import Login from './Components/User/Login';
 import Register from './Components/User/Register';
 import Dashboard from './Components/Dashboard/Dashboard';
-import CreateTasks from './Components/Project/CreateTasks';
 
+
+import SingleProjectPage from './Components/Project/SingleProjectPage';
 import NewProject from './Components/Project/NewProject';
 import ProjectDetails from './Components/Project/ProjectDetails';
+
+import CreateTasks from './Components/Project/CreateTasks';
 
 function App() {
 
@@ -45,6 +48,7 @@ function App() {
 
         /** Change to PrivateRoute after I implement the logic for it */
         <Route path='/dashboard' element={<Dashboard />}></Route>
+        <Route path='/projects/:projectId' element={<SingleProjectPage />}></Route>
 
         <Route path='/create-tasks/:id' element={<CreateTasks />}></Route>
 

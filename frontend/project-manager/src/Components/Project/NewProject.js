@@ -32,7 +32,7 @@ const NewProject = ( {userId}) => {
           );
 
           if (response.status === 201) {
-            navigate(`/dashboard`);
+            navigate('/dashboard');
           }
       } else {
         requestData = { teamLeader: userId };

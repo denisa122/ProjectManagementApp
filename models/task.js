@@ -29,8 +29,7 @@ let taskSchema = new Schema(
             default: null
         },
         taskStatus: {
-            type: String, 
-            required: true, 
+            type: String,
             default: 'To do',
             min: 2, 
             max: 100

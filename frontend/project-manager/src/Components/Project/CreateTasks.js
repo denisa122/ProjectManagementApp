@@ -1,70 +1,124 @@
-import React from "react";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate} from "react-router-dom";
+import axios from "axios";
 
-import './Task.css';
+import "./Task.css";
 
-const CreateTasks = () => {
+const CreateTasks = ({projectId}) => {
+  const navigate = useNavigate();
+  console.log("projectId", projectId);
 
-    const navigate = useNavigate();
-    const [tasks, setTasks] = useState([]);
-    const [name, setName] = useState("");
-    const [number, setNumber] = useState("");
-    const [description, setDescription] = useState("");
-    const [startDate, setStartDate] = useState("");
-    const [taskStatus, setTaskStatus] = useState("");
-    const [assignedTeamMember, setAssignedTeamMember] = useState("");
-    const [attachments, setAttachments] = useState([]);
+  const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
 
-    const handleAddTask = () => {
-        const newTask = {
-            name, 
-            number,
-            description,
-            startDate,
-            taskStatus,
-            assignedTeamMember,
-            attachments
-        };
+  const [task, setTask] = useState({
+    name: "",
+    number: 0,
+    description: "",
+    startDate: "",
+    taskStatus: "To do",
+    assignedTeamMember: "",
+    attachments: "",
+    projectId,
+  });
 
-        setTasks([...tasks, newTask]);
-        setName("");
-        setNumber(0);
-        setDescription("");
-        setStartDate("");
-        setTaskStatus("To do");
-        setAssignedTeamMember("");
-        setAttachments([]);
-    };
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setTask({ ...task, [name]: value });
+  };
 
-    const handleDone = () => {
-        // Implement logic to save tasks
+  const handleAddTask = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        return;
+      }
 
-        navigate('/dashboard/leader');
-    };
+      try {
+        const response = await axios.post(
+          `http://localhost:5000/api/tasks/${projectId}`,
+          { ...task, projectId },
+          {
+            headers: {
+              "auth-token": token,
+            },
+          }
+        );
+        
+        setSuccessMessage("Task created successfully!");
+        setTask({
+          name: "",
+          number: 0,
+          description: "",
+          startDate: "",
+          taskStatus: "To do",
+          assignedTeamMember: "",
+          attachments: "",
+          projectId,
+        });
 
-    return (
-        <div>
-      <h1>Create tasks for the project</h1>
+      navigate(`/projects/${projectId}`);
+      } catch (error) {
+        setError(error.message);
+        console.error("Error with request for creating task:", error);
+      }
+      
+      
+
+    } catch (error) {
+      setError(error.message);
+      console.error("Error adding task:", error);
+    
+    }
+  };
+
+  return (
+    <div>
+      <h1>Create task for the project</h1>
+      {successMessage && <p className="success-message">{successMessage}</p>}
+      {error && <p className="error-message">{error}</p>}
       <div>
         <label>Name:</label>
-        <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+        <input
+          type="text"
+          name="name"
+          value={task.name}
+          onChange={handleInputChange}
+        />
       </div>
       <div>
         <label>Number:</label>
-        <input type="number" value={number} onChange={(e) => setNumber(parseInt(e.target.value))} />
+        <input
+          type="number"
+          name="number"
+          value={task.number}
+          onChange={handleInputChange}
+        />
       </div>
       <div>
         <label>Description:</label>
-        <textarea value={description} onChange={(e) => setDescription(e.target.value)} />
+        <textarea
+          name="description"
+          value={task.description}
+          onChange={handleInputChange}
+        />
       </div>
       <div>
         <label>Start Date:</label>
-        <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+        <input
+          type="date"
+          name="startDate"
+          value={task.startDate}
+          onChange={handleInputChange}
+        />
       </div>
       <div>
         <label>Task Status:</label>
-        <select value={taskStatus} onChange={(e) => setTaskStatus(e.target.value)}>
+        <select
+          name="taskStatus"
+          value={task.taskStatus}
+          onChange={handleInputChange}
+        >
           <option value="To do">To do</option>
           <option value="In progress">In progress</option>
           <option value="Done">Done</option>
@@ -72,42 +126,25 @@ const CreateTasks = () => {
       </div>
       <div>
         <label>Assigned Team Member:</label>
-        <input type="text" value={assignedTeamMember} onChange={(e) => setAssignedTeamMember(e.target.value)} />
+        <input
+          type="text"
+          name="assignedTeamMember"
+          value={task.assignedTeamMember}
+          onChange={handleInputChange}
+        />
       </div>
       <div>
         <label>Attachments:</label>
-        <input type="text" value={attachments} onChange={(e) => setAttachments(e.target.value)} />
+        <input
+          type="text"
+          name="attachments"
+          value={task.attachments}
+          onChange={handleInputChange}
+        />
       </div>
       <button onClick={handleAddTask}>Add Task</button>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Number</th>
-            <th>Description</th>
-            <th>Start Date</th>
-            <th>Task Status</th>
-            <th>Assigned Team Member</th>
-            <th>Attachments</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tasks.map((task, index) => (
-            <tr key={index}>
-              <td>{task.name}</td>
-              <td>{task.number}</td>
-              <td>{task.description}</td>
-              <td>{task.startDate}</td>
-              <td>{task.taskStatus}</td>
-              <td>{task.assignedTeamMember}</td>
-              <td>{task.attachments}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <button onClick={handleDone}>Done</button>
     </div>
-    )
-}
+  );
+};
 
 export default CreateTasks;

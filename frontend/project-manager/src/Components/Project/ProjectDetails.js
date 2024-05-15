@@ -59,13 +59,13 @@ const ProjectDetails = ( {  userId  }) => {
             }
 
 
-            await axios.post("http://localhost:5000/api/projects/", formData, {
+            const response = await axios.post("http://localhost:5000/api/projects/", formData, {
                 headers: {
                     "auth-token": token,
                     "Content-Type": "application/json"
                 }
             });
-            navigate("/dashboard");
+            navigate('/dashboard');
         } catch (error) {
             console.error("Error creating project: ", error);
         }
@@ -86,7 +86,7 @@ const ProjectDetails = ( {  userId  }) => {
                         <option key={team._id} value={team._id}>{team.name}</option>
                     ))}
                 </select>
-                <button type="submit" disabled={loading}>Save Project</button>
+                <button type="submit" disabled={loading}>Save</button>
             </form>
         </div>
     )

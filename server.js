@@ -37,7 +37,7 @@ app.use('/api/user', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/teams', teamRoutes);
 app.use('/api/projects', projectRoutes);
-app.use('/api/projects/:projectId/tasks', taskRoutes);
+app.use('/api/tasks', taskRoutes);
 
 
 // For Render (health check path)
