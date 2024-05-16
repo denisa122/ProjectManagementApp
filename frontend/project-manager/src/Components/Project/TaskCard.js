@@ -54,7 +54,7 @@ const TaskCard = ({ task, projectId, index }) => {
     <Draggable draggableId={task._id} index={index}>
       {(provided) => (
         <div
-          className="block max-w-[18rem] rounded-lg bg-secondary text-white shadow-secondary-1"
+          className="block max-w-[18rem] rounded-lg bg-danger text-white shadow-secondary-1"
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
