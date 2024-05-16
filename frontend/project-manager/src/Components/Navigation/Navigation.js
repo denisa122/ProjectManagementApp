@@ -54,24 +54,12 @@ const Navigation = () => {
 
   return (
     <nav className="relative flex w-full flex-nowrap items-center justify-between bg-sky-100 py-2 shadow-dark-mild lg:flex-wrap lg:justify-start lg:py-4">
-      <div className="flex w-full flex-wrap items-center justify-between px-3">
+      <div className="flex w-full flex-wrap items-center justify-between px-3 py-4 block rounded-lg bg-white shadow-lg dark:bg-neutral-800">
         <div
           className="!visible hidden flex-grow basis-[100%] items-center lg:!flex lg:basis-auto"
           id="navbarSupportedContent1"
           data-twe-collapse-item
         >
-          {/** Logo */}
-          {/* <a
-            className="mb-4 me-5 ms-2 mt-3 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mb-0 lg:mt-0"
-            href="#"
-          >
-            <img
-              src={Logo}
-              style={{ height: "40px" }}
-              alt="CollabHub Logo"
-              loading="lazy"
-            />
-          </a> */}
 
           {/** Left navigation links */}
           <ul
