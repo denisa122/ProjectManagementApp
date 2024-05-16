@@ -53,7 +53,7 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="bg-gradient border-gradient relative flex w-full flex-nowrap items-center justify-between bg-sky-100 py-2 shadow-dark-mild lg:flex-wrap lg:justify-start lg:py-4">
+    <nav className="relative flex w-full flex-nowrap items-center justify-between bg-sky-100 py-2 shadow-dark-mild lg:flex-wrap lg:justify-start lg:py-4">
       <div className="flex w-full flex-wrap items-center justify-between px-3">
         <div
           className="!visible hidden flex-grow basis-[100%] items-center lg:!flex lg:basis-auto"

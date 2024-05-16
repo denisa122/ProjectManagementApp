@@ -32,12 +32,16 @@ const ProjectCard = ({ _id, name, projectStatus, startDate, endDate }) => {
   }, [startDate, endDate]);
 
   return (
-    <div className="projectCard">
-      <img src={Project} alt="project-thumbnail" className="projectImg"></img>
-      <h3 className="projectTitle">{name}</h3>
-      <div className="projectDetailsRow">
-        <p className="projectStatus">{projectStatus}</p>
-        <div className="timeLeft">
+    <div className="mx-3 mt-6 flex flex-col self-start rounded-lg bg-white text-surface shadow-secondary-1 dark:bg-surface-dark dark:text-white sm:shrink-0 sm:grow sm:basis-0">
+      <a>
+        <img className="rounded-t-lg" src={Project} alt="project"></img>
+      </a>
+      <div className="p-6 flex flex-row justify-between items-baseline">
+        <div>
+          <h5 className="mb-2 text-xl font-medium leading-tight">{name}</h5>
+          <p className="mb-4 text-base">{projectStatus}</p>
+        </div>
+        <div className="timeLeft text-sm">
           <img src={Clock} alt="clock" className="clockImg"></img>
           <p>{timeLeft}</p>
         </div>
