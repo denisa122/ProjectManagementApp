@@ -1,4 +1,3 @@
-// Dependencies
 const router = require('express').Router();
 
 const teamController = require('../controllers/teamController');

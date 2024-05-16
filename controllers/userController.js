@@ -1,4 +1,3 @@
-// Dependencies
 const bcrypt = require("bcrypt");
 
 const User = require("../models/user");
@@ -37,7 +36,6 @@ const updateUser = async (req, res) => {
   // Ensure the requested user ID matches the authenticated user's ID
   if (req.user && req.user.id === userId) {
     try {
-      // Check if user exists
       const existingUser = await User.findById(userId);
 
       if (!existingUser) {
@@ -46,7 +44,6 @@ const updateUser = async (req, res) => {
           .send({ message: `Cannot update user. User not found.` });
       }
 
-      // Update user fields
       existingUser.firstName = req.body.firstName || existingUser.firstName;
       existingUser.lastName = req.body.lastName || existingUser.lastName;
       existingUser.email = req.body.email || existingUser.email;
@@ -83,7 +80,6 @@ const deleteUser = async (req, res) => {
   // Ensure the requested user ID matches the authenticated user's ID
   if (req.user && req.user.id === userId) {
     try {
-      // Delete user
       const deletedUser = await User.findByIdAndDelete(userId);
 
       // Check if user was deleted

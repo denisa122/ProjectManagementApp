@@ -1,52 +1,6 @@
-.homepageContainer {
-    display: flex;
-    margin: 180px;
-}
-
-.heroImgContainer {
-    flex: 1;
-    margin-top: -60px;
-}
-
-.homepageLogo {
-    object-fit: cover;
-    width: 250px;
-    margin-left: 20px;
-}
-
-.homepageTitle {
-    margin-top: 0px;
-}
-
-.homepageLoginFormContainer {
-    border: 1px solid black;
-    flex: 1;
-    text-align: center;
-    height: 350px;
-}
-
 #homepageLoginForm {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-.homepageSignupSection{
-    margin-top: 20px;
-}
-
-.homepageLoginFormContainer label {
-    margin-bottom: 8px;
-}
-
-.homepageLoginFormContainer input {
-    margin-bottom: 12px;
-}
-.homepageLoginFormContainer button {
-    margin-top: 4px;
-}
-
-.homepageLoginFormContainer h2 {
-    margin-top: 30px;
 }

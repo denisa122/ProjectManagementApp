@@ -1,4 +1,3 @@
-// Dependencies
 const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
@@ -50,5 +49,4 @@ let taskSchema = new Schema({
   ],
 });
 
-// Export model
 module.exports = mongoose.model("Task", taskSchema);

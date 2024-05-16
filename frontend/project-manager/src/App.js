@@ -48,22 +48,15 @@ function App() {
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        /** Change to PrivateRoute after I implement the logic for it */
+        <Route path="/register" element={<Register />} /> 
+
         <Route path="/dashboard" element={<Dashboard />}></Route>
-        <Route
-          path="/projects/:projectId"
-          element={<SingleProjectPage />}
-        ></Route>
+
+        <Route path="/projects/:projectId" element={<SingleProjectPage />}></Route>
         <Route path="/create-tasks/:id" element={<CreateTasks />}></Route>
-        <Route
-          path="/new-project"
-          element={<NewProject userId={userId} />}
-        ></Route>
-        <Route
-          path="/project-details/:id"
-          element={<ProjectDetails userId={userId} />}
-        ></Route>
+        <Route path="/new-project" element={<NewProject userId={userId} />}></Route>
+        <Route path="/project-details/:id" element={<ProjectDetails userId={userId} />}></Route>
+        
         <Route path="/team-details" element={<TeamDetailsPage userId={userId}/>}></Route>
       </Routes>
     </BrowserRouter>

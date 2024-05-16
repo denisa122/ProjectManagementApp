@@ -68,5 +68,4 @@ mongoose
 
 console.log("dbhost", process.env.DBHOST);
 
-// Export app as a module
 module.exports = app;

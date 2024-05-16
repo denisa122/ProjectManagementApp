@@ -1,4 +1,3 @@
-// Dependencies
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -40,7 +39,6 @@ const register = async (req, res) => {
   try {
     const savedUser = await userObject.save();
 
-    // There was no error and we return the user's ID
     res.json({ error: null, data: savedUser });
   } catch (error) {
     res.status(400).json({ error });
@@ -71,7 +69,7 @@ const login = async (req, res) => {
     return res.status(400).json({ error: "Incorrect email or password" });
   }
 
-  // Create and assign a token with email and id
+  // Create and assign a token with email, id and role
   const token = jwt.sign(
     {
       email: user.email,

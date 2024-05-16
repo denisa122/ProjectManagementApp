@@ -2,44 +2,6 @@
     margin: 40px;
 }
 
-.dashboardContainerLeader {
-    margin: 80px;
-}
-
-.dashboardHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.dashboardLogo {
-    width: 200px;
-}
-
-.projectsContainer {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-}
-
-.projectCard {
-    background-color: #dad8fc;
-    box-shadow: 0 3px 10px rgba(176, 38, 128, 0.152);
-    padding: 20px;
-    margin: 10px;
-}
-
-.projectImg {
-    object-fit: cover;
-    height: 150px;
-    margin-left: 20px;
-}
-
-.projectDetailsRow {
-    display: flex;
-    justify-content: space-between;
-}
-
 .timeLeft {
     display: flex;
     flex-direction: row;

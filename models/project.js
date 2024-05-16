@@ -1,4 +1,3 @@
-// Dependencies
 const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
@@ -47,5 +46,4 @@ let projectSchema = new Schema({
   },
 });
 
-// Export model
 module.exports = mongoose.model("Project", projectSchema);

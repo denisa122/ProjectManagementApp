@@ -3,10 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 
-import Logo from "../../assets/logo.png";
 import ProfileIcon from "../../assets/avatar.svg";
-
-import "./Navigation.css";
 
 const Navigation = () => {
   const navigate = useNavigate();
@@ -61,13 +58,11 @@ const Navigation = () => {
           data-twe-collapse-item
         >
 
-          {/** Left navigation links */}
           <ul
             className="list-style-none me-auto flex flex-col ps-0 lg:flex-row"
             data-twe-navbar-nav-ref
           >
             <li className="mb-4 lg:mb-0 lg:pe-2" data-twe-nav-item-ref>
-              {/** Dashboard link */}
               <Link
                 className="text-black/60 transition duration-200 hover:text-black/80 hover:ease-in-out focus:text-black/80 active:text-black/80 motion-reduce:transition-none dark:text-white/60 dark:hover:text-white/80 dark:focus:text-white/80 dark:active:text-white/80 lg:px-2"
                 style={{fontSize: "large", fontWeight: "400"}}
@@ -77,7 +72,6 @@ const Navigation = () => {
                 Dashboard
               </Link>
             </li>
-            {/** Team link */}
             <li className="mb-4 lg:mb-0 lg:pe-2" data-twe-nav-item-ref>
               {isTeamLeader && (
                 <Link
@@ -111,10 +105,8 @@ const Navigation = () => {
               data-twe-dropdown-toggle-ref
               aria-expanded="false"
             >
-              {/** Dropdown trigger icon */}
               <span className="w-8 h-8">
                 {" "}
-                {/* Adjust width and height as needed */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -128,7 +120,6 @@ const Navigation = () => {
                   />
                 </svg>
               </span>
-              {/** Notification counter */}
               <span className="absolute -top-1 -right-1 rounded-full bg-danger px-[0.35em] py-[0.15em] text-[0.6rem] font-bold leading-none text-white">
                 1
               </span>

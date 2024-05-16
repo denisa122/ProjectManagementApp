@@ -3,8 +3,6 @@ import axios from "axios";
 
 import { Draggable } from "react-beautiful-dnd";
 
-import "./Task.css";
-
 const TaskCard = ({ task, projectId, index }) => {
   const [taskDetails, setTaskDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true); // Set initial loading state to true

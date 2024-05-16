@@ -1,4 +1,3 @@
-// Dependencies
 const Task = require("../models/task");
 const Project = require("../models/project");
 
@@ -12,7 +11,6 @@ const createTask = async (req, res) => {
     const assignedTeamMember = req.body.assignedTeamMember;
     const attachments = req.body.attachments;
 
-    // I had to make it a query parameter because I couldn't access it from the URL
     const projectId = req.params.projectId;
 
     const task = new Task({
@@ -99,7 +97,7 @@ const getTaskDetailsById = async (req, res) => {
 
 const updateTask = async (req, res) => {
   const taskId = req.params.taskId;
-  const {taskStatus} = req.body;
+  const { taskStatus } = req.body;
 
   try {
     const updatedTask = await Task.findByIdAndUpdate(

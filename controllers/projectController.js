@@ -1,4 +1,3 @@
-// Dependencies
 const Project = require("../models/project");
 const ProjectTemplate = require("../models/projectTemplate");
 
@@ -53,7 +52,6 @@ const createProject = async (req, res) => {
         return res.status(400).json({ message: "Invalid template Id" });
       }
 
-      // Get user id from request
       const userId = req.user.id;
 
       // Create project using template and assign teamLeader
@@ -107,7 +105,6 @@ const getAllProjectsForUser = async (req, res) => {
   const userId = req.params.userId;
 
   try {
-    // Find teams where the user is a member or leader
     const teams = await Team.find({
       $or: [{ teamLeader: userId }, { members: userId }],
     });

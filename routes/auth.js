@@ -9,7 +9,7 @@ router.post("/register", authController.register);
 // // /api/user/login
 router.post("/login", authController.login);
 
-// Logout -- TO DO: IMPLEMENT
+// Logout
 // /api/user/logout
 router.post("/logout", authController.logout);
 

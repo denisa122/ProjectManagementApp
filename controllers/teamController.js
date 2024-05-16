@@ -1,4 +1,3 @@
-//Dependencies
 const Team = require("../models/team");
 const User = require("../models/user");
 
@@ -28,15 +27,12 @@ const addTeamMemberToTeam = async (req, res) => {
 
     // Check if the user already exists in the team
     if (team.members.includes(userId)) {
-      res
-        .status(400)
-        .send({
-          message: `User with id=${userId} is already a member of the team.`,
-        });
+      res.status(400).send({
+        message: `User with id=${userId} is already a member of the team.`,
+      });
       return;
     }
 
-    // Add the member to the team
     team.members.push(userId);
 
     const updateTeam = await team.save();
@@ -164,15 +160,12 @@ const removeTeamMemberFromTeam = async (req, res) => {
 
     // Check if the user is a member of the team
     if (!team.members.includes(userId)) {
-      res
-        .status(400)
-        .send({
-          message: `User with id=${userId} is not a member of the team.`,
-        });
+      res.status(400).send({
+        message: `User with id=${userId} is not a member of the team.`,
+      });
       return;
     }
 
-    // Remove the member from the team
     team.members = team.members.filter((memberId) => memberId != userId);
 
     const updatedTeam = await team.save();

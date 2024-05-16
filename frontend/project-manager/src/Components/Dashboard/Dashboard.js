@@ -108,11 +108,15 @@ const Dashboard = () => {
                 data-twe-ripple-color="light"
                 className="flex items-center rounded bg-primary px-10 pb-4 pt-4 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
                 style={{
-                    background:
-                      "linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)",
-                  }}
+                  background:
+                    "linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)",
+                }}
               >
-                <img src={Plus} alt="plus icon" className="me-1 h-5 w-5 mr-3"></img>
+                <img
+                  src={Plus}
+                  alt="plus icon"
+                  className="me-1 h-5 w-5 mr-3"
+                ></img>
                 New project
               </button>
             </Link>
