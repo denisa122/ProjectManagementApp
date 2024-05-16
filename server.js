@@ -46,6 +46,14 @@ app.get("/api/welcome", (req, res) => {
 
 mongoose.connection.once("open", () => console.log("Connected to MongoDB"));
 
+// Serve static files from the React frontend
+app.use(express.static(path.join(__dirname, 'frontend', 'project-manager', 'build')));
+
+// Serve React frontend for all other routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend', 'project-manager', 'build', 'index.html'));
+});
+
 const PORT = process.env.PORT || 5000;
 
 // Start up the server
