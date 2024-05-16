@@ -106,6 +106,10 @@ const NewProject = ({ userId }) => {
           </div>
         </div>
       </div>
+       
+      <div className="pt-12">
+        <Footer />
+      </div>
     </div>
   );
 };

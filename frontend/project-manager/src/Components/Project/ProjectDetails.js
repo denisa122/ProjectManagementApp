@@ -212,7 +212,9 @@ const ProjectDetails = ({ userId }) => {
           </div>
         </div>
       </section>
-      <Footer />
+      <div className="pt-12">
+        <Footer />
+      </div>
     </div>
   );
 };

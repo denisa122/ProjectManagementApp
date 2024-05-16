@@ -177,6 +177,9 @@ const Dashboard = () => {
           </div>
         </div>
       )}
+      <div className="pt-12">
+        <Footer />
+      </div>
     </div>
   );
 };

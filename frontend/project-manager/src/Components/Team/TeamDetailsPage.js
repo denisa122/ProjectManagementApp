@@ -1,11 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 
 import "./Team.css";
 
 import Navigation from "../Navigation/Navigation";
-import { useParams } from "react-router-dom";
+
 
 const TeamDetailsPage = ({ userId }) => {
   const { teamId } = useParams();

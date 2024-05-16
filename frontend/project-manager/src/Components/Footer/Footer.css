@@ -1,9 +1,8 @@
-.footerContainer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #5e8bef;
-    padding: 10px 0;
-    text-align: center;
+.bg-gradient {
+    background: linear-gradient(to right, rgb(238, 119, 36), rgb(216, 54, 58), rgb(221, 54, 117), rgb(180, 69, 147));
+     
 }
+.border-gradient {
+    border-image: linear-gradient(to right, rgba(238, 119, 36, 0.6), rgba(216, 54, 58, 0.6), rgba(221, 54, 117, 0.6), rgba(180, 69, 147, 0.6)) 30;
+    border-top: 3px solid transparent; /* Set a transparent border to maintain spacing */
+  }
