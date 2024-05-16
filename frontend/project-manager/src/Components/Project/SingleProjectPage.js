@@ -8,6 +8,7 @@ import CreateTasks from "./CreateTasks";
 
 import Navigation from "../Navigation/Navigation";
 import Footer from "../Footer/Footer";
+import Plus from "../../assets/plus.svg";
 
 const SingleProjectPage = () => {
   const navigate = useNavigate();
@@ -155,36 +156,50 @@ const SingleProjectPage = () => {
   return (
     <div>
       <Navigation />
-      <h2>Single Project Details</h2>
       {project && (
-        <div>
-          <p>Name: {project.name}</p>
-          <p>Description: {project.description}</p>
-          <p>Start date: {project.startDate}</p>
-          <p>End date: {project.endDate}</p>
-          <p>Project status: {project.projectStatus}</p>
-          <p>Team leader: {project.teamLeader}</p>
+        <div className="m-10">
+          <div className="ml-14">
+            <p className="text-black text-4xl mb-2">{project.name}</p>
+            <p className="text-black text-xl mb-6">{project.description}</p>
+            <p className="text-black text-xl mb-2">Tasks:</p>
+          </div>
           <DragDropContext onDragEnd={handleDragEnd}>
-            <div style={{ display: "flex" }}>
+            <div className="grid-cols-1 sm:grid md:grid-cols-3 gap-0 mx-12">
               <Droppable droppableId="todo">
                 {(provided) => (
                   <div
                     ref={provided.innerRef}
                     {...provided.droppableProps}
-                    style={{ margin: 8, border: "1px solid lightgrey", borderRadius: 4, padding: 8, width: 400 }}
+                    style={{
+                      margin: 8,
+                      border: "1px solid lightgrey",
+                      borderRadius: 4,
+                      padding: 8,
+                    }}
                   >
-                    <h3>To Do</h3>
+                    <h3 className="text-black text-3xl text-center mt-4 mb-10">
+                      To Do
+                    </h3>
                     {tasks
                       .filter((task) => task.taskStatus === "To do")
                       .map((task, index) => (
-                        <Draggable key={task._id} draggableId={task._id} index={index}>
+                        <Draggable
+                          key={task._id}
+                          draggableId={task._id}
+                          index={index}
+                        >
                           {(provided) => (
                             <div
+                              className="my-6 flex content-center justify-center"
                               ref={provided.innerRef}
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
                             >
-                              <TaskCard task={task} projectId={projectId} index={index}/>
+                              <TaskCard
+                                task={task}
+                                projectId={projectId}
+                                index={index}
+                              />
                             </div>
                           )}
                         </Draggable>
@@ -198,20 +213,36 @@ const SingleProjectPage = () => {
                   <div
                     ref={provided.innerRef}
                     {...provided.droppableProps}
-                    style={{ margin: 8, border: "1px solid lightgrey", borderRadius: 4, padding: 8, width: 400 }}
+                    style={{
+                      margin: 8,
+                      border: "1px solid lightgrey",
+                      borderRadius: 4,
+                      padding: 8,
+                    }}
                   >
-                    <h3>In Progress</h3>
+                    <h3 className="text-black text-3xl text-center mt-4 mb-10">
+                      In Progress
+                    </h3>
                     {tasks
                       .filter((task) => task.taskStatus === "In progress")
                       .map((task, index) => (
-                        <Draggable key={task._id} draggableId={task._id} index={index}>
+                        <Draggable
+                          key={task._id}
+                          draggableId={task._id}
+                          index={index}
+                        >
                           {(provided) => (
                             <div
+                              className="my-6 flex content-center justify-center"
                               ref={provided.innerRef}
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
                             >
-                              <TaskCard task={task} projectId={projectId} index={index}/>
+                              <TaskCard
+                                task={task}
+                                projectId={projectId}
+                                index={index}
+                              />
                             </div>
                           )}
                         </Draggable>
@@ -225,20 +256,36 @@ const SingleProjectPage = () => {
                   <div
                     ref={provided.innerRef}
                     {...provided.droppableProps}
-                    style={{ margin: 8, border: "1px solid lightgrey", borderRadius: 4, padding: 8, width: 400 }}
+                    style={{
+                      margin: 8,
+                      border: "1px solid lightgrey",
+                      borderRadius: 4,
+                      padding: 8,
+                    }}
                   >
-                    <h3>Done</h3>
+                    <h3 className="text-black text-3xl text-center mt-4 mb-10">
+                      Done
+                    </h3>
                     {tasks
                       .filter((task) => task.taskStatus === "Done")
                       .map((task, index) => (
-                        <Draggable key={task._id} draggableId={task._id} index={index}>
+                        <Draggable
+                          key={task._id}
+                          draggableId={task._id}
+                          index={index}
+                        >
                           {(provided) => (
                             <div
+                              className="my-6 flex content-center justify-center"
                               ref={provided.innerRef}
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
                             >
-                              <TaskCard task={task} projectId={projectId} index={index}/>
+                              <TaskCard
+                                task={task}
+                                projectId={projectId}
+                                index={index}
+                              />
                             </div>
                           )}
                         </Draggable>
@@ -249,15 +296,46 @@ const SingleProjectPage = () => {
               </Droppable>
             </div>
           </DragDropContext>
-          {isTeamLeader && (
-            <button onClick={handleAddTask}>Add New Task</button>
-          )}
-          {showCreateTask && (
-            <div>
-              <CreateTasks projectId={projectId} teamMembers={project.team[0].members}/>
-              <button onClick={handleDoneAddingTasks}>Done</button>
-            </div>
-          )}
+
+          <div className="ml-14 mt-4 mb-6">
+            {isTeamLeader && (
+              <button
+                type="button"
+                onClick={handleAddTask}
+                data-twe-ripple-init
+                data-twe-ripple-color="light"
+                className="flex items-center rounded bg-primary px-6 pb-3 pt-3 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+                style={{
+                  background:
+                    "linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)",
+                }}
+              >
+                <img
+                  src={Plus}
+                  alt="plus icon"
+                  className="me-1 h-5 w-5 mr-3"
+                ></img>
+                Add task
+              </button>
+            )}
+            {showCreateTask && (
+              <div className="flex flex-col space-y-4">
+                <CreateTasks
+                  projectId={projectId}
+                  teamMembers={project.team[0].members}
+                />
+                <div>
+                <button onClick={handleDoneAddingTasks}
+                className="text-start rounded bg-primary px-6 pb-3 pt-3 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+                style={{
+                  background:
+                    "linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)",
+                }}
+                >Done</button>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>

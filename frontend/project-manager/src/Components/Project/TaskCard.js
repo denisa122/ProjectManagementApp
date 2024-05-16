@@ -13,7 +13,7 @@ const TaskCard = ({ task, projectId, index }) => {
   useEffect(() => {
     const fetchTaskDetails = async () => {
       if (!task) {
-        return; 
+        return;
       }
 
       try {
@@ -42,7 +42,6 @@ const TaskCard = ({ task, projectId, index }) => {
     fetchTaskDetails();
   }, [task, projectId]);
 
- 
   if (isLoading || !taskDetails) {
     return <p>Loading task details...</p>;
   }
@@ -52,37 +51,40 @@ const TaskCard = ({ task, projectId, index }) => {
   }
 
   return (
-    <Draggable draggableId={task._id} index={index}> 
+    <Draggable draggableId={task._id} index={index}>
       {(provided) => (
         <div
-          className="taskCard"
+          className="block max-w-[18rem] rounded-lg bg-secondary text-white shadow-secondary-1"
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <h3>
-            # {taskDetails.task.number} {taskDetails.task.name}
-          </h3>
-          <p>
-            Description: {taskDetails.task.description}
-          </p>
-          <p>Status: {taskDetails.task.taskStatus}</p>
-          
-            <p>
-              Assigned Team Member:{" "}
-              {taskDetails.task.assignedTeamMember &&
-                taskDetails.task.assignedTeamMember
-                  .map((member) => `${member.firstName} ${member.lastName}`)
-                  .join(", ")}
+          <div className="border-b-2 border-black/20 px-6 py-3">
+            <h3>
+              # {taskDetails.task.number} {taskDetails.task.name}
+            </h3>
+          </div>
+
+          <div className="p-6">
+            <h5 className="mb-2 text-xl font-medium leading-tight">
+              {taskDetails.task.description}
+            </h5>
+            <p className="text-base">
+              Status: {taskDetails.task.taskStatus} <br />
+              Start date: {taskDetails.task.startDate}
+              <p>
+                Assigned Team Member:{" "}
+                {taskDetails.task.assignedTeamMember &&
+                  taskDetails.task.assignedTeamMember
+                    .map((member) => `${member.firstName} ${member.lastName}`)
+                    .join(", ")}
+              </p>
             </p>
-          
-          
-          <p>Start date: {taskDetails.task.startDate}</p>
+          </div>
         </div>
       )}
     </Draggable>
   );
 };
-
 
 export default TaskCard;

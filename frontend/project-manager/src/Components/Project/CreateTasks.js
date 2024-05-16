@@ -69,10 +69,16 @@ const CreateTasks = ({ projectId, teamMembers }) => {
 
   return (
     <div>
-      <h1>Create task for the project</h1>
+      <h1 className="text-black text-xl mt-4">Create task for the project</h1>
+      <p className="my-4">
+        Press "Add task" to add the task to the project. You can add more tasks
+        at once <br></br>
+        Press "Done" when you are finished and refresh the page so thee the new
+        tasks you just added!
+      </p>
       {successMessage && <p className="success-message">{successMessage}</p>}
       {error && <p className="error-message">{error}</p>}
-      <div>
+      <div className="mb-2">
         <label>Name:</label>
         <input
           type="text"
@@ -81,7 +87,7 @@ const CreateTasks = ({ projectId, teamMembers }) => {
           onChange={handleInputChange}
         />
       </div>
-      <div>
+      <div className="mb-2">
         <label>Number:</label>
         <input
           type="number"
@@ -90,7 +96,7 @@ const CreateTasks = ({ projectId, teamMembers }) => {
           onChange={handleInputChange}
         />
       </div>
-      <div>
+      <div className="mb-2">
         <label>Description:</label>
         <textarea
           name="description"
@@ -98,7 +104,7 @@ const CreateTasks = ({ projectId, teamMembers }) => {
           onChange={handleInputChange}
         />
       </div>
-      <div>
+      <div className="mb-2">
         <label>Start Date:</label>
         <input
           type="date"
@@ -107,7 +113,7 @@ const CreateTasks = ({ projectId, teamMembers }) => {
           onChange={handleInputChange}
         />
       </div>
-      <div>
+      <div className="mb-2">
         <label>Task Status:</label>
         <select
           name="taskStatus"
@@ -119,7 +125,7 @@ const CreateTasks = ({ projectId, teamMembers }) => {
           <option value="Done">Done</option>
         </select>
       </div>
-      <div>
+      <div className="mb-2">
         <label>Assigned Team Member:</label>
         <select
           name="assignedTeamMember"
@@ -127,14 +133,14 @@ const CreateTasks = ({ projectId, teamMembers }) => {
           onChange={handleInputChange}
         >
           <option value="">Select a team member</option>
-          {teamMembers.map(memberId => (
+          {teamMembers.map((memberId) => (
             <option key={memberId} value={memberId}>
               {memberId}
             </option>
           ))}
         </select>
       </div>
-      <div>
+      <div className="mb-4">
         <label>Attachments:</label>
         <input
           type="text"
@@ -143,7 +149,16 @@ const CreateTasks = ({ projectId, teamMembers }) => {
           onChange={handleInputChange}
         />
       </div>
-      <button onClick={handleAddTask}>Add Task</button>
+      <button
+        className="flex items-center rounded bg-primary px-6 pb-3 pt-3 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+        style={{
+          background:
+            "linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)",
+        }}
+        onClick={handleAddTask}
+      >
+        Add Task
+      </button>
     </div>
   );
 };
