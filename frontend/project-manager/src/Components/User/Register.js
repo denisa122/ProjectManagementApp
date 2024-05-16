@@ -58,6 +58,7 @@ const Register = () => {
                   <h4 className="mb-2 mt-8 pb-1 text-xl font-semibold">
                     Sign up
                   </h4>
+                  {error && <p>{error}</p>}
                 </div>
 
                 <form id="registerForm" onSubmit={handleSubmit}>
