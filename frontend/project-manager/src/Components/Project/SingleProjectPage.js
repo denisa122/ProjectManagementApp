@@ -254,7 +254,7 @@ const SingleProjectPage = () => {
           )}
           {showCreateTask && (
             <div>
-              <CreateTasks projectId={projectId} />
+              <CreateTasks projectId={projectId} teamMembers={project.team[0].members}/>
               <button onClick={handleDoneAddingTasks}>Done</button>
             </div>
           )}

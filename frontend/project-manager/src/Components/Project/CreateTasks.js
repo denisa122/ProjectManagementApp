@@ -4,9 +4,8 @@ import axios from "axios";
 
 import "./Task.css";
 
-const CreateTasks = ({ projectId }) => {
+const CreateTasks = ({ projectId, teamMembers }) => {
   const navigate = useNavigate();
-  console.log("projectId", projectId);
 
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
@@ -122,12 +121,18 @@ const CreateTasks = ({ projectId }) => {
       </div>
       <div>
         <label>Assigned Team Member:</label>
-        <input
-          type="text"
+        <select
           name="assignedTeamMember"
           value={task.assignedTeamMember}
           onChange={handleInputChange}
-        />
+        >
+          <option value="">Select a team member</option>
+          {teamMembers.map(memberId => (
+            <option key={memberId} value={memberId}>
+              {memberId}
+            </option>
+          ))}
+        </select>
       </div>
       <div>
         <label>Attachments:</label>
