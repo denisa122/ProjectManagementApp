@@ -56,7 +56,11 @@ const Navigation = () => {
     <nav className="navbar">
       <div className="leftSide">
         <Link to="/dashboard">Projects</Link>
-        {isTeamLeader && <span style={{ paddingLeft: "20px" }}>Team</span>}
+        {isTeamLeader && (
+          <Link to="/team-details" style={{ paddingLeft: "20px" }}>
+            Team
+          </Link>
+        )}
       </div>
       <div className="rightSide">
         <input

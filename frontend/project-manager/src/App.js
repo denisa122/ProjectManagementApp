@@ -14,6 +14,8 @@ import ProjectDetails from "./Components/Project/ProjectDetails";
 
 import CreateTasks from "./Components/Project/CreateTasks";
 
+import TeamDetailsPage from "./Components/Team/TeamDetailsPage";
+
 function App() {
   const [userId, setUserId] = useState(null);
 
@@ -61,6 +63,7 @@ function App() {
           path="/project-details/:id"
           element={<ProjectDetails userId={userId} />}
         ></Route>
+        <Route path="/team-details" element={<TeamDetailsPage userId={userId}/>}></Route>
       </Routes>
     </BrowserRouter>
     
