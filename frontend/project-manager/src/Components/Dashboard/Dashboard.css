@@ -83,3 +83,44 @@
 .newProjectButton:hover {
     background-color: #6f64e5;
 }
+
+.confirmationContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .confirmationBox {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .confirmationBox p {
+    margin-bottom: 10px;
+  }
+  
+  .confirmationBox button {
+    margin-right: 10px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .confirmationBox button:first-child {
+    background-color: #ff4b4b; /* red color for "Yes" button */
+    color: white;
+  }
+  
+  .confirmationBox button:last-child {
+    background-color: #4caf50; /* green color for "No" button */
+    color: white;
+  }
