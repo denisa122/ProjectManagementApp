@@ -17,7 +17,7 @@ const TeamDetailsPage = ({ userId }) => {
     const fetchTeams = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/teams/leader/${userId}`,
+          `${process.env.REACT_APP_API_URL}/api/teams/leader/${userId}`,
           {
             headers: {
               "auth-token": localStorage.getItem("token"),
@@ -29,7 +29,7 @@ const TeamDetailsPage = ({ userId }) => {
         const teamsWithDetails = await Promise.all(
           response.data.map(async (team) => {
             const teamDetails = await axios.get(
-              `http://localhost:5000/api/teams/${team._id}`,
+              `${process.env.REACT_APP_API_URL}/api/teams/${team._id}`,
               {
                 headers: {
                   "auth-token": localStorage.getItem("token"),

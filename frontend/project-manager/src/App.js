@@ -25,7 +25,7 @@ function App() {
         const token = localStorage.getItem("token");
         if (token) {
           const response = await axios.get(
-            "http://localhost:5000/api/user/login-status",
+            `${process.env.REACT_APP_API_URL}/api/user/login-status`,
             {
               headers: {
                 "auth-token": token,

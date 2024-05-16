@@ -30,7 +30,7 @@ const Dashboard = () => {
         }
 
         const roleResponse = await axios.get(
-          "http://localhost:5000/api/user/login-status",
+          `${process.env.REACT_APP_API_URL}/api/user/login-status`,
           {
             headers: {
               "auth-token": token,
@@ -44,7 +44,7 @@ const Dashboard = () => {
 
         if (id) {
           const projectsResponse = await axios.get(
-            `http://localhost:5000/api/projects/users/${id}`,
+            `${process.env.REACT_APP_API_URL}/api/projects/users/${id}`,
             {
               headers: {
                 "auth-token": token,
@@ -68,7 +68,7 @@ const Dashboard = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.delete(
-        `http://localhost:5000/api/projects/${projectIdToDelete}`,
+        `${process.env.REACT_APP_API_URL}/api/projects/${projectIdToDelete}`,
         {
           headers: {
             "auth-token": token,

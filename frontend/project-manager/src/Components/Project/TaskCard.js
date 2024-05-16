@@ -23,7 +23,7 @@ const TaskCard = ({ task, projectId, index }) => {
         }
 
         const response = await axios.get(
-          `http://localhost:5000/api/tasks/project/${projectId}/task/${task._id}`,
+          `${process.env.REACT_APP_API_URL}/api/tasks/project/${projectId}/task/${task._id}`,
           {
             headers: {
               "auth-token": token,
@@ -31,7 +31,7 @@ const TaskCard = ({ task, projectId, index }) => {
           }
         );
         setTaskDetails(response.data);
-        setIsLoading(false); // Set loading state to false after fetching task details
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching task details:", error);
         setError(error.message);
@@ -42,7 +42,7 @@ const TaskCard = ({ task, projectId, index }) => {
     fetchTaskDetails();
   }, [task, projectId]);
 
-  // Conditional rendering based on loading state and task details
+ 
   if (isLoading || !taskDetails) {
     return <p>Loading task details...</p>;
   }

@@ -33,7 +33,7 @@ const ProjectDetails = ({ userId }) => {
         }
 
         const response = await axios.get(
-          `http://localhost:5000/api/teams/leader/${userId}`,
+          `${process.env.REACT_APP_API_URL}/api/teams/leader/${userId}`,
           {
             headers: {
               "auth-token": token,
@@ -65,7 +65,7 @@ const ProjectDetails = ({ userId }) => {
       }
 
       const response = await axios.post(
-        "http://localhost:5000/api/projects/",
+        `${process.env.REACT_APP_API_URL}/api/projects/`,
         formData,
         {
           headers: {

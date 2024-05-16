@@ -24,7 +24,7 @@ const NewProject = ({ userId }) => {
       if (templateId) {
         requestData = { templateId };
         const response = await axios.post(
-          "http://localhost:5000/api/projects/",
+          `${process.env.REACT_APP_API_URL}/api/projects/`,
           requestData,
           {
             headers: {

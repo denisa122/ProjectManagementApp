@@ -27,7 +27,7 @@ const SingleProjectPage = () => {
       }
 
       const response = await axios.get(
-        `http://localhost:5000/api/tasks/${projectId}`,
+        `${process.env.REACT_APP_API_URL}/api/tasks/${projectId}`,
         {
           headers: {
             "auth-token": token,
@@ -50,7 +50,7 @@ const SingleProjectPage = () => {
         }
 
         const response = await axios.get(
-          `http://localhost:5000/api/projects/${projectId}`,
+          `${process.env.REACT_APP_API_URL}/api/projects/${projectId}`,
           {
             headers: {
               "auth-token": token,
@@ -78,7 +78,7 @@ const SingleProjectPage = () => {
         }
 
         const roleResponse = await axios.get(
-          "http://localhost:5000/api/user/login-status",
+          `${process.env.REACT_APP_API_URL}/api/user/login-status`,
           {
             headers: {
               "auth-token": token,

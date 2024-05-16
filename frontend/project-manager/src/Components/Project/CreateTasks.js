@@ -35,7 +35,7 @@ const CreateTasks = ({ projectId, teamMembers }) => {
 
       try {
         const response = await axios.post(
-          `http://localhost:5000/api/tasks/${projectId}`,
+          `${process.env.REACT_APP_API_URL}/api/tasks/${projectId}`,
           { ...task, projectId },
           {
             headers: {
