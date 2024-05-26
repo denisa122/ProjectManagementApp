@@ -38,7 +38,7 @@ const Register = () => {
   return (
     <div>
       <section
-        className="gradient-form h-full bg-neutral-200 dark:bg-neutral-700"
+        className="gradient-form h-full md:bg-neutral-200 md:dark:bg-neutral-700"
         style={{
           display: "flex",
           justifyContent: "center",
@@ -49,11 +49,11 @@ const Register = () => {
       >
         <div className="max-w-7xl h-full p-10"
         style={{minWidth: "800px"}}>
-          <div className="block rounded-lg bg-white shadow-lg dark:bg-neutral-800">
+          <div className="block rounded-lg bg-white md:shadow-lg dark:bg-neutral-800">
             <div>
               <div className="md:mx-6 md:p-12">
                 {/* <!--Logo--> */}
-                <div className="text-center">
+                <div className="text-center -mt-6 md:mt-0">
                   <img className="mx-auto w-32" src={Logo} alt="logo" />
                   <h4 className="mb-2 mt-8 pb-1 text-xl font-semibold">
                     Sign up

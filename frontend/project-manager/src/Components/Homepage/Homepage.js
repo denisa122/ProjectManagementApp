@@ -47,9 +47,9 @@ const Homepage = () => {
 
   return (
     <div>
-      <section class="gradient-form h-full bg-neutral-200 dark:bg-neutral-700"
+      <section class="gradient-form h-full md:bg-neutral-200 md:dark:bg-neutral-700"
       style={{display: "flex", justifyContent: "center", alignItems: "center", textAlign: "center", minHeight: "100vh"}}>
-        <div class="container h-full p-10">
+        <div class="md:container h-full pt-8 md:p-10">
           <div class="flex h-full flex-wrap items-center justify-center text-neutral-800 dark:text-neutral-200">
             <div class="w-full">
               <div class="block rounded-lg bg-white shadow-lg dark:bg-neutral-800">
