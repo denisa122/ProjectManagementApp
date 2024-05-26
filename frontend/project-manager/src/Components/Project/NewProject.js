@@ -72,7 +72,7 @@ const NewProject = ({ userId }) => {
               data-twe-ripple-color="light"
               style={{
                 background:
-                  "linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)",
+                  "linear-gradient(to right, #1e3c72, #2a5298, #1abc9c)",
               }}
             >
               Select
@@ -98,7 +98,7 @@ const NewProject = ({ userId }) => {
               data-twe-ripple-color="light"
               style={{
                 background:
-                  "linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)",
+                  "linear-gradient(to right, #1e3c72, #2a5298, #1abc9c)",
               }}
             >
               Select

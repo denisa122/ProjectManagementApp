@@ -54,12 +54,12 @@ const TaskCard = ({ task, projectId, index }) => {
     <Draggable draggableId={task._id} index={index}>
       {(provided) => (
         <div
-          className="block max-w-[18rem] rounded-lg border border-danger-600 bg-transparent text-surface shadow-secondary-1 dark:bg-surface-dark dark:text-white"
+          className="block max-w-[18rem] rounded-lg border border-primary bg-transparent text-surface shadow-secondary-1 dark:bg-surface-dark dark:text-white"
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <div className="border-b-2 border-danger-600 px-6 py-3">
+          <div className="border-b-2 border-primary px-6 py-3">
             <h3 className="text-xl">
               <strong># {taskDetails.task.number} {taskDetails.task.name}</strong>
             </h3>
@@ -80,7 +80,7 @@ const TaskCard = ({ task, projectId, index }) => {
               </p>
             </p>
           </div>
-          <div className="border-t-2 border-danger-600 px-6 py-3">
+          <div className="border-t-2 border-primary px-6 py-3">
           <strong>{taskDetails.task.taskStatus}</strong>
           </div>
         </div>
