@@ -6,7 +6,6 @@ import axios from "axios";
 import "./Homepage.css";
 
 import Logo from "../../assets/logo.png";
-import Footer from "../Footer/Footer";
 
 const Homepage = () => {
   const [email, setEmail] = useState("");
@@ -116,7 +115,7 @@ const Homepage = () => {
                             data-twe-ripple-color="light"
                             style={{
                               background:
-                                "linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)",
+                                "linear-gradient(to right, #1e3c72, #2a5298, #1abc9c)",
                             }}
                           >
                             Log in
@@ -132,7 +131,8 @@ const Homepage = () => {
                           <Link to="/register">
                             <button
                               type="button"
-                              class="inline-block rounded border-2 border-danger px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-danger transition duration-150 ease-in-out hover:border-danger-600 hover:bg-danger-50/50 hover:text-danger-600 focus:border-danger-600 focus:bg-danger-50/50 focus:text-danger-600 focus:outline-none focus:ring-0 active:border-danger-700 active:text-danger-700 dark:hover:bg-rose-950 dark:focus:bg-rose-950"
+                              class="inline-block rounded border-2 px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal transition duration-150 ease-in-out hover:border-danger-600 hover:bg-danger-50/50 hover:text-danger-600 focus:border-danger-600 focus:bg-danger-50/50 focus:text-danger-600 focus:outline-none focus:ring-0 active:border-danger-700 active:text-danger-700 dark:hover:bg-rose-950 dark:focus:bg-rose-950"
+                              style={{borderColor: "#2a5298", color: "#2a5298"}}
                               data-twe-ripple-init
                               data-twe-ripple-color="light"
                             >
@@ -149,7 +149,7 @@ const Homepage = () => {
                     class="flex items-center rounded-b-lg lg:w-6/12 lg:rounded-e-lg lg:rounded-bl-none"
                     style={{
                       background:
-                        "linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)",
+                        "linear-gradient(to right, #1e3c72, #2a5298, #1abc9c)",
                     }}
                   >
                     <div class="px-4 py-6 text-white md:mx-6 md:p-12">
