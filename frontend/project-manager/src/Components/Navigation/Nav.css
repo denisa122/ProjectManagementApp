@@ -1,5 +1,5 @@
 .navbar {
-    background-color: #fde5ed;
+    background-color: #E3F1F1;
     height: 5rem;
     width: 100vw;
     margin: 0 !important;
@@ -17,15 +17,15 @@
 }
 
 .desktopMenuListItem:hover {
-    color: rgb(180, 69, 147);
+    color: #2a5298;
     padding-bottom: 0.5rem;
-    border-bottom: 3px solid rgb(180, 69, 147);
+    border-bottom: 3px solid #2a5298;
 }
 
 .active {
-    color: rgb(180, 69, 147);
+    color: #2a5298;
     padding-bottom: 0.5rem;
-    border-bottom: 3px solid rgb(180, 69, 147);
+    border-bottom: 3px solid #2a5298;
 }
 
 .mobileMenu {
