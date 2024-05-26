@@ -11,6 +11,7 @@ import Dashboard from "./Components/Dashboard/Dashboard";
 import SingleProjectPage from "./Components/Project/SingleProjectPage";
 import NewProject from "./Components/Project/NewProject";
 import ProjectDetails from "./Components/Project/ProjectDetails";
+import EditProject from "./Components/Project/EditProject";
 
 import CreateTasks from "./Components/Project/CreateTasks";
 
@@ -102,7 +103,17 @@ function App() {
           path="/project-details/:id"
           element={
             <PrivateRoute
-              element={<ProjectDetails userId={userId} />}
+              element={<ProjectDetails userId={userId}/>}
+              isAuthenticated={isAuthenticated}
+            />
+          }
+        />
+
+        <Route
+          path="/edit-project/:id"
+          element={
+            <PrivateRoute
+              element={<EditProject userId={userId} />}
               isAuthenticated={isAuthenticated}
             />
           }

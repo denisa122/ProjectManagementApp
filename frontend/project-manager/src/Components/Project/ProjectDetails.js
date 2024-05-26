@@ -141,11 +141,11 @@ const ProjectDetails = ({ userId }) => {
                     </label>
                   </div>
 
-                  <div className="relative mb-4 text-left" data-twe-input-wrapper-init>
-                  <label
-                      htmlFor="startDate"
-                      className="ml-3"
-                      >
+                  <div
+                    className="relative mb-4 text-left"
+                    data-twe-input-wrapper-init
+                  >
+                    <label htmlFor="startDate" className="ml-3">
                       Start date
                     </label>
                     <input
@@ -158,11 +158,11 @@ const ProjectDetails = ({ userId }) => {
                     />
                   </div>
 
-                  <div className="relative mb-4 text-left" data-twe-input-wrapper-init>
-                  <label
-                      htmlFor="endDate"
-                      className="ml-3"
-                      >
+                  <div
+                    className="relative mb-4 text-left"
+                    data-twe-input-wrapper-init
+                  >
+                    <label htmlFor="endDate" className="ml-3">
                       End date
                     </label>
                     <input
@@ -188,6 +188,21 @@ const ProjectDetails = ({ userId }) => {
                           {team.name}
                         </option>
                       ))}
+                    </select>
+                  </div>
+
+                  <div className="relative mb-4" data-twe-input-wrapper-init>
+                    <select
+                      name="projectStatus"
+                      value={formData.projectStatus}
+                      onChange={handleChange}
+                      required
+                      className="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
+                    >
+                      <option value="">Select Project Status</option>
+                      <option value="Not started">Not started</option>
+                      <option value="In progress">In progress</option>
+                      <option value="Finished">Finished</option>
                     </select>
                   </div>
 
