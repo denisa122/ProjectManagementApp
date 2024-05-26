@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 import Navigation from "../Navigation/Navigation";
-
+import avatar from "../../assets/person.png";
 
 const TeamDetailsPage = ({ userId }) => {
   const { teamId } = useParams();
@@ -61,28 +61,41 @@ const TeamDetailsPage = ({ userId }) => {
 
   return (
     <div>
-        <Navigation />
-        <div style={{ margin: "100px" }}>
-          <div className="text-3xl md:text-5xl font-semibold">
+      <Navigation />
+      <div style={{ margin: "40px" }}>
+        <div className="text-3xl md:text-5xl font-semibold">
           <h2>Your Teams</h2>
-          </div>
-            
-            {teams.map((team) => (
-                <div key={team._id}>
-                    <h3>{team.name}</h3>
-                    <h4>Members:</h4>
-                    <ul>
-                        {team.members.map((member) => (
-                            <li key={member._id}>
-                                {member.firstName} {member.lastName}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            ))}
         </div>
+
+        {teams.map((team) => (
+          <div key={team._id} className="mt-10">
+            <h3 className="text-2xl mb-2 font-semibold">{team.name}</h3>
+            <h4 className="text-xl mb-5 font-medium">Members:</h4>
+            <ul className="flex flex-row">
+              {team.members.map((member) => (
+                <li key={member._id}>
+                  <div class="block max-w-[18rem] bg-white text-surface shadow-secondary-1 dark:bg-surface-dark dark:text-white">
+                    <div class="relative overflow-hidden bg-cover bg-no-repeat">
+                      <img
+                        class="w-32 rounded-full object-cover h-36 w-36 mr-5"
+                        src={avatar}
+                        alt="profile picture avatar"
+                      />
+                    </div>
+                    <div class="p-6">
+                      <p class="text-base">
+                        {member.firstName} {member.lastName}
+                      </p>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
     </div>
-);
+  );
 };
 
 export default TeamDetailsPage;
