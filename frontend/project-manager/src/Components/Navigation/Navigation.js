@@ -1,14 +1,19 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import axios from "axios";
 
 import ProfileIcon from "../../assets/avatar.svg";
+import menu from "../../assets/burgerNav.png";
+
+import "./Nav.css";
 
 const Navigation = () => {
   const navigate = useNavigate();
 
   const [isTeamLeader, setIsTeamLeader] = useState(false);
+
+  const [showMenu, setShowMenu] = useState(false);
 
   useEffect(() => {
     const fetchUserRole = async () => {
@@ -50,42 +55,29 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="relative flex w-full flex-nowrap items-center justify-between bg-sky-100 py-2 shadow-dark-mild lg:flex-wrap lg:justify-start lg:py-4">
-      <div className="flex w-full flex-wrap items-center justify-between px-3 py-4 block rounded-lg bg-white shadow-lg dark:bg-neutral-800">
-        <div
-          className="!visible hidden flex-grow basis-[100%] items-center lg:!flex lg:basis-auto"
-          id="navbarSupportedContent1"
-          data-twe-collapse-item
-        >
-
-          <ul
-            className="list-style-none me-auto flex flex-col ps-0 lg:flex-row"
-            data-twe-navbar-nav-ref
+    <nav className="navbar py-2 px-12 xl:px-8 shadow-dark-mild">
+      <div className="desktopMenu flex-grow basis-[100%] items-center lg:!flex lg:basis-auto justify-between">
+        <div>
+          <NavLink
+            exact
+            to="/dashboard"
+            activeClass="active"
+            className="desktopMenuListItem"
           >
-            <li className="mb-4 lg:mb-0 lg:pe-2" data-twe-nav-item-ref>
-              <Link
-                className="text-black/60 transition duration-200 hover:text-black/80 hover:ease-in-out focus:text-black/80 active:text-black/80 motion-reduce:transition-none dark:text-white/60 dark:hover:text-white/80 dark:focus:text-white/80 dark:active:text-white/80 lg:px-2"
-                style={{fontSize: "large", fontWeight: "400"}}
-                to="/dashboard"
-                data-twe-nav-link-ref
-              >
-                Dashboard
-              </Link>
-            </li>
-            <li className="mb-4 lg:mb-0 lg:pe-2" data-twe-nav-item-ref>
-              {isTeamLeader && (
-                <Link
-                  className="text-black/60 transition duration-200 hover:text-black/80 hover:ease-in-out focus:text-black/80 active:text-black/80 motion-reduce:transition-none dark:text-white/60 dark:hover:text-white/80 dark:focus:text-white/80 dark:active:text-white/80 lg:px-2"
-                  style={{fontSize: "large", fontWeight: "400"}}
-                  to="/team-details"
-                  data-twe-nav-link-ref
-                >
-                  Team
-                </Link>
-              )}
-            </li>
-          </ul>
-          <div className="relative flex items-center">
+            Dashboard
+          </NavLink>
+          {isTeamLeader && (
+            <NavLink
+              activeClass="active"
+              className="desktopMenuListItem"
+              to="/team-details"
+            >
+              Team
+            </NavLink>
+          )}
+        </div>
+
+        <div className="relative flex items-center">
             <a className="me-4 text-neutral-600 dark:text-white" href="#">
               <span className="[&>svg]:w-5">
                 <img
@@ -130,7 +122,48 @@ const Navigation = () => {
               style={{fontSize: "large", fontWeight: "400"}}>Log out</button>
             </a>
           </div>
-        </div>
+      </div>
+
+      <img
+        src={menu}
+        alt="burger navigation icon"
+        className="mobileMenu"
+        onClick={() => setShowMenu(!showMenu)}
+      ></img>
+      <div className="navMenu" style={{ display: showMenu ? "flex" : "none" }}>
+        <NavLink
+          exact
+          activeClass="active"
+          to="/dashboard"
+          className="listItem"
+          onClick={() => setShowMenu(false)}
+        >
+          Dashboard
+        </NavLink>
+        <NavLink
+          activeClass="active"
+          to="/team-details"
+          className="listItem"
+          onClick={() => setShowMenu(false)}
+        >
+          Team
+        </NavLink>
+        <NavLink
+          activeClass="active"
+          to="/"
+          className="listItem"
+          onClick={() => setShowMenu(false)}
+        >
+          Profile
+        </NavLink>
+        <NavLink
+          activeClass="active"
+          to="/"
+          className="listItem"
+          onClick={() => setShowMenu(false)}
+        >
+          Notifications
+        </NavLink>
       </div>
     </nav>
   );

@@ -50,11 +50,13 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Homepage />} />
+
+        <Route path="/register" element={<Register />} />
+
         <Route
           path="/login"
           element={<Login setIsAuthenticated={setIsAuthenticated} />}
         />
-        <Route path="/register" element={<Register />} />
 
         <Route
           path="/dashboard"
