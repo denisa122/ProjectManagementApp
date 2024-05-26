@@ -71,7 +71,7 @@ const CreateTasks = ({ projectId, teamMembers }) => {
       <p className="my-4">
         Press "Add task" to add the task to the project. You can add more tasks
         at once <br></br>
-        Press "Done" when you are finished and refresh the page so thee the new
+        Press "Done" when you are finished and refresh the page to see the new
         tasks you just added!
       </p>
       {successMessage && <p className="success-message">{successMessage}</p>}

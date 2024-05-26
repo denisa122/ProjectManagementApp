@@ -6,7 +6,6 @@ import axios from "axios";
 import Navigation from "../Navigation/Navigation";
 import Footer from "../Footer/Footer";
 
-import './Project.css'
 
 const EditProject = () => {
   const { id } = useParams();
@@ -89,7 +88,7 @@ const EditProject = () => {
     <div>
       <Navigation />
       <section
-        className="gradient-form h-full bg-neutral-200 dark:bg-neutral-700"
+        className="gradient-form h-full bg-neutral-200 dark:bg-neutral-700 editProject"
         style={{
           display: "flex",
           justifyContent: "center",
