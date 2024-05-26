@@ -7,7 +7,7 @@ import "./authentication.css";
 
 import Logo from "../../assets/logo.png";
 
-const Login = () => {
+const Login = ({ setIsAuthenticated }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -30,8 +30,8 @@ const Login = () => {
 
       if (token) {
         localStorage.setItem("token", token);
-
-      navigate("/dashboard");
+        setIsAuthenticated(true);
+        navigate("/dashboard");
       } else {
         setError("Token not received from server");
       }
@@ -53,8 +53,7 @@ const Login = () => {
           minHeight: "100vh",
         }}
       >
-        <div className="max-w-7xl h-full p-10"
-        style={{minWidth: "800px"}}>
+        <div className="max-w-7xl h-full p-10" style={{ minWidth: "800px" }}>
           <div className="block rounded-lg bg-white shadow-lg dark:bg-neutral-800">
             <div>
               <div className="md:mx-6 md:p-12">
