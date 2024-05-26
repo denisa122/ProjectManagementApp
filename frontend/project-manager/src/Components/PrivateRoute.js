@@ -14,7 +14,7 @@ const PrivateRoute = ({ element: Component, isAuthenticated }) => {
                 setRedirect(true);
             }, 3000); // Show error for 3 seconds
 
-            return () => clearTimeout(timer); // Clean up the timer on component unmount
+            return () => clearTimeout(timer);
         }
     }, [isAuthenticated]);
 
@@ -28,7 +28,7 @@ const PrivateRoute = ({ element: Component, isAuthenticated }) => {
 
     return (
         <>
-            {showError && <div className="error-popup">You must be logged in to access this page.</div>}
+            {showError && <div className="error-popup text-center">You must be logged in to access this page.<br></br>Redirecting you to login page.</div>}
         </>
     );
 };
