@@ -5,7 +5,7 @@ import axios from "axios";
 
 import "./Homepage.css";
 
-import Logo from "../../assets/logo.png";
+import Logo from "../../assets/logo.JPG";
 
 const Homepage = () => {
   const [email, setEmail] = useState("");

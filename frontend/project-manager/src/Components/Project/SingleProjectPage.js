@@ -9,7 +9,7 @@ import CreateTasks from "./CreateTasks";
 import Navigation from "../Navigation/Navigation";
 import Footer from "../Footer/Footer";
 import Plus from "../../assets/plus.svg";
-import Logo from "../../assets/logo.png";
+import Logo from "../../assets/logo.JPG";
 
 const SingleProjectPage = () => {
   const navigate = useNavigate();

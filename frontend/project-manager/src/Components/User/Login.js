@@ -5,7 +5,7 @@ import axios from "axios";
 
 import "./authentication.css";
 
-import Logo from "../../assets/logo.png";
+import Logo from "../../assets/logo.JPG";
 
 const Login = ({ setIsAuthenticated }) => {
   const [email, setEmail] = useState("");
