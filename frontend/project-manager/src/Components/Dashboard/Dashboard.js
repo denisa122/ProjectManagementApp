@@ -157,24 +157,21 @@ const Dashboard = () => {
                   </Link>
 
                   {isTeamLeader && (
-                    <Link
-                    to={`/edit-project/${project._id}`}
-                    >
+                    <Link to={`/edit-project/${project._id}`}>
                       <button
-                      type="button"
-                      className="inline-block rounded bg-danger px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-danger-3 transition duration-150 ease-in-out hover:bg-danger-accent-300 hover:shadow-danger-2 focus:bg-danger-accent-300 focus:shadow-danger-2 focus:outline-none focus:ring-0 active:bg-danger-600 active:shadow-danger-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
-                      data-twe-ripple-init
-                      data-twe-ripple-color="light"
-                      style={{
-                        background:
-                          "linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)",
-                      }}>
+                        type="button"
+                        className="inline-block rounded bg-danger px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-danger-3 transition duration-150 ease-in-out hover:bg-danger-accent-300 hover:shadow-danger-2 focus:bg-danger-accent-300 focus:shadow-danger-2 focus:outline-none focus:ring-0 active:bg-danger-600 active:shadow-danger-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+                        data-twe-ripple-init
+                        data-twe-ripple-color="light"
+                        style={{
+                          background:
+                            "linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)",
+                        }}
+                      >
                         Edit
                       </button>
                     </Link>
-                  )
-
-                  }
+                  )}
 
                   {isTeamLeader && (
                     <button
@@ -201,6 +198,7 @@ const Dashboard = () => {
           </div>
         </div>
       )}
+
       <div className="pt-12">
         <Footer />
       </div>

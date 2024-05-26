@@ -63,7 +63,10 @@ const TeamDetailsPage = ({ userId }) => {
     <div>
         <Navigation />
         <div style={{ margin: "100px" }}>
-            <h2>Your Teams</h2>
+          <div className="text-3xl md:text-5xl font-semibold">
+          <h2>Your Teams</h2>
+          </div>
+            
             {teams.map((team) => (
                 <div key={team._id}>
                     <h3>{team.name}</h3>
