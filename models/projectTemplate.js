@@ -3,6 +3,14 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
+// Calculate the default endDate
+const getDefaultEndDate = () => {
+  const startDate = new Date();
+  const endDate = new Date(startDate);
+  endDate.setDate(startDate.getDate() + 30);
+  return endDate;
+}
+
 const projectTemplateSchema = new Schema({
   name: {
     type: String,
@@ -18,7 +26,7 @@ const projectTemplateSchema = new Schema({
   },
   endDate: {
     type: Date,
-    default: null,
+    default: getDefaultEndDate,
   },
   projectStatus: {
     type: String,

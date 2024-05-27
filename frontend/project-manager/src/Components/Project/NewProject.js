@@ -65,7 +65,7 @@ const NewProject = ({ userId }) => {
             </p>
             <button
               type="button"
-              onClick={() => createProject("663e13bbc3d7e22c979bcf74")}
+              onClick={() => createProject("6654858d66fb60e40973c8f4")}
               disabled={loading}
               className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
               data-twe-ripple-init
