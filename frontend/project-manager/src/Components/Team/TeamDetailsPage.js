@@ -1,13 +1,13 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
 
 import Navigation from "../Navigation/Navigation";
 import avatar from "../../assets/person.png";
 
 const TeamDetailsPage = ({ userId }) => {
-  const { teamId } = useParams();
+
+  console.log("userId in TeamDetailsPage:", userId);
   const [teams, setTeams] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -15,11 +15,21 @@ const TeamDetailsPage = ({ userId }) => {
   useEffect(() => {
     const fetchTeams = async () => {
       try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          throw new Error("Authentication token not found.");
+        }
+
+        if (!userId) {
+          window.location.reload(); 
+          return;
+        }
+
         const response = await axios.get(
           `${process.env.REACT_APP_API_URL}/api/teams/leader/${userId}`,
           {
             headers: {
-              "auth-token": localStorage.getItem("token"),
+              "auth-token": token,
             },
           }
         );
@@ -31,7 +41,7 @@ const TeamDetailsPage = ({ userId }) => {
               `${process.env.REACT_APP_API_URL}/api/teams/${team._id}`,
               {
                 headers: {
-                  "auth-token": localStorage.getItem("token"),
+                  "auth-token": token,
                 },
               }
             );

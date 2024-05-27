@@ -17,11 +17,14 @@ import CreateTasks from "./Components/Project/CreateTasks";
 
 import TeamDetailsPage from "./Components/Team/TeamDetailsPage";
 
+import Navigation from "./Components/Navigation/Navigation";
+
 import PrivateRoute from "./Components/PrivateRoute";
 
 function App() {
   const [userId, setUserId] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -38,19 +41,37 @@ function App() {
           );
           setUserId(response.data.id);
           setIsAuthenticated(true);
+
+          console.log("UserId fetched:", response.data.id);
         }
       } catch (error) {
         console.error("Error fetching user ID:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchUserId();
   }, []);
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  console.log("userId in App.js:", userId);
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Homepage />} />
+        <Route
+          path="/"
+          element={
+            <Homepage
+              setIsAuthenticated={setIsAuthenticated}
+              setUserId={setUserId}
+            />
+          }
+        />
 
         <Route path="/register" element={<Register />} />
 
@@ -103,7 +124,7 @@ function App() {
           path="/project-details/:id"
           element={
             <PrivateRoute
-              element={<ProjectDetails userId={userId}/>}
+              element={<ProjectDetails userId={userId} />}
               isAuthenticated={isAuthenticated}
             />
           }

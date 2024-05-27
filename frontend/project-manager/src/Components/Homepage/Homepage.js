@@ -7,7 +7,7 @@ import "./Homepage.css";
 
 import Logo from "../../assets/logo.JPG";
 
-const Homepage = () => {
+const Homepage = ( {setIsAuthenticated, setUserId} ) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -34,6 +34,11 @@ const Homepage = () => {
         // Check user role
         const role = response.data?.data?.role;
         localStorage.setItem("userRole", role);
+
+        // Set userId and authentication state
+        const userId = response.data?.data?.userId;
+        setUserId(userId);
+        setIsAuthenticated(true);
 
         navigate("/dashboard");
       } else {
