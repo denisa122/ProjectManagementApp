@@ -6,8 +6,7 @@ import axios from "axios";
 import Navigation from "../Navigation/Navigation";
 import Footer from "../Footer/Footer";
 
-
-const EditProject = () => {
+const EditProject = ( {userId} ) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [project, setProject] = useState({
@@ -19,6 +18,8 @@ const EditProject = () => {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [teams, setTeams] = useState([]);
+
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -47,7 +48,31 @@ const EditProject = () => {
     };
 
     fetchProject();
+    fetchTeams();
   }, [id]);
+
+  const fetchTeams = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        navigate("/login");
+        return;
+      }
+
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/teams/leader/${userId}`,
+        {
+          headers: {
+            "auth-token": token,
+          },
+        }
+      );
+
+      setTeams(response.data);
+    } catch (error) {
+      console.error("Error fetching teams: ", error);
+    }
+  };
 
   const handleChange = (e) => {
     setProject({
@@ -109,7 +134,10 @@ const EditProject = () => {
                 </div>
 
                 <form onSubmit={handleSubmit}>
-                  <div className="relative mb-4 text-left" data-twe-input-wrapper-init>
+                  <div
+                    className="relative mb-4 text-left"
+                    data-twe-input-wrapper-init
+                  >
                     <label htmlFor="name" className="ml-3">
                       Project Name
                     </label>
@@ -122,7 +150,10 @@ const EditProject = () => {
                     />
                   </div>
 
-                  <div className="relative mb-4 text-left" data-twe-input-wrapper-init>
+                  <div
+                    className="relative mb-4 text-left"
+                    data-twe-input-wrapper-init
+                  >
                     <label htmlFor="description" className="ml-3">
                       Project Description
                     </label>
@@ -164,6 +195,22 @@ const EditProject = () => {
                       onChange={handleChange}
                       className="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
                     />
+                  </div>
+
+                  <div className="relative mb-4" data-twe-input-wrapper-init>
+                    <select
+                      name="team"
+                      value={project.team}
+                      onChange={handleChange}
+                      className="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
+                    >
+                      <option value="">Select Team</option>
+                      {teams.map((team) => (
+                        <option key={team._id} value={team._id}>
+                          {team.name}
+                        </option>
+                      ))}
+                    </select>
                   </div>
 
                   <div className="relative mb-4" data-twe-input-wrapper-init>

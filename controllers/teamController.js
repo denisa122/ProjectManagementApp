@@ -106,11 +106,7 @@ const updateTeam = async (req, res) => {
       return;
     }
 
-    // Prevent updating team leader and members
-    delete updateData.teamLeader;
-    delete updateData.members;
-
-    // Update other fields
+    // Update fields
     Object.assign(team, updateData);
 
     const updatedTeam = await team.save();

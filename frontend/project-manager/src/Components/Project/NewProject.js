@@ -57,7 +57,7 @@ const NewProject = ({ userId }) => {
             <h5 className="mb-2 text-xl font-medium leading-tight">
               Create Project from Template
             </h5>
-            <p class="mb-4 text-base">
+            <p className="mb-4 text-base">
               When choosing this option, a project with predefined project
               details will be created. <br></br>
               You will be redirected to the main page, where you can see the
@@ -67,7 +67,7 @@ const NewProject = ({ userId }) => {
               type="button"
               onClick={() => createProject("663e13bbc3d7e22c979bcf74")}
               disabled={loading}
-              class="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+              className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
               data-twe-ripple-init
               data-twe-ripple-color="light"
               style={{
@@ -85,7 +85,7 @@ const NewProject = ({ userId }) => {
             <h5 className="mb-2 text-xl font-medium leading-tight">
               Create Project without Template
             </h5>
-            <p class="mb-4 text-base">
+            <p className="mb-4 text-base">
               When choosing this option, you will be taken to the next step,
               where you have to enter the project details. <br></br>
             </p>
@@ -93,7 +93,7 @@ const NewProject = ({ userId }) => {
               type="button"
               onClick={() => createProject(null)}
               disabled={loading}
-              class="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+              className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
               data-twe-ripple-init
               data-twe-ripple-color="light"
               style={{

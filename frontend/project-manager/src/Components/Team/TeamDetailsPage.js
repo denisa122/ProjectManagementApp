@@ -74,16 +74,16 @@ const TeamDetailsPage = ({ userId }) => {
             <ul className="flex flex-row">
               {team.members.map((member) => (
                 <li key={member._id}>
-                  <div class="block max-w-[18rem] bg-white text-surface shadow-secondary-1 dark:bg-surface-dark dark:text-white">
-                    <div class="relative overflow-hidden bg-cover bg-no-repeat">
+                  <div className="block max-w-[18rem] bg-white text-surface shadow-secondary-1 dark:bg-surface-dark dark:text-white">
+                    <div className="relative overflow-hidden bg-cover bg-no-repeat">
                       <img
-                        class="w-32 rounded-full object-cover h-36 w-36 mr-5"
+                        className="w-32 rounded-full object-cover h-36 w-36 mr-5"
                         src={avatar}
                         alt="profile picture avatar"
                       />
                     </div>
-                    <div class="p-6">
-                      <p class="text-base">
+                    <div className="p-6">
+                      <p className="text-base">
                         {member.firstName} {member.lastName}
                       </p>
                     </div>
