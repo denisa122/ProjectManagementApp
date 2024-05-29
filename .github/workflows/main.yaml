@@ -6,9 +6,9 @@ on:
 
 jobs:
 
-  test:
+  test-backend:
 
-    name: Test
+    name: Test Backend
     runs-on: ubuntu-latest
 
     strategy:
@@ -26,25 +26,65 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install dependencies, build project and run tests
+      - name: Install dependencies and run tests
         run: |
           npm install
           npm test
+        working-directory: .
         env:
           DBHOST: ${{ secrets.DBHOST }}
           TOKEN_SECRET: ${{ secrets.TOKEN_SECRET }}
           JWT_EXPIRES_IN: ${{ secrets.JWT_EXPIRES_IN }}
 
-  deploy:
+  test-frontend:
+    name: Test Frontend
+    runs-on: ubuntu-latest
 
-    name: Deploy
-    needs: [test]
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies and run tests
+        run: |
+          npm install
+          npm test
+        working-directory: frontend/project-manager
+
+  deploy-backend:
+
+    name: Deploy Backend
+    needs: [test-backend]
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy
+      - name: Deploy Backend
         if: github.ref == 'refs/heads/main'
         env:
           deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL}}
+        run: |
+          curl "$deploy_url"
+
+  deploy-frontend:
+
+    name: Deploy Frontend
+    needs: [test-frontend]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy Frontend
+        if: github.ref == 'refs/heads/main'
+        env:
+          deploy_url: ${{ secrets.RENDER_FRONTEND_DEPLOY_HOOK_URL}}
         run: |
           curl "$deploy_url"
