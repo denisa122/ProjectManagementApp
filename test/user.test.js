@@ -89,7 +89,7 @@ describe('Register & login tests', () => {
         chai.request(server)
             .post('/api/user/login')
             .send({
-                email: 'email@test.com',
+                email: 'email@test.com', // Invalid email
                 password: 'password'
             })
             .end((err, res) => {
