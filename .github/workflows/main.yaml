@@ -17,12 +17,12 @@ jobs:
     
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
       - name: Setup Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
 
@@ -34,4 +34,17 @@ jobs:
           DBHOST: ${{ secrets.DBHOST }}
           TOKEN_SECRET: ${{ secrets.TOKEN_SECRET }}
           JWT_EXPIRES_IN: ${{ secrets.JWT_EXPIRES_IN }}
+
+  deploy:
+
+    name: Deploy
+    needs: [test]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to production
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{ secrets.SERVICE_ID }}
+          api-key: ${{ secrets.RENDER_API_KEY }}
 
