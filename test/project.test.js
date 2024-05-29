@@ -245,6 +245,105 @@ describe("Project tests", () => {
     });
   });
 
+  describe("Read project workflow test", () => {
+    it("should login user + retrieve the project created in a previous test", (done) => {
+        let projectId = createdProjectId;
+
+        // Login the user
+        chai.request(server)
+        .post("/api/user/login")
+        .send({
+            email: "jane@email.com",
+            password: "password",
+        })
+        .end((err, res) => {
+            expect(res.status).to.be.equal(200);
+            expect(res.body.error).to.be.equal(null);
+
+            let token = res.body.data.token;
+
+            // Get project details by ID
+            chai.request(server)
+            .get(`/api/projects/${projectId}`)
+            .set({ "auth-token": token })
+            .end((err, res) => {
+                expect(res.status).to.be.equal(200);
+                expect(res.body).to.be.a("object");
+
+                let project = res.body;
+
+                expect(project._id).to.be.equal(projectId);
+
+                done();
+            });
+        })
+    });
+
+    it("should login user + retrieve all projects for the user created in a previous test", (done) => {
+        // Login the user
+        chai.request(server)
+        .post("/api/user/login")
+        .send({
+            email: "jane@email.com",
+            password: "password",
+        })
+        .end((err, res) => {
+            expect(res.status).to.be.equal(200);
+            expect(res.body.error).to.be.equal(null);
+
+            let token = res.body.data.token;
+            let decoded = jwt.decode(token);
+            let userId = decoded.id;
+
+            // Get all projects for user
+            chai.request(server)
+            .get(`/api/projects/users/${userId}`)
+            .set({ "auth-token": token })
+            .end((err, res) => {
+                expect(res.status).to.be.equal(200);
+                expect(res.body).to.be.a("array");
+
+                let projects = res.body;
+
+                expect(projects.length).to.be.equal(2);
+
+                done();
+            });
+        })
+    });
+
+    it("should login user + retrieve all projects for the team with specified ID", (done) => {
+        // Login the user
+        chai.request(server)
+        .post("/api/user/login")
+        .send({
+            email: "jane@email.com",
+            password: "password",
+        })
+        .end((err, res) => {
+            expect(res.status).to.be.equal(200);
+            expect(res.body.error).to.be.equal(null);
+
+            let token = res.body.data.token;
+
+            // Get all projects for team
+            chai.request(server)
+            .get(`/api/projects/team/66102f526329d03cb81c1ea8`)
+            .set({ "auth-token": token })
+            .end((err, res) => {
+                expect(res.status).to.be.equal(200);
+                expect(res.body).to.be.a("array");
+
+                let projects = res.body;
+
+                expect(projects.length).to.be.equal(2);
+
+                done();
+            });
+        })
+    });
+  });
+
   describe("Delete project workflow test", () => {
     it("should login user + delete the project created in a previous test", (done) => {
         // Login the user
