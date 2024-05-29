@@ -42,9 +42,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy to production
-        uses: johnbeynon/render-deploy-action@v0.0.8
+      - name: Checkout repository
+        uses: actions/checkout@v3
         with:
-          service-id: ${{ secrets.SERVICE_ID }}
-          api-key: ${{ secrets.RENDER_API_KEY }}
+          fetch-depth: 0
 
+      - name: Trigger deployment on Render.com
+        run: |
+          curl -X POST "https://api.render.com/v1/services/${{ secrets.SERVICE_ID }}/deploys" \
+          -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+          -H "Accept: application/json" \
+          -H "Content-Type: application/json"
