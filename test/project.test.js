@@ -10,6 +10,7 @@ const project = require("../models/project");
 chai.use(chaiHttp);
 
 describe("Project tests", () => {
+    let createdProjectId;
   describe("Create project workflow test", () => {
     it("should register + login user, and then create a new project without template", (done) => {
       // Register the user
@@ -70,6 +71,7 @@ describe("Project tests", () => {
                   expect(res.body).to.be.a("object");
 
                   let savedProject = res.body;
+                  createdProjectId = savedProject._id;
 
                   expect(savedProject.name).to.be.equal(project.name);
                   expect(savedProject.description).to.be.equal(
@@ -191,6 +193,55 @@ describe("Project tests", () => {
                 });
             });
         });
+    });
+  });
+
+  describe("Update project workflow test", () => {
+    it("should login user + edit the project created in the previous test", (done) => {
+        // Login the user
+        chai.request(server)
+        .post("/api/user/login")
+        .send({
+            email: "jane@email.com",
+            password: "password",
+        })
+        .end((err, res) => {
+            expect(res.status).to.be.equal(200);
+            expect(res.body.error).to.be.equal(null);
+
+            let token = res.body.data.token;
+
+            // Update data for the project
+            let updatedData = {
+                name: "Updated Test Project",
+                description: "This is an updated test project",
+                startDate: "2021-01-01T00:00:00.000Z",
+                endDate: "2021-12-31T00:00:00.000Z",
+                projectStatus: "In progress",
+            };
+
+            // Retrieve the projectId from the previously created project
+            let projectId = createdProjectId;
+
+            chai.request(server)
+            .put(`/api/projects/${projectId}`)
+            .set({ "auth-token": token })
+            .send(updatedData)
+            .end((err, res) => {
+                expect(res.status).to.be.equal(200);
+                expect(res.body).to.be.a("object");
+
+                let updatedProject = res.body;
+
+                expect(updatedProject.name).to.be.equal(updatedData.name);
+                expect(updatedProject.description).to.be.equal(updatedData.description);
+                expect(updatedProject.startDate).to.be.equal(updatedData.startDate);
+                expect(updatedProject.endDate).to.be.equal(updatedData.endDate);
+                expect(updatedProject.projectStatus).to.be.equal(updatedData.projectStatus);
+
+                done();
+            });
+        })
     });
   });
 });
