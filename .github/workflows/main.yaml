@@ -49,7 +49,7 @@ jobs:
 
       - name: Trigger deployment on Render.com
         run: |
-          curl -X POST "https://api.render.com/v1/services/${{ secrets.SERVICE_ID }}/deploys" \
+          curl -X PATCH "https://api.render.com/v1/services/${{ secrets.SERVICE_ID }}/deploys" \
           -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
           -H "Accept: application/json" \
           -H "Content-Type: application/json" \
