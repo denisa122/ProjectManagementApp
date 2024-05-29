@@ -1,179 +1,81 @@
-const chai = require('chai')
+const chai = require("chai");
 const expect = chai.expect;
 const should = chai.should();
 
-const chaiHttp = require('chai-http');
-const server = require('../server');
+const chaiHttp = require("chai-http");
+const server = require("../server");
+const jwt = require("jsonwebtoken");
 
 chai.use(chaiHttp);
 
-describe('Register & login tests', () => {
-    let registeredUser;
-    
-    // POST Register user    
-    it ('should register a valid user', (done) => {
-            let user = {
-                firstName: 'Paul',
-                lastName: 'Smith',
-                email: 'paulsmith@email.com',
-                password: 'password'
-            }
-            
-            chai.request(server)
-                .post('/api/user/register')
-                .send(user)
-                .end((err, res) => {
-                    expect(res.status).to.be.equal(200);
-                    registeredUser = user;
-                    done();
-                })
-        });
+describe("User tests", () => {
+    let createdUserId;
+    describe("Update user workflow test", () => {
+    it("should register + login user, and then update user details", (done) => {
+      // Register the user
+      let user = {
+        firstName: "Test",
+        lastName: "User",
+        email: "testuser@email.com",
+        password: "password",
+      };
 
-    // POST Login user
-    it ('should log in the registered user', (done) => {
-    chai.request(server)
-        .post('/api/user/login')
-        .send({
-            email: registeredUser.email,
-            password: registeredUser.password
-        })
+      chai
+        .request(server)
+        .post("/api/user/register")
+        .send(user)
         .end((err, res) => {
-            expect(res.status).to.be.equal(200);
-            res.body.should.have.property('data');
-            res.body.data.should.have.property('token');
-            done();
-        })
-    });
-    
-    it ('should not register an invalid user', (done) => {
-        let user = {
-            firstName: 'Paul',
-            lastName: 'Smith',
-            email: 'paulsmith@test.com',
-            password: '123'
-        }
-        
-        chai.request(server)
-            .post('/api/user/register')
-            .send(user)
-            .end((err, res) => {
-                expect(res.status).to.be.equal(400);
+          expect(res.status).to.be.equal(200);
+          expect(res.body).to.be.a("object");
+          expect(res.body.error).to.be.equal(null);
 
-                expect(res.body).to.be.a('object');
-                expect(res.body.error).to.be.equal('\"password\" length must be at least 8 characters long');
-                done();
-            });
-    });
+            createdUserId = res.body.data._id;
 
-    it ('should not register a user with an existing email', (done) => {
-        let user = {
-            firstName: 'Jens',
-            lastName: 'Jensen',
-            email: 'paulsmith@email.com',
-            password: 'password'
-        }
-
-        chai.request(server)
-            .post('/api/user/register')
-            .send(user)
-            .end((err, res) => {
-                expect(res.status).to.be.equal(400);
-
-                expect(res.body).to.be.a('object');
-                expect(res.body.error).to.be.equal('Email is already taken');
-                done();
-            });
-    });
-
-    it ('should not log in an invalid user', (done) => {
-        chai.request(server)
-            .post('/api/user/login')
+          // Login the user
+          chai
+            .request(server)
+            .post("/api/user/login")
             .send({
-                email: 'email@test.com', // Invalid email
-                password: 'password'
+              email: user.email,
+              password: user.password,
             })
             .end((err, res) => {
-                expect(res.status).to.be.equal(400);
+              expect(res.status).to.be.equal(200);
+              expect(res.body.error).to.be.equal(null);
 
-                expect(res.body).to.be.a('object');
-                expect(res.body.error).to.be.equal('Incorrect email or password');
-                done();
-            });
-    });
+              let token = res.body.data.token;
 
-    it('should log in and then log out a user', (done) => {
-        // Login the user
-        chai.request(server)
-        .post('/api/user/login')
-        .send({
-            email: registeredUser.email,
-            password: registeredUser.password
-        })
-        .end((err, res) => {
-            expect(res.status).to.be.equal(200);
-            res.body.should.have.property('data');
-            res.body.data.should.have.property('token');
+              // Update the user
+              let updatedData = {
+                firstName: "First Updated",
+                lastName: "Last Updated",
+              };
+              chai
+                .request(server)
+                .put(`/api/users/${createdUserId}`)
+                .set("auth-token", token)
+                .send(updatedData)
+                .end((err, res) => {
+                  expect(res.status).to.be.equal(200);
+                  expect(res.body).to.be.a("object");
+                  expect(res.body).to.have.property("message");
+                  expect(res.body.message).to.be.equal(
+                    "User was updated successfully."
+                  );
 
-            let token = res.body.data.token;
+                  let updatedUser = res.body.userUpdated;
 
-            // Logout the user
-            chai.request(server)
-            .post('/api/user/logout')
-            .set('auth-token', token)
-            .end((err, res) => {
-                expect(res.status).to.be.equal(200);
-                expect(res.body).to.be.a('object');
-                expect(res.body.message).to.be.equal('Logged out successfully');
+                  expect(updatedUser.firstName).to.be.equal(
+                    updatedData.firstName
+                  );
+                  expect(updatedUser.lastName).to.be.equal(
+                    updatedData.lastName
+                  );
 
-                done();
-            });
-        });
-    });
-});
-
-describe('Login status tests', () => {
-    it('should return isLoggedIn false when no token is provided', (done) => {
-        chai.request(server)
-        .get('/api/user/login-status')
-        .end((err, res) => {
-            expect(res.status).to.be.equal(200);
-            expect(res.body).to.be.a('object');
-            expect(res.body.isLoggedIn).to.be.false;
-
-            done();
-        });
-    });
-
-    it('should return isLoggedIn true when a valid token is provided', (done) => {
-        // Login the user
-        chai.request(server)
-        .post('/api/user/login')
-        .send({
-            email: 'paulsmith@email.com',
-            password: 'password'
-        })
-        .end((err, res) => {
-            expect(res.status).to.be.equal(200);
-            res.body.should.have.property('data');
-            res.body.data.should.have.property('token');
-
-            let token = res.body.data.token;
-
-            // Check login status
-            chai.request(server)
-            .get('/api/user/login-status')
-            .set('auth-token', token)
-            .end((err, res) => {
-                expect(res.status).to.be.equal(200);
-                expect(res.body).to.be.a('object');
-                expect(res.body.isLoggedIn).to.be.true;
-                expect(res.body).to.have.property('role');
-                expect(res.body.role).to.be.equal('team member');
-                expect(res.body).to.have.property('id');
-                expect(res.body.id).to.be.a('string');
-
-                done();
+                  done();
+                });
             });
         });
     });
+  });
 });

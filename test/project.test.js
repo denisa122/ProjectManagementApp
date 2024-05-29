@@ -5,7 +5,6 @@ const should = chai.should();
 const chaiHttp = require("chai-http");
 const server = require("../server");
 const jwt = require("jsonwebtoken");
-const project = require("../models/project");
 
 chai.use(chaiHttp);
 
