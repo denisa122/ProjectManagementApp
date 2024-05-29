@@ -55,3 +55,23 @@ jobs:
           -H "Content-Type: application/json" \
           -d "{}" \
           -v
+
+      - name: Check deployment status
+        run: |
+          sleep 60  # wait for 60 seconds to allow deployment to start
+          curl -X GET "https://api.render.com/v1/services/${{ secrets.SERVICE_ID }}" \
+          -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+          -H "Accept: application/json" \
+          -v
+
+      - name: Verify deployment
+        run: |
+          DEPLOY_STATUS=$(curl -s -X GET "https://api.render.com/v1/services/${{ secrets.SERVICE_ID }}" \
+          -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+          -H "Accept: application/json" | jq -r '.serviceDetails.healthCheckPath')
+          if [ "$DEPLOY_STATUS" != "200" ]; then
+            echo "Deployment failed or is not healthy."
+            exit 1
+          else
+            echo "Deployment succeeded and is healthy."
+          fi
