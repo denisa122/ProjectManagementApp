@@ -55,9 +55,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install dependencies and run tests
+      - name: Install dependencies and run tests #it should not be npm install --force
         run: |
-          npm install --force
+          npm install --force 
           npm test
         working-directory: frontend/project-manager
 
