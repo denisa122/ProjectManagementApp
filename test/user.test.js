@@ -191,7 +191,6 @@ describe("User tests", () => {
               token = res.body.data.token;
               let decode = jwt.decode(token);
               userId = decode.id;
-              console.log(userId);
 
               // Delete the user
               chai
