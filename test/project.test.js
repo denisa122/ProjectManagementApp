@@ -241,7 +241,39 @@ describe("Project tests", () => {
 
                 done();
             });
+        });
+    });
+  });
+
+  describe("Delete project workflow test", () => {
+    it("should login user + delete the project created in a previous test", (done) => {
+        // Login the user
+        chai.request(server)
+        .post("/api/user/login")
+        .send({
+            email: "jane@email.com",
+            password: "password",
         })
+        .end((err, res) => {
+            expect(res.status).to.be.equal(200);
+            expect(res.body.error).to.be.equal(null);
+
+            let token = res.body.data.token;
+
+            // Retrieve the projectId from the previously created project
+            let projectId = createdProjectId;
+
+            chai.request(server)
+            .delete(`/api/projects/${projectId}`)
+            .set({ "auth-token": token })
+            .end((err, res) => {
+                expect(res.status).to.be.equal(200);
+                expect(res.body).to.be.a("object");
+                expect(res.body.message).to.be.equal("Project deleted successfully.");
+
+                done();
+            });
+        });
     });
   });
 });
