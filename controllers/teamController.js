@@ -106,8 +106,15 @@ const updateTeam = async (req, res) => {
       return;
     }
 
-    // Update fields
-    Object.assign(team, updateData);
+    // Update team name if provided
+    if (updateData.name) {
+      team.name = updateData.name;
+    }
+
+    // Update team members if provided
+    if (updateData.members) {
+      team.members = updateData.members;
+    }
 
     const updatedTeam = await team.save();
     await Team.populate(updatedTeam, {
@@ -124,6 +131,8 @@ const updateTeam = async (req, res) => {
     res.status(500).send({ message: error.message });
   }
 };
+
+
 
 const deleteTeam = async (req, res) => {
   const teamId = req.params.teamId;
