@@ -97,12 +97,12 @@ const getTaskDetailsById = async (req, res) => {
 
 const updateTask = async (req, res) => {
   const taskId = req.params.taskId;
-  const { taskStatus } = req.body;
+  const { name, number, description, startDate, taskStatus } = req.body;
 
   try {
     const updatedTask = await Task.findByIdAndUpdate(
       taskId,
-      { taskStatus },
+      { name, number, description, startDate, taskStatus },
       { new: true }
     );
 
