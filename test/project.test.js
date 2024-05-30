@@ -9,7 +9,7 @@ const jwt = require("jsonwebtoken");
 chai.use(chaiHttp);
 
 describe("Project tests", () => {
-    let createdProjectId;
+  let createdProjectId;
   describe("Create project workflow test", () => {
     it("should register + login user, and then create a new project without template", (done) => {
       // Register the user
@@ -197,48 +197,56 @@ describe("Project tests", () => {
 
   describe("Update project workflow test", () => {
     it("should login user + edit the project created in the previous test", (done) => {
-        // Login the user
-        chai.request(server)
+      // Login the user
+      chai
+        .request(server)
         .post("/api/user/login")
         .send({
-            email: "jane@email.com",
-            password: "password",
+          email: "jane@email.com",
+          password: "password",
         })
         .end((err, res) => {
-            expect(res.status).to.be.equal(200);
-            expect(res.body.error).to.be.equal(null);
+          expect(res.status).to.be.equal(200);
+          expect(res.body.error).to.be.equal(null);
 
-            let token = res.body.data.token;
+          let token = res.body.data.token;
 
-            // Update data for the project
-            let updatedData = {
-                name: "Updated Test Project",
-                description: "This is an updated test project",
-                startDate: "2021-01-01T00:00:00.000Z",
-                endDate: "2021-12-31T00:00:00.000Z",
-                projectStatus: "In progress",
-            };
+          // Update data for the project
+          let updatedData = {
+            name: "Updated Test Project",
+            description: "This is an updated test project",
+            startDate: "2021-01-01T00:00:00.000Z",
+            endDate: "2021-12-31T00:00:00.000Z",
+            projectStatus: "In progress",
+          };
 
-            // Retrieve the projectId from the previously created project
-            let projectId = createdProjectId;
+          // Retrieve the projectId from the previously created project
+          let projectId = createdProjectId;
 
-            chai.request(server)
+          chai
+            .request(server)
             .put(`/api/projects/${projectId}`)
             .set({ "auth-token": token })
             .send(updatedData)
             .end((err, res) => {
-                expect(res.status).to.be.equal(200);
-                expect(res.body).to.be.a("object");
+              expect(res.status).to.be.equal(200);
+              expect(res.body).to.be.a("object");
 
-                let updatedProject = res.body;
+              let updatedProject = res.body;
 
-                expect(updatedProject.name).to.be.equal(updatedData.name);
-                expect(updatedProject.description).to.be.equal(updatedData.description);
-                expect(updatedProject.startDate).to.be.equal(updatedData.startDate);
-                expect(updatedProject.endDate).to.be.equal(updatedData.endDate);
-                expect(updatedProject.projectStatus).to.be.equal(updatedData.projectStatus);
+              expect(updatedProject.name).to.be.equal(updatedData.name);
+              expect(updatedProject.description).to.be.equal(
+                updatedData.description
+              );
+              expect(updatedProject.startDate).to.be.equal(
+                updatedData.startDate
+              );
+              expect(updatedProject.endDate).to.be.equal(updatedData.endDate);
+              expect(updatedProject.projectStatus).to.be.equal(
+                updatedData.projectStatus
+              );
 
-                done();
+              done();
             });
         });
     });
@@ -246,130 +254,140 @@ describe("Project tests", () => {
 
   describe("Read project workflow test", () => {
     it("should login user + retrieve the project created in a previous test", (done) => {
-        let projectId = createdProjectId;
+      let projectId = createdProjectId;
 
-        // Login the user
-        chai.request(server)
+      // Login the user
+      chai
+        .request(server)
         .post("/api/user/login")
         .send({
-            email: "jane@email.com",
-            password: "password",
+          email: "jane@email.com",
+          password: "password",
         })
         .end((err, res) => {
-            expect(res.status).to.be.equal(200);
-            expect(res.body.error).to.be.equal(null);
+          expect(res.status).to.be.equal(200);
+          expect(res.body.error).to.be.equal(null);
 
-            let token = res.body.data.token;
+          let token = res.body.data.token;
 
-            // Get project details by ID
-            chai.request(server)
+          // Get project details by ID
+          chai
+            .request(server)
             .get(`/api/projects/${projectId}`)
             .set({ "auth-token": token })
             .end((err, res) => {
-                expect(res.status).to.be.equal(200);
-                expect(res.body).to.be.a("object");
+              expect(res.status).to.be.equal(200);
+              expect(res.body).to.be.a("object");
 
-                let project = res.body;
+              let project = res.body;
 
-                expect(project._id).to.be.equal(projectId);
+              expect(project._id).to.be.equal(projectId);
 
-                done();
+              done();
             });
-        })
+        });
     });
 
     it("should login user + retrieve all projects for the user created in a previous test", (done) => {
-        // Login the user
-        chai.request(server)
+      // Login the user
+      chai
+        .request(server)
         .post("/api/user/login")
         .send({
-            email: "jane@email.com",
-            password: "password",
+          email: "jane@email.com",
+          password: "password",
         })
         .end((err, res) => {
-            expect(res.status).to.be.equal(200);
-            expect(res.body.error).to.be.equal(null);
+          expect(res.status).to.be.equal(200);
+          expect(res.body.error).to.be.equal(null);
 
-            let token = res.body.data.token;
-            let decoded = jwt.decode(token);
-            let userId = decoded.id;
+          let token = res.body.data.token;
+          let decoded = jwt.decode(token);
+          let userId = decoded.id;
 
-            // Get all projects for user
-            chai.request(server)
+          // Get all projects for user
+          chai
+            .request(server)
             .get(`/api/projects/users/${userId}`)
             .set({ "auth-token": token })
             .end((err, res) => {
-                expect(res.status).to.be.equal(200);
-                expect(res.body).to.be.a("array");
+              expect(res.status).to.be.equal(200);
+              expect(res.body).to.be.a("array");
 
-                let projects = res.body;
+              let projects = res.body;
 
-                expect(projects.length).to.be.equal(2);
+              expect(projects.length).to.be.equal(2);
 
-                done();
+              done();
             });
-        })
+        });
     });
 
     it("should login user + retrieve all projects for the team with specified ID", (done) => {
-        // Login the user
-        chai.request(server)
+      // Login the user
+      chai
+        .request(server)
         .post("/api/user/login")
         .send({
-            email: "jane@email.com",
-            password: "password",
+          email: "jane@email.com",
+          password: "password",
         })
         .end((err, res) => {
-            expect(res.status).to.be.equal(200);
-            expect(res.body.error).to.be.equal(null);
+          expect(res.status).to.be.equal(200);
+          expect(res.body.error).to.be.equal(null);
 
-            let token = res.body.data.token;
+          let token = res.body.data.token;
 
-            // Get all projects for team
-            chai.request(server)
+          // Get all projects for team
+          chai
+            .request(server)
             .get(`/api/projects/team/66102f526329d03cb81c1ea8`)
             .set({ "auth-token": token })
             .end((err, res) => {
-                expect(res.status).to.be.equal(200);
-                expect(res.body).to.be.a("array");
+              expect(res.status).to.be.equal(200);
+              expect(res.body).to.be.a("array");
 
-                let projects = res.body;
+              let projects = res.body;
 
-                expect(projects.length).to.be.equal(2);
+              expect(projects.length).to.be.equal(2);
 
-                done();
+              done();
             });
-        })
+        });
     });
   });
 
   describe("Delete project workflow test", () => {
     it("should login user + delete the project created in a previous test", (done) => {
-        // Login the user
-        chai.request(server)
+      // Login the user
+      chai
+        .request(server)
         .post("/api/user/login")
         .send({
-            email: "jane@email.com",
-            password: "password",
+          email: "jane@email.com",
+          password: "password",
         })
         .end((err, res) => {
-            expect(res.status).to.be.equal(200);
-            expect(res.body.error).to.be.equal(null);
+          expect(res.status).to.be.equal(200);
+          expect(res.body.error).to.be.equal(null);
 
-            let token = res.body.data.token;
+          let token = res.body.data.token;
 
-            // Retrieve the projectId from the previously created project
-            let projectId = createdProjectId;
+          // Retrieve the projectId from the previously created project
+          let projectId = createdProjectId;
 
-            chai.request(server)
+          chai
+            .request(server)
             .delete(`/api/projects/${projectId}`)
             .set({ "auth-token": token })
             .end((err, res) => {
-                expect(res.status).to.be.equal(200);
-                expect(res.body).to.be.a("object");
-                expect(res.body.message).to.be.equal("Project deleted successfully.");
+              expect(res.status).to.be.equal(200);
+              expect(res.body).to.be.a("object");
+              expect(res.body.message).to.be.equal(
+                "Project deleted successfully."
+              );
 
-                done();
+              done();
             });
         });
     });

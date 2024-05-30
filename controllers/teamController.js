@@ -106,12 +106,10 @@ const updateTeam = async (req, res) => {
       return;
     }
 
-    // Update team name if provided
     if (updateData.name) {
       team.name = updateData.name;
     }
 
-    // Update team members if provided
     if (updateData.members) {
       team.members = updateData.members;
     }

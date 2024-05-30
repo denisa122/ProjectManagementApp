@@ -155,22 +155,23 @@ describe("User tests", () => {
     });
 
     it("should get a list of all the users in the db", (done) => {
-      chai.request(server)
-      .get("/api/users")
-      .end((err, res) => {
-        expect(res.status).to.be.equal(200);
-        expect(res.body).to.be.a("array");
-        expect(res.body.length).to.be.greaterThan(0);
+      chai
+        .request(server)
+        .get("/api/users")
+        .end((err, res) => {
+          expect(res.status).to.be.equal(200);
+          expect(res.body).to.be.a("array");
+          expect(res.body.length).to.be.greaterThan(0);
 
-        res.body.forEach((user) => {
-          expect(user).to.have.property("firstName");
-          expect(user).to.have.property("lastName");
-          expect(user).to.have.property("email");
-          expect(user).to.have.property("role");
+          res.body.forEach((user) => {
+            expect(user).to.have.property("firstName");
+            expect(user).to.have.property("lastName");
+            expect(user).to.have.property("email");
+            expect(user).to.have.property("role");
+          });
+
+          done();
         });
-
-        done();
-      });
     });
   });
 

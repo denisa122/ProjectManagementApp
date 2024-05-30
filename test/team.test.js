@@ -151,14 +151,15 @@ describe("Team tests", () => {
     });
 
     it("should get a list of all teams", (done) => {
-        chai.request(server)
+      chai
+        .request(server)
         .get("/api/teams/")
         .end((err, res) => {
-            expect(res.status).to.be.equal(200);
-            expect(res.body).to.be.a("array");
-            expect(res.body.length).to.be.eql(1);
+          expect(res.status).to.be.equal(200);
+          expect(res.body).to.be.a("array");
+          expect(res.body.length).to.be.eql(1);
 
-            done();
+          done();
         });
     });
   });

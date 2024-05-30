@@ -43,7 +43,7 @@ describe("Task tests", () => {
 
               let token = res.body.data.token;
               let decoded = jwt.decode(token);
-              userId = decoded.id;
+              let userId = decoded.id;
 
               // Create a new project
               let project = {
@@ -125,69 +125,69 @@ describe("Task tests", () => {
 
   describe("Read task workflow test", () => {
     it("should login a user, and then get all tasks for the project created in the previous test", (done) => {
-        // Login the user
-        chai
-          .request(server)
-          .post("/api/user/login")
-          .send({
-            email: "johnjohnson@email.com",
-            password: "password",
-            })
+      // Login the user
+      chai
+        .request(server)
+        .post("/api/user/login")
+        .send({
+          email: "johnjohnson@email.com",
+          password: "password",
+        })
+        .end((err, res) => {
+          expect(res.status).to.be.equal(200);
+          expect(res.body.error).to.be.equal(null);
+
+          let token = res.body.data.token;
+
+          // Get all tasks for the project
+          chai
+            .request(server)
+            .get(`/api/tasks/${createdProjectId}`)
+            .set("auth-token", token)
             .end((err, res) => {
-                expect(res.status).to.be.equal(200);
-                expect(res.body.error).to.be.equal(null);
+              expect(res.status).to.be.equal(200);
+              expect(res.body).to.be.an("array");
 
-                let token = res.body.data.token;
+              let tasks = res.body;
+              expect(tasks.length).to.be.equal(1);
 
-                // Get all tasks for the project
-                chai
-                  .request(server)
-                  .get(`/api/tasks/${createdProjectId}`)
-                  .set("auth-token", token)
-                  .end((err, res) => {
-                      expect(res.status).to.be.equal(200);
-                      expect(res.body).to.be.an("array");
-
-                      let tasks = res.body;
-                      expect(tasks.length).to.be.equal(1);
-
-                      done();
-                  });
+              done();
             });
+        });
     });
 
     it("should login a user, and then get the task details for the task created in the previous test", (done) => {
-        // Login the user
-        chai
-          .request(server)
-          .post("/api/user/login")
-          .send({
-            email: "johnjohnson@email.com",
-            password: "password",
-            })
+      // Login the user
+      chai
+        .request(server)
+        .post("/api/user/login")
+        .send({
+          email: "johnjohnson@email.com",
+          password: "password",
+        })
+        .end((err, res) => {
+          expect(res.status).to.be.equal(200);
+          expect(res.body.error).to.be.equal(null);
+
+          let token = res.body.data.token;
+
+          // Get task details
+          chai
+            .request(server)
+            .get(`/api/tasks/project/${createdProjectId}/task/${createdTaskId}`)
+            .set("auth-token", token)
             .end((err, res) => {
-                expect(res.status).to.be.equal(200);
-                expect(res.body.error).to.be.equal(null);
+              expect(res.status).to.be.equal(200);
+              expect(res.body).to.be.a("object");
 
-                let token = res.body.data.token;
+              let taskDetails = res.body;
 
-                // Get task details
-                chai
-                  .request(server)
-                  .get(`/api/tasks/project/${createdProjectId}/task/${createdTaskId}`)
-                  .set("auth-token", token)
-                  .end((err, res) => {
-                      expect(res.status).to.be.equal(200);
-                      expect(res.body).to.be.a("object");
+              expect(taskDetails.task).to.be.a("object");
+              expect(taskDetails.project).to.be.a("object");
 
-                      let taskDetails = res.body;
-                      
-                      expect(taskDetails.task).to.be.a("object");
-                      expect(taskDetails.project).to.be.a("object");
-
-                      done();
-                  });
+              done();
             });
+        });
     });
   });
 
@@ -279,37 +279,37 @@ describe("Task tests", () => {
     });
 
     it("should login a user, and then unassign a team member from the task created in the previous test", (done) => {
-        // Login the user
-        chai
-          .request(server)
-          .post("/api/user/login")
-          .send({
-            email: "johnjohnson@email.com",
-            password: "password",
-            })
+      // Login the user
+      chai
+        .request(server)
+        .post("/api/user/login")
+        .send({
+          email: "johnjohnson@email.com",
+          password: "password",
+        })
+        .end((err, res) => {
+          expect(res.status).to.be.equal(200);
+          expect(res.body.error).to.be.equal(null);
+
+          let token = res.body.data.token;
+
+          // Unassign a team member from the task
+          chai
+            .request(server)
+            .put(`/api/tasks/${createdTaskId}/unassign`)
+            .set("auth-token", token)
+            .send()
             .end((err, res) => {
-                expect(res.status).to.be.equal(200);
-                expect(res.body.error).to.be.equal(null);
+              expect(res.status).to.be.equal(200);
+              expect(res.body).to.be.a("object");
 
-                let token = res.body.data.token;
+              let updatedTask = res.body;
+              expect(updatedTask.assignedTeamMember).to.be.equal(null);
+              expect(updatedTask.taskStatus).to.be.equal("To do");
 
-                // Unassign a team member from the task
-                chai
-                  .request(server)
-                  .put(`/api/tasks/${createdTaskId}/unassign`)
-                  .set("auth-token", token)
-                  .send()
-                  .end((err, res) => {
-                      expect(res.status).to.be.equal(200);
-                      expect(res.body).to.be.a("object");
-
-                      let updatedTask = res.body;
-                      expect(updatedTask.assignedTeamMember).to.be.equal(null);
-                      expect(updatedTask.taskStatus).to.be.equal("To do");
-
-                      done();
-                  });
+              done();
             });
+        });
     });
   });
 
