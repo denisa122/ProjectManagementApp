@@ -18,4 +18,8 @@ The main goal of this project was to create a comprehensive project management t
 - Assign tasks to team members and track project progress  
 - Edit team members and manage project settings  
 - Secure authentication using JWT  
-- Modern, responsive frontend built with React.js and Tailwind CSS  
+- Modern, responsive frontend built with React.js and Tailwind CSS
+
+## 🚀 Deployment
+The application is deployed on [Render.com](https://collabhub-10hd.onrender.com).  
+Due to using a basic Render plan, loading times may be longer at times.
